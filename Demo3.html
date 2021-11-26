@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demonstração 3</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.6.0/dist/chart.min.js"></script>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <h1>3</h1>
+    
+    <div class="center">
+        <button onclick="showUmidade()">Umidade</button>
+        <button onclick="showCondu()">Conductividade</button>
+        <button onclick="showTemp()">Temperatura</button>
+    </div>
+
+    <div id="Umidade" class="hide">
+        <canvas id="graficoUmidade" width="250" height="50"></canvas>
+    </div>
+
+    <div id="Condu" class="hide">
+        <canvas id="graficoCondu" width="250" height="50"></canvas>
+    </div>
+
+    <div id="Temp" class="hide">
+        <canvas id="graficoTemperatura" width="250" height="50"></canvas>
+    </div>
+
+    <script>
+         async function getData(){
+
+            const response = await fetch('DADOS.csv');
+            const data = await response.text();
+            const tempo = []
+            const UmidadeComP = []
+            const ConduComP = []
+            const TempComP = []
+            const UmidadeSem = []
+            const ConduSem = []
+            const TempSem = []
+            const linhas = data.split('\n').slice(1)
+            linhas.forEach(linhas => {
+                const colunas = linhas.split(';')
+                tempo.push(colunas[0])
+                UmidadeComP.push(colunas[1])
+                ConduComP.push(colunas[2])
+                TempComP.push(colunas[3])
+                UmidadeSem.push(colunas[4])
+                ConduSem.push(colunas[5])
+                TempSem.push(colunas[6])
+            })
+            return{tempo, UmidadeComP, ConduComP,TempComP, UmidadeSem, ConduSem, TempSem}
+    }
+
+    </script>
+
+    <script>
+            window.addEventListener('load', setup);
+            async function setup(){
+                const ctx = document.getElementById('graficoUmidade').getContext('2d')
+                const elemnts = await getData()
+                const graph = new Chart(ctx, {
+                    type: 'line',
+                    data:{
+                        labels: elemnts.tempo,
+                        datasets:[
+                            {
+                                label: 'Com palha',
+                                data: elemnts.UmidadeComP,
+                                borderColor: 'blue',
+                                backgroundColor: 'blue',
+                                borderWidth: 1,
+                                yAxisID: 'y',
+                            },
+                            {
+                                label: 'Sem palha',
+                                data: elemnts.UmidadeSem,
+                                borderColor: 'red',
+                                backgroundColor: 'red',
+                                borderWidth: 1,
+                                yAxisID: 'y1',
+                            }
+                        ]
+                    },
+                    options:{
+                        layout: {
+                            padding: {
+                                left: 70,
+                                right: 70,
+                            }
+                        },
+                        plugins:{
+                            title: {
+                            display: true,
+                            text:  'Gráfico da Umidade',
+                            font: {
+                                size: 20
+                            }
+                            }
+                        },
+                        interaction: {
+                            intersect: false,
+                            mode: 'index'
+                        },
+                        scales: {
+                            y: {
+                            type: 'linear',
+                            display: true,
+                            position: 'left',
+                    },
+                    y1: {
+                        display: false,
+                        grid: {
+                            drawOnChartArea: false,
+                        },
+                    },
+                }
+             },
+        })
+    }
+</script>
+
+<script>
+    window.addEventListener('load', setup);
+    async function setup(){
+        const ctx = document.getElementById('graficoCondu').getContext('2d')
+        const elemnts = await getData()
+        const graph = new Chart(ctx, {
+            type: 'line',
+            data:{
+                labels: elemnts.tempo,
+                datasets:[
+                    {
+                        label: 'Com palha',
+                        data: elemnts.ConduComP,
+                        borderColor: 'blue',
+                        backgroundColor: 'blue',
+                        borderWidth: 1,
+                        yAxisID: 'y',
+                    },
+                    {
+                        label: 'Sem palha',
+                        data: elemnts.ConduSem,
+                        borderColor: 'red',
+                        backgroundColor: 'red',
+                        borderWidth: 1,
+                        yAxisID: 'y1',
+                    }
+                ]
+            },
+            options:{
+                layout: {
+                    padding: {
+                        left: 70,
+                        right: 70,
+                    }
+                },
+                plugins:{
+                    title: {
+                    display: true,
+                    text:  'Gráfico da Conductividade',
+                    font: {
+                            size: 20
+                        }
+                    }
+                },
+                interaction: {
+                    intersect: false,
+                    mode: 'index'
+                },
+                scales: {
+                    y: {
+                    type: 'linear',
+                    display: true,
+                    position: 'left',
+            },
+            y1: {
+                display: false,
+                grid: {
+                    drawOnChartArea: false,
+                },
+            },
+        }
+     },
+})
+}
+</script>
+
+<script>
+    window.addEventListener('load', setup);
+    async function setup(){
+        const ctx = document.getElementById('graficoTemperatura').getContext('2d')
+        const elemnts = await getData()
+        const graph = new Chart(ctx, {
+            type: 'line',
+            data:{
+                labels: elemnts.tempo,
+                datasets:[
+                    {
+                        label: 'Com palha',
+                        data: elemnts.TempComP,
+                        borderColor: 'blue',
+                        backgroundColor: 'blue',
+                        borderWidth: 1,
+                        yAxisID: 'y',
+                    },
+                    {
+                        label: 'Sem palha',
+                        data: elemnts.TempSem,
+                        borderColor: 'red',
+                        backgroundColor: 'red',
+                        borderWidth: 1,
+                        yAxisID: 'y1',
+                    }
+                ]
+            },
+            options:{
+                layout: {
+                    padding: {
+                        left: 70,
+                        right: 70,
+                    }
+                },
+                plugins:{
+                    title: {
+                    display: true,
+                    text:  'Gráfico da Temperatura',
+                    font: {
+                            size: 20
+                        }
+                    }
+                },
+                interaction: {
+                    intersect: false,
+                    mode: 'index'
+                },
+                scales: {
+                    y: {
+                    type: 'linear',
+                    display: true,
+                    position: 'left',
+            },
+            y1: {
+                display: false,
+                grid: {
+                    drawOnChartArea: false,
+                },
+            },
+        }
+     },
+})
+}
+</script>
+
+<script>
+    async function showUmidade(){
+        document.getElementById('Umidade').setAttribute('class', 'show')
+        document.getElementById('Condu').setAttribute('class', 'hide')
+        document.getElementById('Temp').setAttribute('class', 'hide')
+    }
+
+    async function showCondu(){
+        document.getElementById('Umidade').setAttribute('class', 'hide')
+        document.getElementById('Condu').setAttribute('class', 'show')
+        document.getElementById('Temp').setAttribute('class', 'hide')
+    }
+
+    async function showTemp(){
+        document.getElementById('Umidade').setAttribute('class', 'hide')
+        document.getElementById('Condu').setAttribute('class', 'hide')
+        document.getElementById('Temp').setAttribute('class', 'show')
+    }
+</script>
+
+</body>
+</html>
