@@ -1,3 +1,11 @@
+:root{
+    --purple-navy: #37436bff;
+    --vivid-sky-blue: #32c6efff;
+    --space-cadet: #323c62ff;
+    --rich-black-fogra-39: #0a0a0aff;
+    --green-pigment: #009b43ff;
+}
+
 .center{
     display: flex;
     justify-content: space-evenly;
@@ -11,6 +19,10 @@
     justify-content: space-evenly;
     margin: auto;
     width: 40%;
+}
+
+.grafico{
+    height: 22rem;
 }
 
 body{

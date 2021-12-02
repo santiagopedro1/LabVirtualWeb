@@ -21,21 +21,21 @@
     </div>
 
     <div id="Umidade" class="hide">
-        <canvas id="graficoUmidade" width="250" height="50"></canvas>
+        <canvas id="graficoUmidade" height="70vh"></canvas>
     </div>
 
     <div id="Condu" class="hide">
-        <canvas id="graficoCondu" width="250" height="50"></canvas>
+        <canvas id="graficoCondu"></canvas>
     </div>
 
     <div id="Temp" class="hide">
-        <canvas id="graficoTemperatura" width="250" height="50"></canvas>
+        <canvas id="graficoTemperatura"></canvas>
     </div>
 
     <script>
          async function getData(){
 
-            const response = await fetch('DADOS.csv');
+            const response = await fetch('DADOS.json');
             const data = await response.text();
             const tempo = []
             const UmidadeComP = []
@@ -76,7 +76,6 @@
                                 borderColor: 'blue',
                                 backgroundColor: 'blue',
                                 borderWidth: 1,
-                                yAxisID: 'y',
                             },
                             {
                                 label: 'Sem palha',
@@ -84,15 +83,14 @@
                                 borderColor: 'red',
                                 backgroundColor: 'red',
                                 borderWidth: 1,
-                                yAxisID: 'y1',
                             }
                         ]
                     },
                     options:{
                         layout: {
                             padding: {
-                                left: 70,
-                                right: 70,
+                                left: 5,
+                                right: 5,
                             }
                         },
                         plugins:{
@@ -108,19 +106,6 @@
                             intersect: false,
                             mode: 'index'
                         },
-                        scales: {
-                            y: {
-                            type: 'linear',
-                            display: true,
-                            position: 'left',
-                    },
-                    y1: {
-                        display: false,
-                        grid: {
-                            drawOnChartArea: false,
-                        },
-                    },
-                }
              },
         })
     }
@@ -142,7 +127,6 @@
                         borderColor: 'blue',
                         backgroundColor: 'blue',
                         borderWidth: 1,
-                        yAxisID: 'y',
                     },
                     {
                         label: 'Sem palha',
@@ -150,7 +134,6 @@
                         borderColor: 'red',
                         backgroundColor: 'red',
                         borderWidth: 1,
-                        yAxisID: 'y1',
                     }
                 ]
             },
@@ -174,19 +157,6 @@
                     intersect: false,
                     mode: 'index'
                 },
-                scales: {
-                    y: {
-                    type: 'linear',
-                    display: true,
-                    position: 'left',
-            },
-            y1: {
-                display: false,
-                grid: {
-                    drawOnChartArea: false,
-                },
-            },
-        }
      },
 })
 }
@@ -208,7 +178,6 @@
                         borderColor: 'blue',
                         backgroundColor: 'blue',
                         borderWidth: 1,
-                        yAxisID: 'y',
                     },
                     {
                         label: 'Sem palha',
@@ -216,7 +185,6 @@
                         borderColor: 'red',
                         backgroundColor: 'red',
                         borderWidth: 1,
-                        yAxisID: 'y1',
                     }
                 ]
             },
@@ -240,19 +208,6 @@
                     intersect: false,
                     mode: 'index'
                 },
-                scales: {
-                    y: {
-                    type: 'linear',
-                    display: true,
-                    position: 'left',
-            },
-            y1: {
-                display: false,
-                grid: {
-                    drawOnChartArea: false,
-                },
-            },
-        }
      },
 })
 }

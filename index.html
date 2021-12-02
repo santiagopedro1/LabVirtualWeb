@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Demonstração 2</title>
+    <title>Demonstração(CSV)</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.6.0/dist/chart.min.js"></script>
 
     <link rel="stylesheet" href="style.css">
@@ -12,32 +12,20 @@
 
 <body>
 
-    <h1>2</h1>
+    <h1>Demonstração(CSV)</h1>
 
 
-    <div class="centerInput">
-        <input type="text" inputmode="numeric" pattern="[0-9]+" placeholder="DD/MM/AAAA">
-        <input type="text" inputmode="numeric" pattern="[0-9]+" placeholder="MM/AAAA">
-        <input type="text" inputmode="numeric" pattern="[0-9]+" placeholder="AAAA">
+
+    <div class="grafico">
+        <canvas id="graficoUmidade"></canvas>
     </div>
 
-        
-    <div class="center">
-        <button>Diário</button>
-        <button>Mensal</button>
-        <button>Anual</button>
+    <div class="grafico">
+        <canvas id="graficoCondu"></canvas>
     </div>
 
-    <div>
-        <canvas id="graficoUmidade" width="250" height="50"></canvas>
-    </div>
-
-    <div>
-        <canvas id="graficoCondu" width="250" height="50"></canvas>
-    </div>
-
-    <div>
-        <canvas id="graficoTemperatura" width="250" height="50"></canvas>
+    <div class="grafico">
+        <canvas id="graficoTemperatura"></canvas>
     </div>
 
     <script>
@@ -46,24 +34,24 @@
             const response = await fetch('DADOS.csv');
             const data = await response.text();
             const tempo = []
-            const UmidadeComP = []
-            const ConduComP = []
-            const TempComP = []
-            const UmidadeSem = []
-            const ConduSem = []
-            const TempSem = []
+            const Umidadecomp = []
+            const Conducomp = []
+            const Tempcomp = []
+            const Umidadesem = []
+            const Condusem = []
+            const Tempsem = []
             const linhas = data.split('\n').slice(1)
             linhas.forEach(linhas => {
                 const colunas = linhas.split(';')
                 tempo.push(colunas[0])
-                UmidadeComP.push(colunas[1])
-                ConduComP.push(colunas[2])
-                TempComP.push(colunas[3])
-                UmidadeSem.push(colunas[4])
-                ConduSem.push(colunas[5])
-                TempSem.push(colunas[6])
+                Umidadecomp.push(colunas[1])
+                Conducomp.push(colunas[2])
+                Tempcomp.push(colunas[3])
+                Umidadesem.push(colunas[4])
+                Condusem.push(colunas[5])
+                Tempsem.push(colunas[6])
             })
-            return{tempo, UmidadeComP, ConduComP,TempComP, UmidadeSem, ConduSem, TempSem}
+            return{tempo, Umidadecomp, Conducomp,Tempcomp, Umidadesem, Condusem, Tempsem}
     }
 
     </script>
@@ -80,23 +68,22 @@
                         datasets:[
                             {
                                 label: 'Com palha',
-                                data: elemnts.UmidadeComP,
+                                data: elemnts.Umidadecomp,
                                 borderColor: 'blue',
                                 backgroundColor: 'blue',
                                 borderWidth: 1,
-                                yAxisID: 'y',
                             },
                             {
                                 label: 'Sem palha',
-                                data: elemnts.UmidadeSem,
+                                data: elemnts.Umidadesem,
                                 borderColor: 'red',
                                 backgroundColor: 'red',
                                 borderWidth: 1,
-                                yAxisID: 'y1',
                             }
                         ]
                     },
                     options:{
+                        maintainAspectRatio: false,
                         layout: {
                             padding: {
                                 left: 70,
@@ -107,6 +94,7 @@
                             title: {
                             display: true,
                             text:  'Gráfico da Umidade',
+                            color: '#0A0A0aff', 
                             font: {
                                 size: 20
                             }
@@ -116,19 +104,6 @@
                             intersect: false,
                             mode: 'index'
                         },
-                        scales: {
-                            y: {
-                            type: 'linear',
-                            display: true,
-                            position: 'left',
-                    },
-                    y1: {
-                        display: false,
-                        grid: {
-                            drawOnChartArea: false,
-                        },
-                    },
-                }
              },
         })
     }
@@ -146,23 +121,22 @@
                 datasets:[
                     {
                         label: 'Com palha',
-                        data: elemnts.ConduComP,
+                        data: elemnts.Conducomp,
                         borderColor: 'blue',
                         backgroundColor: 'blue',
                         borderWidth: 1,
-                        yAxisID: 'y',
                     },
                     {
                         label: 'Sem palha',
-                        data: elemnts.ConduSem,
+                        data: elemnts.Condusem,
                         borderColor: 'red',
                         backgroundColor: 'red',
                         borderWidth: 1,
-                        yAxisID: 'y1',
                     }
                 ]
             },
             options:{
+                maintainAspectRatio: false,
                 layout: {
                     padding: {
                         left: 70,
@@ -173,6 +147,7 @@
                     title: {
                     display: true,
                     text:  'Gráfico da Conductividade',
+                    color: '#0A0A0aff',
                     font: {
                             size: 20
                         }
@@ -182,19 +157,6 @@
                     intersect: false,
                     mode: 'index'
                 },
-                scales: {
-                    y: {
-                    type: 'linear',
-                    display: true,
-                    position: 'left',
-            },
-            y1: {
-                display: false,
-                grid: {
-                    drawOnChartArea: false,
-                },
-            },
-        }
      },
 })
 }
@@ -212,23 +174,22 @@
                 datasets:[
                     {
                         label: 'Com palha',
-                        data: elemnts.TempComP,
+                        data: elemnts.Tempcomp,
                         borderColor: 'blue',
                         backgroundColor: 'blue',
                         borderWidth: 1,
-                        yAxisID: 'y',
                     },
                     {
                         label: 'Sem palha',
-                        data: elemnts.TempSem,
+                        data: elemnts.Tempsem,
                         borderColor: 'red',
                         backgroundColor: 'red',
                         borderWidth: 1,
-                        yAxisID: 'y1',
                     }
                 ]
             },
             options:{
+                maintainAspectRatio: false,
                 layout: {
                     padding: {
                         left: 70,
@@ -239,6 +200,7 @@
                     title: {
                     display: true,
                     text:  'Gráfico da Temperatura',
+                    color: '#0A0A0aff',
                     font: {
                             size: 20
                         }
@@ -248,19 +210,6 @@
                     intersect: false,
                     mode: 'index'
                 },
-                scales: {
-                    y: {
-                    type: 'linear',
-                    display: true,
-                    position: 'left',
-            },
-            y1: {
-                display: false,
-                grid: {
-                    drawOnChartArea: false,
-                },
-            },
-        }
      },
 })
 }

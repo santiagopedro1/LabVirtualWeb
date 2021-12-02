@@ -1,0 +1,652 @@
+{"dados_teste":
+  [
+    {
+      "tempo": "00:00",
+      "Umidadecomp": 14.02,
+      "Conducomp": 0.83,
+      "Tempcomp": 20.4,
+      "Umidadesem": 14.2,
+      "Condusem": 1.17,
+      "Tempsem": 18.7
+    },
+    {
+      "tempo": "00:20",
+      "Umidadecomp": 13.94,
+      "Conducomp": 0.84,
+      "Tempcomp": 20.1,
+      "Umidadesem": 14.13,
+      "Condusem": 1.16,
+      "Tempsem": 18.4
+    },
+    {
+      "tempo": "00:40",
+      "Umidadecomp": 13.92,
+      "Conducomp": 0.84,
+      "Tempcomp": 19.9,
+      "Umidadesem": 14.13,
+      "Condusem": 1.16,
+      "Tempsem": 18.2
+    },
+    {
+      "tempo": "01:00",
+      "Umidadecomp": 13.94,
+      "Conducomp": 0.84,
+      "Tempcomp": 19.7,
+      "Umidadesem": 14.11,
+      "Condusem": 1.15,
+      "Tempsem": 18
+    },
+    {
+      "tempo": "01:20",
+      "Umidadecomp": 13.91,
+      "Conducomp": 0.84,
+      "Tempcomp": 19.4,
+      "Umidadesem": 14.07,
+      "Condusem": 1.15,
+      "Tempsem": 17.9
+    },
+    {
+      "tempo": "01:40",
+      "Umidadecomp": 13.91,
+      "Conducomp": 0.83,
+      "Tempcomp": 19.3,
+      "Umidadesem": 14.04,
+      "Condusem": 1.15,
+      "Tempsem": 17.7
+    },
+    {
+      "tempo": "02:00",
+      "Umidadecomp": 13.82,
+      "Conducomp": 0.84,
+      "Tempcomp": 19,
+      "Umidadesem": 13.93,
+      "Condusem": 1.15,
+      "Tempsem": 17.5
+    },
+    {
+      "tempo": "02:20",
+      "Umidadecomp": 13.85,
+      "Conducomp": 0.83,
+      "Tempcomp": 19,
+      "Umidadesem": 13.96,
+      "Condusem": 1.13,
+      "Tempsem": 17.4
+    },
+    {
+      "tempo": "02:40",
+      "Umidadecomp": 13.84,
+      "Conducomp": 0.83,
+      "Tempcomp": 19,
+      "Umidadesem": 13.94,
+      "Condusem": 1.12,
+      "Tempsem": 17.7
+    },
+    {
+      "tempo": "03:00",
+      "Umidadecomp": 13.83,
+      "Conducomp": 0.82,
+      "Tempcomp": 19.1,
+      "Umidadesem": 13.93,
+      "Condusem": 1.11,
+      "Tempsem": 17.8
+    },
+    {
+      "tempo": "03:20",
+      "Umidadecomp": 13.78,
+      "Conducomp": 0.83,
+      "Tempcomp": 18.9,
+      "Umidadesem": 13.86,
+      "Condusem": 1.11,
+      "Tempsem": 17.8
+    },
+    {
+      "tempo": "03:40",
+      "Umidadecomp": 13.75,
+      "Conducomp": 0.83,
+      "Tempcomp": 18.8,
+      "Umidadesem": 13.89,
+      "Condusem": 1.11,
+      "Tempsem": 17.7
+    },
+    {
+      "tempo": "04:00",
+      "Umidadecomp": 13.73,
+      "Conducomp": 0.82,
+      "Tempcomp": 18.9,
+      "Umidadesem": 13.88,
+      "Condusem": 1.1,
+      "Tempsem": 17.8
+    },
+    {
+      "tempo": "04:20",
+      "Umidadecomp": 13.72,
+      "Conducomp": 0.83,
+      "Tempcomp": 18.8,
+      "Umidadesem": 13.84,
+      "Condusem": 1.11,
+      "Tempsem": 17.7
+    },
+    {
+      "tempo": "04:40",
+      "Umidadecomp": 13.71,
+      "Conducomp": 0.83,
+      "Tempcomp": 18.7,
+      "Umidadesem": 13.85,
+      "Condusem": 1.1,
+      "Tempsem": 17.6
+    },
+    {
+      "tempo": "05:00",
+      "Umidadecomp": 13.76,
+      "Conducomp": 0.83,
+      "Tempcomp": 18.8,
+      "Umidadesem": 13.8,
+      "Condusem": 1.09,
+      "Tempsem": 17.8
+    },
+    {
+      "tempo": "05:20",
+      "Umidadecomp": 13.75,
+      "Conducomp": 0.83,
+      "Tempcomp": 18.8,
+      "Umidadesem": 13.84,
+      "Condusem": 1.09,
+      "Tempsem": 17.8
+    },
+    {
+      "tempo": "05:40",
+      "Umidadecomp": 13.67,
+      "Conducomp": 0.83,
+      "Tempcomp": 18.6,
+      "Umidadesem": 13.78,
+      "Condusem": 1.1,
+      "Tempsem": 17.6
+    },
+    {
+      "tempo": "06:00",
+      "Umidadecomp": 13.66,
+      "Conducomp": 0.84,
+      "Tempcomp": 18.4,
+      "Umidadesem": 13.81,
+      "Condusem": 1.1,
+      "Tempsem": 17.5
+    },
+    {
+      "tempo": "06:20",
+      "Umidadecomp": 13.65,
+      "Conducomp": 0.84,
+      "Tempcomp": 18.3,
+      "Umidadesem": 13.72,
+      "Condusem": 1.1,
+      "Tempsem": 17.4
+    },
+    {
+      "tempo": "06:40",
+      "Umidadecomp": 13.69,
+      "Conducomp": 0.84,
+      "Tempcomp": 18.2,
+      "Umidadesem": 13.78,
+      "Condusem": 1.1,
+      "Tempsem": 17.2
+    },
+    {
+      "tempo": "07:00",
+      "Umidadecomp": 13.68,
+      "Conducomp": 0.84,
+      "Tempcomp": 18,
+      "Umidadesem": 13.75,
+      "Condusem": 1.11,
+      "Tempsem": 17.1
+    },
+    {
+      "tempo": "07:20",
+      "Umidadecomp": 13.67,
+      "Conducomp": 0.84,
+      "Tempcomp": 18.1,
+      "Umidadesem": 13.76,
+      "Condusem": 1.1,
+      "Tempsem": 17.2
+    },
+    {
+      "tempo": "07:40",
+      "Umidadecomp": 13.62,
+      "Conducomp": 0.83,
+      "Tempcomp": 18.2,
+      "Umidadesem": 13.75,
+      "Condusem": 1.1,
+      "Tempsem": 17.4
+    },
+    {
+      "tempo": "08:00",
+      "Umidadecomp": 13.66,
+      "Conducomp": 0.83,
+      "Tempcomp": 18.4,
+      "Umidadesem": 13.77,
+      "Condusem": 1.09,
+      "Tempsem": 17.6
+    },
+    {
+      "tempo": "08:20",
+      "Umidadecomp": 13.61,
+      "Conducomp": 0.84,
+      "Tempcomp": 18.8,
+      "Umidadesem": 13.78,
+      "Condusem": 1.08,
+      "Tempsem": 18
+    },
+    {
+      "tempo": "08:40",
+      "Umidadecomp": 13.67,
+      "Conducomp": 0.82,
+      "Tempcomp": 19.6,
+      "Umidadesem": 13.75,
+      "Condusem": 1.07,
+      "Tempsem": 19.4
+    },
+    {
+      "tempo": "09:00",
+      "Umidadecomp": 13.71,
+      "Conducomp": 0.81,
+      "Tempcomp": 21.2,
+      "Umidadesem": 13.85,
+      "Condusem": 1.05,
+      "Tempsem": 20.8
+    },
+    {
+      "tempo": "09:20",
+      "Umidadecomp": 13.69,
+      "Conducomp": 0.79,
+      "Tempcomp": 22.8,
+      "Umidadesem": 13.87,
+      "Condusem": 1.06,
+      "Tempsem": 20.6
+    },
+    {
+      "tempo": "09:40",
+      "Umidadecomp": 13.78,
+      "Conducomp": 0.79,
+      "Tempcomp": 23.3,
+      "Umidadesem": 13.86,
+      "Condusem": 1.07,
+      "Tempsem": 20.1
+    },
+    {
+      "tempo": "10:00",
+      "Umidadecomp": 13.75,
+      "Conducomp": 0.83,
+      "Tempcomp": 21.8,
+      "Umidadesem": 13.94,
+      "Condusem": 1.07,
+      "Tempsem": 20.5
+    },
+    {
+      "tempo": "10:20",
+      "Umidadecomp": 13.83,
+      "Conducomp": 0.78,
+      "Tempcomp": 25.1,
+      "Umidadesem": 14.04,
+      "Condusem": 1.02,
+      "Tempsem": 24.1
+    },
+    {
+      "tempo": "10:40",
+      "Umidadecomp": 13.91,
+      "Conducomp": 0.77,
+      "Tempcomp": 27.5,
+      "Umidadesem": 14.1,
+      "Condusem": 1,
+      "Tempsem": 26
+    },
+    {
+      "tempo": "11:00",
+      "Umidadecomp": 13.96,
+      "Conducomp": 0.77,
+      "Tempcomp": 28.9,
+      "Umidadesem": 14.24,
+      "Condusem": 1.02,
+      "Tempsem": 27.1
+    },
+    {
+      "tempo": "11:20",
+      "Umidadecomp": 13.96,
+      "Conducomp": 0.78,
+      "Tempcomp": 30,
+      "Umidadesem": 14.31,
+      "Condusem": 1.03,
+      "Tempsem": 27.9
+    },
+    {
+      "tempo": "11:40",
+      "Umidadecomp": 14.06,
+      "Conducomp": 0.78,
+      "Tempcomp": 31.2,
+      "Umidadesem": 14.41,
+      "Condusem": 1.03,
+      "Tempsem": 29
+    },
+    {
+      "tempo": "12:00",
+      "Umidadecomp": 14.06,
+      "Conducomp": 0.79,
+      "Tempcomp": 32.3,
+      "Umidadesem": 14.49,
+      "Condusem": 1.03,
+      "Tempsem": 30.1
+    },
+    {
+      "tempo": "12:20",
+      "Umidadecomp": 14.19,
+      "Conducomp": 0.79,
+      "Tempcomp": 33.6,
+      "Umidadesem": 14.61,
+      "Condusem": 1.04,
+      "Tempsem": 31.4
+    },
+    {
+      "tempo": "12:40",
+      "Umidadecomp": 14.27,
+      "Conducomp": 0.8,
+      "Tempcomp": 34.7,
+      "Umidadesem": 14.69,
+      "Condusem": 1.04,
+      "Tempsem": 32.5
+    },
+    {
+      "tempo": "13:00",
+      "Umidadecomp": 14.34,
+      "Conducomp": 0.81,
+      "Tempcomp": 35.8,
+      "Umidadesem": 14.78,
+      "Condusem": 1.05,
+      "Tempsem": 33.6
+    },
+    {
+      "tempo": "13:20",
+      "Umidadecomp": 14.41,
+      "Conducomp": 0.82,
+      "Tempcomp": 36.6,
+      "Umidadesem": 14.81,
+      "Condusem": 1.06,
+      "Tempsem": 34
+    },
+    {
+      "tempo": "13:40",
+      "Umidadecomp": 14.46,
+      "Conducomp": 0.83,
+      "Tempcomp": 37.2,
+      "Umidadesem": 14.85,
+      "Condusem": 1.07,
+      "Tempsem": 34.5
+    },
+    {
+      "tempo": "14:00",
+      "Umidadecomp": 14.49,
+      "Conducomp": 0.84,
+      "Tempcomp": 37.4,
+      "Umidadesem": 14.97,
+      "Condusem": 1.08,
+      "Tempsem": 34.7
+    },
+    {
+      "tempo": "14:20",
+      "Umidadecomp": 14.45,
+      "Conducomp": 0.86,
+      "Tempcomp": 37.2,
+      "Umidadesem": 15,
+      "Condusem": 1.09,
+      "Tempsem": 34.8
+    },
+    {
+      "tempo": "14:40",
+      "Umidadecomp": 14.48,
+      "Conducomp": 0.88,
+      "Tempcomp": 36.7,
+      "Umidadesem": 15.04,
+      "Condusem": 1.11,
+      "Tempsem": 34.6
+    },
+    {
+      "tempo": "15:00",
+      "Umidadecomp": 14.49,
+      "Conducomp": 0.9,
+      "Tempcomp": 36.2,
+      "Umidadesem": 15.06,
+      "Condusem": 1.12,
+      "Tempsem": 34.4
+    },
+    {
+      "tempo": "15:20",
+      "Umidadecomp": 14.55,
+      "Conducomp": 0.92,
+      "Tempcomp": 35.5,
+      "Umidadesem": 15.04,
+      "Condusem": 1.14,
+      "Tempsem": 33.7
+    },
+    {
+      "tempo": "15:40",
+      "Umidadecomp": 14.6,
+      "Conducomp": 0.93,
+      "Tempcomp": 35.5,
+      "Umidadesem": 15.08,
+      "Condusem": 1.14,
+      "Tempsem": 33.9
+    },
+    {
+      "tempo": "16:00",
+      "Umidadecomp": 14.61,
+      "Conducomp": 0.95,
+      "Tempcomp": 35.1,
+      "Umidadesem": 15.1,
+      "Condusem": 1.15,
+      "Tempsem": 34
+    },
+    {
+      "tempo": "16:20",
+      "Umidadecomp": 14.58,
+      "Conducomp": 0.97,
+      "Tempcomp": 33.9,
+      "Umidadesem": 15.2,
+      "Condusem": 1.17,
+      "Tempsem": 33.1
+    },
+    {
+      "tempo": "16:40",
+      "Umidadecomp": 14.63,
+      "Conducomp": 0.98,
+      "Tempcomp": 33,
+      "Umidadesem": 15.17,
+      "Condusem": 1.18,
+      "Tempsem": 32.2
+    },
+    {
+      "tempo": "17:00",
+      "Umidadecomp": 14.62,
+      "Conducomp": 1,
+      "Tempcomp": 32.2,
+      "Umidadesem": 15.05,
+      "Condusem": 1.19,
+      "Tempsem": 31.2
+    },
+    {
+      "tempo": "17:20",
+      "Umidadecomp": 14.6,
+      "Conducomp": 1.01,
+      "Tempcomp": 31.2,
+      "Umidadesem": 15.02,
+      "Condusem": 1.2,
+      "Tempsem": 30
+    },
+    {
+      "tempo": "17:40",
+      "Umidadecomp": 14.57,
+      "Conducomp": 1.02,
+      "Tempcomp": 30.3,
+      "Umidadesem": 14.87,
+      "Condusem": 1.21,
+      "Tempsem": 28.9
+    },
+    {
+      "tempo": "18:00",
+      "Umidadecomp": 14.48,
+      "Conducomp": 1.02,
+      "Tempcomp": 29.5,
+      "Umidadesem": 14.76,
+      "Condusem": 1.21,
+      "Tempsem": 27.8
+    },
+    {
+      "tempo": "18:20",
+      "Umidadecomp": 14.49,
+      "Conducomp": 1.04,
+      "Tempcomp": 28.8,
+      "Umidadesem": 14.72,
+      "Condusem": 1.21,
+      "Tempsem": 27.1
+    },
+    {
+      "tempo": "18:40",
+      "Umidadecomp": 14.38,
+      "Conducomp": 1.03,
+      "Tempcomp": 28.2,
+      "Umidadesem": 14.62,
+      "Condusem": 1.19,
+      "Tempsem": 26.6
+    },
+    {
+      "tempo": "19:00",
+      "Umidadecomp": 14.4,
+      "Conducomp": 1.02,
+      "Tempcomp": 27.8,
+      "Umidadesem": 14.45,
+      "Condusem": 1.18,
+      "Tempsem": 26.1
+    },
+    {
+      "tempo": "19:20",
+      "Umidadecomp": 14.29,
+      "Conducomp": 1.03,
+      "Tempcomp": 27.1,
+      "Umidadesem": 14.39,
+      "Condusem": 1.17,
+      "Tempsem": 25.6
+    },
+    {
+      "tempo": "19:40",
+      "Umidadecomp": 14.28,
+      "Conducomp": 1.03,
+      "Tempcomp": 26.6,
+      "Umidadesem": 14.28,
+      "Condusem": 1.16,
+      "Tempsem": 25
+    },
+    {
+      "tempo": "20:00",
+      "Umidadecomp": 14.21,
+      "Conducomp": 1.02,
+      "Tempcomp": 26.1,
+      "Umidadesem": 14.16,
+      "Condusem": 1.15,
+      "Tempsem": 24.6
+    },
+    {
+      "tempo": "20:20",
+      "Umidadecomp": 14.1,
+      "Conducomp": 1.02,
+      "Tempcomp": 25.6,
+      "Umidadesem": 13.98,
+      "Condusem": 1.14,
+      "Tempsem": 24.1
+    },
+    {
+      "tempo": "20:40",
+      "Umidadecomp": 14.1,
+      "Conducomp": 1.02,
+      "Tempcomp": 24.9,
+      "Umidadesem": 13.93,
+      "Condusem": 1.12,
+      "Tempsem": 23.5
+    },
+    {
+      "tempo": "21:00",
+      "Umidadecomp": 14.03,
+      "Conducomp": 1.02,
+      "Tempcomp": 24.4,
+      "Umidadesem": 13.82,
+      "Condusem": 1.11,
+      "Tempsem": 23
+    },
+    {
+      "tempo": "21:20",
+      "Umidadecomp": 13.98,
+      "Conducomp": 1.02,
+      "Tempcomp": 23.9,
+      "Umidadesem": 13.66,
+      "Condusem": 1.11,
+      "Tempsem": 22.5
+    },
+    {
+      "tempo": "21:40",
+      "Umidadecomp": 13.91,
+      "Conducomp": 1.01,
+      "Tempcomp": 23.5,
+      "Umidadesem": 13.6,
+      "Condusem": 1.11,
+      "Tempsem": 22.1
+    },
+    {
+      "tempo": "22:00",
+      "Umidadecomp": 13.81,
+      "Conducomp": 1,
+      "Tempcomp": 23.1,
+      "Umidadesem": 13.53,
+      "Condusem": 1.1,
+      "Tempsem": 21.7
+    },
+    {
+      "tempo": "22:20",
+      "Umidadecomp": 13.77,
+      "Conducomp": 1,
+      "Tempcomp": 22.7,
+      "Umidadesem": 13.37,
+      "Condusem": 1.09,
+      "Tempsem": 21.4
+    },
+    {
+      "tempo": "22:40",
+      "Umidadecomp": 13.77,
+      "Conducomp": 1,
+      "Tempcomp": 22.4,
+      "Umidadesem": 13.3,
+      "Condusem": 1.09,
+      "Tempsem": 21
+    },
+    {
+      "tempo": "23:00",
+      "Umidadecomp": 13.75,
+      "Conducomp": 1,
+      "Tempcomp": 22,
+      "Umidadesem": 13.27,
+      "Condusem": 1.08,
+      "Tempsem": 20.7
+    },
+    {
+      "tempo": "23:20",
+      "Umidadecomp": 13.65,
+      "Conducomp": 0.99,
+      "Tempcomp": 21.7,
+      "Umidadesem": 13.21,
+      "Condusem": 1.07,
+      "Tempsem": 20.4
+    },
+    {
+      "tempo": "23:40",
+      "Umidadecomp": 13.63,
+      "Conducomp": 0.98,
+      "Tempcomp": 21.4,
+      "Umidadesem": 13.18,
+      "Condusem": 1.07,
+      "Tempsem": 20.1
+    }
+  ]
+}
