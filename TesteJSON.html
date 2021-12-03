@@ -1,0 +1,57 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.6.0/dist/chart.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+
+
+
+<script>
+
+$.getJSON("DADOS.json", function (json) {
+  // will generate array with ['Monday', 'Tuesday', 'Wednesday']
+  var labels = json.map(function(item) {
+    return item.tempo;
+  });
+
+  var data = {
+    labels: labels,
+    datasets: [
+    {
+      label: "My First dataset",
+      fillColor: "rgba(220,220,220,0.5)",
+      strokeColor: "rgba(220,220,220,0.8)",
+      highlightFill: "rgba(220,220,220,0.75)",
+      highlightStroke: "rgba(220,220,220,1)",
+      data: [65, 59, 80, 81, 56, 55, 40]
+    },
+    {
+      label: "My Second dataset",
+      fillColor: "rgba(151,187,205,0.5)",
+      strokeColor: "rgba(151,187,205,0.8)",
+      highlightFill: "rgba(151,187,205,0.75)",
+      highlightStroke: "rgba(151,187,205,1)",
+      data: [28, 48, 40, 19, 86, 27, 90]
+    }
+    ]
+  };
+
+  var ctx = document.getElementById("myChart").getContext("2d");
+  ctx.canvas.width = 1000;
+  ctx.canvas.height = 800;
+
+  var myChart = new Chart(ctx).Bar(data);
+});
+     
+
+</script>
+
+
+
+</body>
+</html>

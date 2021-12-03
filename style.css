@@ -1,3 +1,8 @@
+* {
+    margin: 0;
+    padding: 0;
+  }
+
 :root{
     --purple-navy: #37436bff;
     --vivid-sky-blue: #32c6efff;
@@ -5,58 +10,47 @@
     --rich-black-fogra-39: #0a0a0aff;
     --green-pigment: #009b43ff;
 }
+@import url(https://fonts.googleapis.com/css?family=Roboto);
 
-.center{
-    display: flex;
-    justify-content: space-evenly;
-    margin: auto;
-    width: 40%;
-    padding: 10px;
-}
-
-.centerInput{
-    display: flex;
-    justify-content: space-evenly;
-    margin: auto;
-    width: 40%;
+.active{
+    background-color: var(--space-cadet);
 }
 
 .grafico{
     height: 22rem;
+    padding: 1rem;
 }
 
-body{
-    background-color: rgba(0, 0, 0, 0.1);
+body {
+  background: #E5E5E5;
 }
 
 h1{
     text-align: center;
 }
 
-button{
-    padding: 8px 25px;
-    background: transparent;
-    outline: none;
-    border: 2px solid black;
-    border-radius: 12px;
-    color: black;
-    font-size: 12px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-input:invalid {
-    border: 5px solid red;
-}
-
-input{
-    padding: 8px
-}
-
-.show{
+ul {
+    font-family: 'roboto';
+    font-weight: bolder;
+    letter-spacing: 0.01rem;
+    list-style-type: none;
+    overflow: hidden;
+    background-color: var(--rich-black-fogra-39);
+  }
+  
+  li {
+    float: left;
+  }
+  
+  li a {
     display: block;
-}
-
-.hide{
-    display: none;
-}
+    color: var(--vivid-sky-blue);
+    text-align: center;
+    padding: 1.2rem 2rem;
+    text-decoration: none;
+  }
+  
+  li a:hover {
+    background-color: var(--space-cadet);
+    cursor: pointer;
+    }

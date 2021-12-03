@@ -6,14 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Demonstração(CSV)</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.6.0/dist/chart.min.js"></script>
+    <!-- <script src="Javascript.js"></script> -->
 
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-    <h1>Demonstração(CSV)</h1>
+    <ul>
+        <li><a class="active">GRÁFICO DIÁRIO</a></li>
+        <li><a>GRÁFICO MENSAL</a></li>
+        <li><a>GRÁFICO ANUAL</a></li>
+        <li><a>GRÁFICO DE PERÍODO</a></li>
+    </ul>
 
+    <h1 style="padding-top: 1rem;">Demonstração(CSV)</h1>
 
 
     <div class="grafico">
@@ -84,12 +91,6 @@
                     },
                     options:{
                         maintainAspectRatio: false,
-                        layout: {
-                            padding: {
-                                left: 70,
-                                right: 70,
-                            }
-                        },
                         plugins:{
                             title: {
                             display: true,
@@ -137,12 +138,6 @@
             },
             options:{
                 maintainAspectRatio: false,
-                layout: {
-                    padding: {
-                        left: 70,
-                        right: 70,
-                    }
-                },
                 plugins:{
                     title: {
                     display: true,
@@ -190,12 +185,6 @@
             },
             options:{
                 maintainAspectRatio: false,
-                layout: {
-                    padding: {
-                        left: 70,
-                        right: 70,
-                    }
-                },
                 plugins:{
                     title: {
                     display: true,
