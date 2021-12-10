@@ -4,9 +4,12 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Demonstração(CSV)</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.6.0/dist/chart.min.js"></script>
-    <!-- <script src="Javascript.js"></script> -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.6.1/chart.js" integrity="sha512-9fQaGKKJO2zXOYXpPTEEyzIdx7r3ou0nZgvxS9VICh70AGvdangg7lUVonofpBYrNWd6h2e/FQHoWSCRZkwOUQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-crosshair@1"></script>
+    <script src="Javascript.js"></script>
 
     <link rel="stylesheet" href="style.css">
 </head>
@@ -22,7 +25,7 @@
         </ul>
     </nav>
 
-    <h1 style="padding-top: 1rem;">Demonstração(CSV)</h1>
+    <h1>Demonstração(CSV)</h1>
 
 
     <div class="grafico">
@@ -37,33 +40,6 @@
         <canvas id="graficoTemperatura"></canvas>
     </div>
 
-    <script>
-         async function getData(){
-
-            const response = await fetch('DADOS.csv');
-            const data = await response.text();
-            const tempo = []
-            const Umidadecomp = []
-            const Conducomp = []
-            const Tempcomp = []
-            const Umidadesem = []
-            const Condusem = []
-            const Tempsem = []
-            const linhas = data.split('\n').slice(1)
-            linhas.forEach(linhas => {
-                const colunas = linhas.split(';')
-                tempo.push(colunas[0])
-                Umidadecomp.push(colunas[1])
-                Conducomp.push(colunas[2])
-                Tempcomp.push(colunas[3])
-                Umidadesem.push(colunas[4])
-                Condusem.push(colunas[5])
-                Tempsem.push(colunas[6])
-            })
-            return{tempo, Umidadecomp, Conducomp,Tempcomp, Umidadesem, Condusem, Tempsem}
-    }
-
-    </script>
 
     <script>
             window.addEventListener('load', setup);
@@ -77,27 +53,37 @@
                         datasets:[
                             {
                                 label: 'Com palha',
-                                data: elemnts.Umidadecomp,
+                                data: elemnts.A_Umidade,
                                 borderColor: 'blue',
                                 backgroundColor: 'blue',
-                                borderWidth: 1,
+                                borderWidth: 2
                             },
                             {
                                 label: 'Sem palha',
-                                data: elemnts.Umidadesem,
+                                data: elemnts.B_Umidade,
                                 borderColor: 'red',
                                 backgroundColor: 'red',
-                                borderWidth: 1,
+                                borderWidth: 2,
                             }
                         ]
                     },
                     options:{
+                        spanGaps: true,
+                        animation: false,
                         maintainAspectRatio: false,
                         plugins:{
+                            crosshair:{
+                                line: {
+                                    color: '#1b1b1b'
+                                },
+                                snap:{
+                                    enabled: true
+                                }
+                            },
                             title: {
                             display: true,
                             text:  'Gráfico da Umidade',
-                            color: '#0A0A0aff', 
+                            color: 'black', 
                             font: {
                                 size: 20
                             }
@@ -124,27 +110,37 @@
                 datasets:[
                     {
                         label: 'Com palha',
-                        data: elemnts.Conducomp,
+                        data: elemnts.A_Conductividade,
                         borderColor: 'blue',
                         backgroundColor: 'blue',
-                        borderWidth: 1,
+                        borderWidth: 2,
                     },
                     {
                         label: 'Sem palha',
-                        data: elemnts.Condusem,
+                        data: elemnts.B_Conductividade,
                         borderColor: 'red',
                         backgroundColor: 'red',
-                        borderWidth: 1,
+                        borderWidth: 2,
                     }
                 ]
             },
             options:{
+                spanGaps: true,
+                animation: false,
                 maintainAspectRatio: false,
                 plugins:{
+                    crosshair:{
+                        line: {
+                            color: '#1b1b1b'
+                        },
+                        snap: {
+                            enabled: true
+                        }
+                    },
                     title: {
                     display: true,
                     text:  'Gráfico da Conductividade',
-                    color: '#0A0A0aff',
+                    color: 'black',
                     font: {
                             size: 20
                         }
@@ -171,27 +167,37 @@
                 datasets:[
                     {
                         label: 'Com palha',
-                        data: elemnts.Tempcomp,
+                        data: elemnts.A_Temperatura,
                         borderColor: 'blue',
                         backgroundColor: 'blue',
-                        borderWidth: 1,
+                        borderWidth: 2,
                     },
                     {
                         label: 'Sem palha',
-                        data: elemnts.Tempsem,
+                        data: elemnts.B_Temperatura,
                         borderColor: 'red',
                         backgroundColor: 'red',
-                        borderWidth: 1,
+                        borderWidth: 2,
                     }
                 ]
             },
             options:{
+                spanGaps: true,
+                animation:false,
                 maintainAspectRatio: false,
                 plugins:{
+                    crosshair:{
+                        line: {
+                            color: '#1b1b1b'
+                        },
+                        snap:{
+                            enabled: true
+                        }
+                    },
                     title: {
                     display: true,
                     text:  'Gráfico da Temperatura',
-                    color: '#0A0A0aff',
+                    color: 'black',
                     font: {
                             size: 20
                         }

@@ -4,11 +4,9 @@
   }
 
 :root{
-    --purple-navy: #37436bff;
     --vivid-sky-blue: #32c6efff;
     --space-cadet: #323c62ff;
-    --rich-black-fogra-39: #0a0a0aff;
-    --green-pigment: #009b43ff;
+    --eerie-black: #1b1b1b;
 }
 @import url(https://fonts.googleapis.com/css?family=Roboto);
 
@@ -21,17 +19,34 @@
     padding: 1rem;
 }
 
+.reset-zoom{
+  border: 0;
+  text-align: center;
+  display: inline-block;
+  padding: 14px;
+  width: 150px;
+  margin: 7px;
+  color: #ffffff;
+  background-color: var(--space-cadet);
+  border-radius: 8px;
+  font-family: 'roboto';
+  font-weight: 600;
+  text-decoration: none;
+  transition: box-shadow 200ms ease-out;
+}
+
 body {
   background: #E5E5E5;
 }
 
 h1{
     text-align: center;
+    padding: 1rem;
 }
 
 ol, ul {
   list-style: none;
-  background-color: var(--rich-black-fogra-39);
+  background-color: var(--eerie-black);
 }
 li {
   display: inline-block;
