@@ -1,0 +1,393 @@
+  [
+    {
+      "tempo": "00:00",
+      "Umidadecomp": 14.02,
+      "Umidadesem": 14.2
+    },
+    {
+      "tempo": "00:20",
+      "Umidadecomp": 13.94,
+      "Umidadesem": 14.13
+    },
+    {
+      "tempo": "00:40",
+      "Umidadecomp": 13.92,
+      "Umidadesem": 14.13
+    },
+    {
+      "tempo": "01:00",
+      "Umidadecomp": 13.94,
+      "Umidadesem": 14.11
+    },
+    {
+      "tempo": "01:20",
+      "Umidadecomp": 13.91,
+      "Umidadesem": 14.07
+    },
+    {
+      "tempo": "01:40",
+      "Umidadecomp": 13.91,
+      "Umidadesem": 14.04
+    },
+    {
+      "tempo": "02:00",
+      "Umidadecomp": 13.82,
+      "Umidadesem": 13.93
+    },
+    {
+      "tempo": "02:20",
+      "Umidadecomp": 13.85,
+      "Umidadesem": 13.96
+    },
+    {
+      "tempo": "02:40",
+      "Umidadecomp": 13.84,
+      "Umidadesem": 13.94
+    },
+    {
+      "tempo": "03:00",
+      "Umidadecomp": 13.83,
+      "Umidadesem": 13.93
+    },
+    {
+      "tempo": "03:20",
+      "Umidadecomp": 13.78,
+      "Umidadesem": 13.86
+    },
+    {
+      "tempo": "03:40",
+      "Umidadecomp": 13.75,
+      "Umidadesem": 13.89
+    },
+    {
+      "tempo": "04:00",
+      "Umidadecomp": 13.73,
+      "Umidadesem": 13.88
+    },
+    {
+      "tempo": "04:20",
+      "Umidadecomp": 13.72,
+      "Umidadesem": 13.84
+    },
+    {
+      "tempo": "04:40",
+      "Umidadecomp": 13.71,
+      "Umidadesem": 13.85
+    },
+    {
+      "tempo": "05:00",
+      "Umidadecomp": 13.76,
+      "Umidadesem": 13.8
+    },
+    {
+      "tempo": "05:20",
+      "Umidadecomp": 13.75,
+      "Umidadesem": 13.84
+    },
+    {
+      "tempo": "05:40",
+      "Umidadecomp": 13.67,
+      "Umidadesem": 13.78
+    },
+    {
+      "tempo": "06:00",
+      "Umidadecomp": 13.66,
+      "Umidadesem": 13.81
+    },
+    {
+      "tempo": "06:20",
+      "Umidadecomp": 13.65,
+      "Umidadesem": 13.72
+    },
+    {
+      "tempo": "06:40",
+      "Umidadecomp": 13.69,
+      "Umidadesem": 13.78
+    },
+    {
+      "tempo": "07:00",
+      "Umidadecomp": 13.68,
+      "Umidadesem": 13.75
+    },
+    {
+      "tempo": "07:20",
+      "Umidadecomp": 13.67,
+      "Umidadesem": 13.76
+    },
+    {
+      "tempo": "07:40",
+      "Umidadecomp": 13.62,
+      "Umidadesem": 13.75
+    },
+    {
+      "tempo": "08:00",
+      "Umidadecomp": 13.66,
+      "Umidadesem": 13.77
+    },
+    {
+      "tempo": "08:20",
+      "Umidadecomp": 13.61,
+      "Umidadesem": 13.78
+    },
+    {
+      "tempo": "08:40",
+      "Umidadecomp": 13.67,
+      "Umidadesem": 13.75
+    },
+    {
+      "tempo": "09:00",
+      "Umidadecomp": 13.71,
+      "Umidadesem": 13.85
+    },
+    {
+      "tempo": "09:20",
+      "Umidadecomp": 13.69,
+      "Umidadesem": 13.87
+    },
+    {
+      "tempo": "09:40",
+      "Umidadecomp": 13.78,
+      "Umidadesem": 13.86
+    },
+    {
+      "tempo": "10:00",
+      "Umidadecomp": 13.75,
+      
+      "Umidadesem": 13.94
+    },
+    {
+      "tempo": "10:20",
+      "Umidadecomp": 13.83,
+      
+      "Umidadesem": 14.04
+    },
+    {
+      "tempo": "10:40",
+      "Umidadecomp": 13.91,
+      
+      "Umidadesem": 1   },
+    {
+      "tempo": "11:00",
+      "Umidadecomp": 13.96,
+      
+      "Umidadesem": 14.24
+    },
+    {
+      "tempo": "11:20",
+      "Umidadecomp": 13.96,
+           "Umidadesem": 14.31
+    },
+    {
+      "tempo": "11:40",
+      "Umidadecomp": 14.06,
+      
+      "Umidadesem": 14.41
+    },
+    {
+      "tempo": "12:00",
+      "Umidadecomp": 14.06,
+      
+      "Umidadesem": 14.49
+    },
+    {
+      "tempo": "12:20",
+      "Umidadecomp": 14.19,
+      
+      "Umidadesem": 14.61
+    },
+    {
+      "tempo": "12:40",
+      "Umidadecomp": 14.27,      
+      "Umidadesem": 14.69
+    },
+    {
+      "tempo": "13:00",
+      "Umidadecomp": 14.34,
+      
+      "Umidadesem": 14.78
+    },
+    {
+      "tempo": "13:20",
+      "Umidadecomp": 14.41,
+      
+      "Umidadesem": 14.81
+    },
+    {
+      "tempo": "13:40",
+      "Umidadecomp": 14.46,
+      
+      "Umidadesem": 14.85
+    },
+    {
+      "tempo": "14:00",
+      "Umidadecomp": 14.49,
+      
+      "Umidadesem": 14.97
+    },
+    {
+      "tempo": "14:20",
+      "Umidadecomp": 14.45,
+      
+      "Umidadesem": 15
+    },
+    {
+      "tempo": "14:40",
+      "Umidadecomp": 14.48,
+      
+      "Umidadesem": 15.04
+    },
+    {
+      "tempo": "15:00",
+      "Umidadecomp": 14.49,      
+      "Umidadesem": 15.06
+    },
+    {
+      "tempo": "15:20",
+      "Umidadecomp": 14.55,
+      
+      "Umidadesem": 15.04
+    },
+    {
+      "tempo": "15:40",
+      "Umidadecomp": 14.6,
+      
+      "Umidadesem": 15.08
+    },
+    {
+      "tempo": "16:00",
+      "Umidadecomp": 14.61,
+      
+      "Umidadesem": 15.1
+    },
+    {
+      "tempo": "16:20",
+      "Umidadecomp": 14.58,
+      
+      "Umidadesem": 15.2
+    },
+    {
+      "tempo": "16:40",
+      "Umidadecomp": 14.63,
+           "Umidadesem": 15.17
+    },
+    {
+      "tempo": "17:00",
+      "Umidadecomp": 14.62,    
+      "Umidadesem": 15.05
+    },
+    {
+      "tempo": "17:20",
+      "Umidadecomp": 14.6,
+      
+      "Umidadesem": 15.0
+    },
+    {
+      "tempo": "17:40",
+      "Umidadecomp": 14.57,
+      
+      "Umidadesem": 14.87
+    },
+    {
+      "tempo": "18:00",
+      "Umidadecomp": 14.48,
+      
+      "Umidadesem": 14.76
+    },
+    {
+      "tempo": "18:20",
+      "Umidadecomp": 14.49,
+      
+      "Umidadesem": 14.72
+    },
+    {
+      "tempo": "18:40",
+      "Umidadecomp": 14.38,
+      
+      "Umidadesem": 14.62
+    },
+    {
+      "tempo": "19:00",
+      "Umidadecomp": 14.4,
+      
+      "Umidadesem": 14.45
+    },
+    {
+      "tempo": "19:20",
+      "Umidadecomp": 14.29,
+      
+      "Umidadesem": 14.39
+    },
+    {
+      "tempo": "19:40",
+      "Umidadecomp": 14.28,
+      
+      "Umidadesem": 14.28
+    },
+    {
+      "tempo": "20:00",
+      "Umidadecomp": 14.21,
+      
+      "Umidadesem": 14.16
+    },
+    {
+      "tempo": "20:20",
+      "Umidadecomp": 14.1,
+      
+      "Umidadesem": 13.98
+    },
+    {
+      "tempo": "20:40",
+      "Umidadecomp": 14.1,
+      
+      "Umidadesem": 13.93
+    },
+    {
+      "tempo": "21:00",
+      "Umidadecomp": 14.03,
+      
+      "Umidadesem": 13.82
+    },
+    {
+      "tempo": "21:20",
+      "Umidadecomp": 13.98,
+      
+      "Umidadesem": 13.66
+    },
+    {
+      "tempo": "21:40",
+      "Umidadecomp": 13.91,
+      
+      "Umidadesem": 13.6
+    },
+    {
+      "tempo": "22:00",
+      "Umidadecomp": 13.81,
+      
+      "Umidadesem": 13.5
+    },
+    {
+      "tempo": "22:20",
+      "Umidadecomp": 13.77,    
+      "Umidadesem": 13.37
+    },
+    {
+      "tempo": "22:40",
+      "Umidadecomp": 13.77,    
+      "Umidadesem": 13.3   
+    },
+    {
+      "tempo": "23:00",
+      "Umidadecomp": 13.75, 
+      "Umidadesem": 13.27
+    },
+    {
+      "tempo": "23:20",
+      "Umidadecomp": 13.65,
+      "Umidadesem": 13.21
+    },
+    {
+      "tempo": "23:40",
+      "Umidadecomp": 13.63,
+      "Umidadesem": 13.18
+    }
+  ]
