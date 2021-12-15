@@ -7,6 +7,9 @@
 
 # Changelogs
 
+### 15/12/2021
+- Movido o plot dos graficos para o arquivo JS
+
 ### 09/12/2021
 - Adicionado a função de zoom no gráfico;
 - Adicionado uma mira nos gráficos;

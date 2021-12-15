@@ -1,4 +1,170 @@
 // TODO: Fazer isso aqui funcionar
+window.addEventListener('load', setup);
+async function setup(){
+    const ctx = document.getElementById('graficoUmidade').getContext('2d')
+    const elemnts = await getData()
+    const graph = new Chart(ctx, {
+        type: 'line',
+        data:{
+            labels: elemnts.tempo,
+            datasets:[
+                {
+                    label: 'Com palha',
+                    data: elemnts.A_Umidade,
+                    borderColor: 'blue',
+                    backgroundColor: 'blue',
+                    borderWidth: 2
+                },
+                {
+                    label: 'Sem palha',
+                    data: elemnts.B_Umidade,
+                    borderColor: 'red',
+                    backgroundColor: 'red',
+                    borderWidth: 2,
+                }
+            ]
+        },
+        options:{
+            spanGaps: true,
+            animation: false,
+            maintainAspectRatio: false,
+            plugins:{
+                crosshair:{
+                    line: {
+                        color: '#1b1b1b'
+                    },
+                    snap:{
+                        enabled: true
+                    }
+                },
+                title: {
+                display: true,
+                text:  'Gráfico da Umidade',
+                color: 'black', 
+                font: {
+                    size: 20
+                }
+                }
+            },
+            interaction: {
+                intersect: false,
+                mode: 'index'
+            },
+ },
+})
+}
+
+
+window.addEventListener('load', setup2);
+    async function setup2(){
+        const ctx2 = document.getElementById('graficoCondu').getContext('2d')
+        const elemnts = await getData()
+        const graph = new Chart(ctx2, {
+            type: 'line',
+            data:{
+                labels: elemnts.tempo,
+                datasets:[
+                    {
+                        label: 'Com palha',
+                        data: elemnts.A_Conductividade,
+                        borderColor: 'blue',
+                        backgroundColor: 'blue',
+                        borderWidth: 2,
+                    },
+                    {
+                        label: 'Sem palha',
+                        data: elemnts.B_Conductividade,
+                        borderColor: 'red',
+                        backgroundColor: 'red',
+                        borderWidth: 2,
+                    }
+                ]
+            },
+            options:{
+                spanGaps: true,
+                animation: true,
+                maintainAspectRatio: false,
+                plugins:{
+                    crosshair:{
+                        line: {
+                            color: '#1b1b1b'
+                        },
+                        snap: {
+                            enabled: true
+                        }
+                    },
+                    title: {
+                    display: true,
+                    text:  'Gráfico da Conductividade',
+                    color: 'black',
+                    font: {
+                            size: 20
+                        }
+                    }
+                },
+                interaction: {
+                    intersect: false,
+                    mode: 'index'
+                },
+     },
+})
+}
+
+window.addEventListener('load', setup3);
+async function setup3(){
+    const ctx3 = document.getElementById('graficoTemperatura').getContext('2d')
+    const elemnts = await getData()
+    const graph = new Chart(ctx3, {
+        type: 'line',
+        data:{
+            labels: elemnts.tempo,
+            datasets:[
+                {
+                    label: 'Com palha',
+                    data: elemnts.A_Temperatura,
+                    borderColor: 'blue',
+                    backgroundColor: 'blue',
+                    borderWidth: 2,
+                },
+                {
+                    label: 'Sem palha',
+                    data: elemnts.B_Temperatura,
+                    borderColor: 'red',
+                    backgroundColor: 'red',
+                    borderWidth: 2,
+                }
+            ]
+        },
+        options:{
+            spanGaps: true,
+            animation:false,
+            maintainAspectRatio: false,
+            plugins:{
+                crosshair:{
+                    line: {
+                        color: '#1b1b1b'
+                    },
+                    snap:{
+                        enabled: true
+                    }
+                },
+                title: {
+                display: true,
+                text:  'Gráfico da Temperatura',
+                color: 'black',
+                font: {
+                        size: 20
+                    }
+                }
+            },
+            interaction: {
+                intersect: false,
+                mode: 'index'
+            },
+ },
+})
+}
+
 
 async function getData(){
 
