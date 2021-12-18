@@ -168,7 +168,7 @@ async function setup3(){
 
 async function getData(){
 
-   const response = await fetch('DADOS.csv');
+   const response = await fetch('sensors_data.csv');
    const data = await response.text();
    const tempo = []
    const A_Umidade = []
@@ -179,7 +179,7 @@ async function getData(){
    const B_Temperatura = []
    const linhas = data.split('\n').slice(1)
    linhas.forEach(linhas => {
-       const colunas = linhas.split(';')
+       const colunas = linhas.split(',')
        tempo.push(colunas[0])
        A_Umidade.push(colunas[1])
        A_Conductividade.push(colunas[2])
