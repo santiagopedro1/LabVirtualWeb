@@ -14,11 +14,6 @@
     background-color: var(--space-cadet);
 }
 
-#chart {
-  padding: 5px;
-}
-
-
 .grafico{
     height: 25rem;
     padding: 1rem;

@@ -1,4 +1,4 @@
-// TODO: Fazer isso aqui funcionar
+// Inicio chart.js
 window.addEventListener('load', setup);
 async function setup(){
     const ctx = document.getElementById('graficoUmidade').getContext('2d')
@@ -164,8 +164,10 @@ async function setup3(){
  },
 })
 }
+// Fim chart.js
 
 
+// Fetch
 async function getData(){
 
    const response = await fetch('sensors_data.csv');
