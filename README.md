@@ -7,6 +7,10 @@
 
 # Changelogs
 
+### 29/12/2021
+- Adicionados exemplos de seleção de datas;
+- Arquivos css, js e de dadods agora tem suas próprias pastas.
+
 ### 19/12/2021
 - index.html agora é com apexcharts. Versão com chart.js pode encontrada em chartjs.html;
 - Separado o arquivo javascript para as duas bibliotecas de gráfico.

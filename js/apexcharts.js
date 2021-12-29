@@ -2,6 +2,8 @@
 window.Apex = {
     colors:['#ee204d', '#00bbf9'],
     title:{
+        margin: -20,
+        offsetY: 15,
         align: 'center',
         style:{
             fontSize: 20,
@@ -22,16 +24,26 @@ window.Apex = {
         borderColor: '#cccccc',
     },
     xaxis:{
+        tickAmount: 20,
+        crosshairs:{
+            opacity: 1
+        },
+        labels:{
+            hideOverlappingLabels: true,
+        },
         axisBorder:{
             color: 'black'
         },
         axisTicks:{
             color: 'black'
+        },
+        tooltip:{
+            enabled: false
         }
     },
     legend:{
         position: 'top',
-        fontSize: 16
+        fontSize: 16,
     },
     tooltip:{
         followCursor: true
@@ -40,11 +52,16 @@ window.Apex = {
         height: 450,
         width: '100%',
         toolbar:{
+            offsetY: 15,
             tools:{
                 zoomin: false,
                 zoomout: false,
                 pan: false,
             }
+        },
+        animations:{
+            easing: 'linear',
+            animateGradually: false
         }
     }
 }
@@ -86,21 +103,24 @@ window.addEventListener('load', setupAPEX2)
 async function setupAPEX2(){
     const elemnts = await getData()
     var options = {
-        title: {
+    title: {
         text: 'Gráfico da conductividade',
         },
-
-    chart:{
-            type: 'line'
+        yaxis:{
+            min: 0,
+            forceNiceScale: true
         },
-        series: [
-            {
-            name: 'Conductividade com palha',
-            data: elemnts.A_Conductividade
+    chart:{
+        type: 'line'
+        },
+    series: [
+        {
+        name: 'Conductividade com palha',
+        data: elemnts.A_Conductividade
         },
         {
-            name: 'Conductividade sem palha',
-            data: elemnts.B_Conductividade
+        name: 'Conductividade sem palha',
+        data: elemnts.B_Conductividade
         }
         ],
         xaxis: {
@@ -149,16 +169,16 @@ async function setupAPEX3(){
 // Fetch
 async function getData(){
 
-    const response = await fetch('sensors_data.csv');
+    const response = await fetch('/data/sensors_data.csv');
     const data = await response.text();
-    const tempo = []
-    const A_Umidade = []
-    const A_Conductividade = []
-    const A_Temperatura = []
-    const B_Umidade = []
-    const B_Conductividade = []
-    const B_Temperatura = []
-    const linhas = data.split('\n').slice(1)
+    let tempo = []
+    let A_Umidade = []
+    let A_Conductividade = []
+    let A_Temperatura = []
+    let B_Umidade = []
+    let B_Conductividade = []
+    let B_Temperatura = []
+    let linhas = data.split('\n').slice(1)
     linhas.forEach(linhas => {
         const colunas = linhas.split(',')
         tempo.push(colunas[0])
@@ -169,5 +189,13 @@ async function getData(){
         B_Conductividade.push(colunas[5])
         B_Temperatura.push(colunas[6])
     })
+
+    A_Umidade = A_Umidade.map(Number)
+    A_Conductividade = A_Conductividade.map(Number)
+    A_Temperatura = A_Temperatura.map(Number)
+    B_Umidade = B_Umidade.map(Number)
+    B_Conductividade = B_Conductividade.map(Number)
+    B_Temperatura = B_Temperatura.map(Number)
+
     return{tempo, A_Umidade, A_Conductividade,A_Temperatura, B_Umidade, B_Conductividade, B_Temperatura}
  }
