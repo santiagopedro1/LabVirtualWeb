@@ -2,14 +2,25 @@
 
  Projeto Alpha, utilizando:
  - HTML;
- - CSS puro;
- - Javascript puro;
+ - CSS;
+ - Javascript.
+
+ Bibliotecas utillizadas:
+ - jQuery;
+ - ApexCharts;
+ - picker.js;
+ - pickadate.js.
 
 # Changelogs
 
+### 08/01/2022
+- Limpeza do arquivo apexcharts.js;
+- Novo menu de navegação;
+- Atualização do arquivo README.
+
 ### 29/12/2021
 - Adicionados exemplos de seleção de datas;
-- Arquivos css, js e de dadods agora tem suas próprias pastas.
+- Arquivos css, js e de dados agora tem suas próprias pastas.
 
 ### 19/12/2021
 - index.html agora é com apexcharts. Versão com chart.js pode encontrada em chartjs.html;
