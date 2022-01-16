@@ -21,27 +21,19 @@ input[type="radio"] {
   display: flex;
   background-color: var(--eerie-black);
   align-items: center;
-}
-.tabs h1 {
-  user-select: none;
-  margin-right: auto;
-  margin-left: 1rem;
-  color: #AEFF6E;
+  justify-content: center;
 }
 
 .tab {
   text-transform: uppercase;
   cursor: pointer;
   font-weight: 700;
-  padding: 1.2rem 2rem;
+  padding: 1.2rem 1.5rem;
   color: var(--vivid-sky-blue);
   transition: box-shadow 0.2s ease-in-out, color 0.2s;
 }
 .tab:hover {
   box-shadow: inset 0px -3px var(--eerie-black), inset 0px -6px var(--vivid-sky-blue);
-}
-.tab:last-child {
-  margin-right: auto;
 }
 
 input[type="radio"]:checked + label {
@@ -58,6 +50,25 @@ input[type="radio"]:checked + .tab {
   margin: 3rem 0;
 }
 
+.filter2 {
+  display: flex;
+  justify-content: space-around;
+}
+.filter2 input[type='checkbox'] {
+  display: none;
+}
+.filter2 input[type='checkbox'] + label {
+  text-transform: uppercase;
+  padding: 0.5rem 1rem;
+  background-color: white;
+  border: 2px solid var(--vivid-sky-blue);
+  margin-top: 2rem;
+  border-radius: 1rem;
+}
+.filter2 input[type='checkbox']:checked + label {
+  background-color: var(--vivid-sky-blue);
+  color: white;
+}
 
 .filter {
   width: 100%;
@@ -67,8 +78,8 @@ input[type="radio"]:checked + .tab {
 }
 
 .filter-content {
-  max-width: 24rem;
-  min-width: 24rem;
+  max-width: 23.438rem;
+  min-width: 23.438rem;
   position: relative;
   margin: 1rem 1rem;
   padding: 0 1rem;
@@ -132,4 +143,10 @@ label.filter {
 main h1 {
   text-align: center;
   padding: 1rem;
+}
+
+#main {
+  padding-top: 2rem;
+  height: 500px;
+  width: 100%
 }

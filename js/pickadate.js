@@ -14,7 +14,7 @@ $(function() {
   picker = $input.pickadate('picker')
   picker.on('set', function (event) {
     if (event.select){
-      console.log('Uma data:', this.get('select', 'dd-mm-yyyy'))
+      console.log('Uma data:', this.get('select', 'dd/mm/yyyy'))
     }
     else if('clear' in event){
       console.log('Uma data limpo')
@@ -27,7 +27,7 @@ var from_$input = $('#input_from').pickadate(),
   from_picker = from_$input.pickadate('picker')
   from_picker.on('set', function (event) {
     if (event.select){
-      console.log('Início:', this.get('select', 'dd-mm-yyyy'))
+      console.log('Início:', this.get('select', 'dd/mm/yyyy'))
     }
     else if('clear' in event){
       console.log('Início limpo')
@@ -38,7 +38,7 @@ var to_$input = $('#input_to').pickadate(),
   to_picker = to_$input.pickadate('picker')
   to_picker.on('set', function (event) {
     if (event.select){
-      console.log('Fim:', this.get('select', 'dd-mm-yyyy'))
+      console.log('Fim:', this.get('select', 'dd/mm/yyyy'))
     }
     else if('clear' in event){
       console.log('Fim limpo')

@@ -1,6 +1,6 @@
 // Globais
 window.Apex = {
-  colors:['#ee204d', '#00bbf9'],
+  colors:["#ff355e", "#50bfe6", "#ff6037", "#009900", "#ffff66", "#ff00cc"],
   title:{
     align: 'center',
     style:{
@@ -22,13 +22,13 @@ window.Apex = {
     borderColor: '#cccccc',
   },
   xaxis:{
-    tickAmount: 20,
     crosshairs:{
 			stroke: {
 				color: 'gray',
 			}
     },
     labels:{
+      rotate: 0,
       hideOverlappingLabels: true
     },
     axisBorder:{
@@ -42,8 +42,7 @@ window.Apex = {
     }
   },
   legend:{
-    position: 'top',
-    fontSize: 16,
+    show: false
   },
   tooltip:{
     followCursor: true
@@ -65,124 +64,62 @@ window.Apex = {
 				enabled: false
 			}
     }
+  },
+  noData:{
+    text:'Sem dados'
   }
 }
+//------fim globais---------------------------------------------------------------------------
 
+let request = new XMLHttpRequest();
+request.open("GET", "data/dados.json", false);
+request.send(null)
+let dados = JSON.parse(request.responseText);
 
-
-window.addEventListener('load', setupAPEX)
-async function setupAPEX(){
-
-  const elemnts = await getData()
-
-	// chart #1
-  var options = {
-    title: {
-    text: `Gráfico da umidade do dia ${new Date().toLocaleDateString('pt-BR')}`,
-    },
-
-  chart:{
-      type: 'line'
-    },
-    series: [
-      {
+// chart #1
+let options = {
+  title: {
+   text: `Gráfico da umidade do dia ${new Date().toLocaleDateString()}`,
+  },
+chart:{
+    type: 'line'
+  },
+  series: [
+    {
       name: 'Umidade com palha',
-      data: elemnts.A_Umidade
+      data: dados.sensor.A.Umidade
     },
     {
       name: 'Umidade sem palha',
-      data: elemnts.B_Umidade
-    }
-    ],
-    xaxis: {
-      categories: elemnts.tempo
-    }
-  }
-
-  var chart = new ApexCharts(document.querySelector("#chart"), options);
-  chart.render();
-
-	// chart #2
-  var options2 = {
-  title: {
-    	text: 'Gráfico da conductividade',
-    },
-    yaxis:{
-      min: 0,
-      forceNiceScale: true
-    },
-  chart:{
-    type: 'line'
-    },
-  series: [
-    {
-    name: 'Conductividade com palha',
-    data: elemnts.A_Conductividade
+      data: dados.sensor.B.Umidade
     },
     {
-    name: 'Conductividade sem palha',
-    data: elemnts.B_Conductividade
-    }
-    ],
-    xaxis: {
-      categories: elemnts.tempo
-    }
-  }
-
-  var chart2 = new ApexCharts(document.querySelector("#chart2"), options2);
-  chart2.render();
-
-	// chart #3
-  var options3 = {
-    title: {
-    	text: 'Gráfico da temperatura',
+      name: 'Conductividade com palha',
+      data: dados.sensor.A.Conductividade
     },
-  	chart:{
-      type: 'line'
+    {
+      name: 'Conductividade sem palha',
+      data: dados.sensor.B.Conductividade
     },
-    series: [
-      {
+    {
       name: 'Temperatura com palha',
-      data: elemnts.A_Temperatura
+      data: dados.sensor.A.Temperatura
     },
     {
       name: 'Temperatura sem palha',
-      data: elemnts.B_Temperatura
+      data: dados.sensor.B.Temperatura
     }
-    ],
-    xaxis: {
-      categories: elemnts.tempo
-    }
+  ],
+  xaxis: {
+    categories: dados.hora
   }
-
-  var chart3 = new ApexCharts(document.querySelector("#chart3"), options3);
-  chart3.render();
 }
+window.chart = new ApexCharts(document.querySelector("#chart"), options);
+chart.render()
+options.series.forEach(element => {
+  chart.toggleSeries(`${element.name}`)
+});
 
-
-
-// Fetch
-async function getData(){
- const response = await fetch('/data/sensors_data.csv');
- const data = await response.text();
- let tempo = []
- let A_Umidade = []
- let A_Conductividade = []
- let A_Temperatura = []
- let B_Umidade = []
- let B_Conductividade = []
- let B_Temperatura = []
- let linhas = data.split('\n').slice(1)
- linhas.forEach(linhas => {
-	const colunas = linhas.split(',')
-  tempo.push(colunas[0])
-  A_Umidade.push(colunas[1])
-  A_Conductividade.push(colunas[2])
-  A_Temperatura.push(colunas[3])
-  B_Umidade.push(colunas[4])
-  B_Conductividade.push(colunas[5])
-  B_Temperatura.push(colunas[6])
- })
-
- return{tempo, A_Umidade, A_Conductividade,A_Temperatura, B_Umidade, B_Conductividade, B_Temperatura}
+function filtrar(tipo) {
+  chart.toggleSeries(`${tipo}`)
 }

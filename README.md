@@ -6,12 +6,19 @@
  - Javascript.
 
  Bibliotecas utillizadas:
- - jQuery;
  - ApexCharts;
- - picker.js;
- - pickadate.js.
+ - jQuery*;
+ - picker.js*;
+ - pickadate.js*;
+ - Echarts.js*.
+
+ *: Experimentais
 
 # Changelogs
+
+### 16/01/2022
+- Os códigos do Echarts foram mesclados com este;
+- Arquivo de dados agora é em JSON.
 
 ### 08/01/2022
 - Limpeza do arquivo apexcharts.js;

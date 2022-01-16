@@ -6,7 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <link rel="stylesheet" href="/css/style.css">
-  <link rel="stylesheet" href="/css/pickadate.css">
 
   <title>Demonstração do Apexcharts</title>
 
@@ -17,8 +16,6 @@
   <header>
 
     <nav class="tabs">
-
-      <h1>Labvirtual</h1>
 
       <input onclick="console.log(`click em (${this.id})`)" type="radio" id="Gráfico Diário" name="tabs" checked/>
       <label class="tab" for="Gráfico Diário">Gráfico Diário</label>
@@ -37,55 +34,36 @@
   </header>
   
   <main>
-   <h1>Demonstração(Apexcharts)</h1>
-   <h1>Exemplo de seleção de datas</h1>
-   <p style="text-align: center; padding-bottom: 1rem;">A data escolhida é logada no console</p>
 
-   <h1>Uma data</h1>
-    <div class="filter">
+    <div class="filter2">
+      <input onclick="filtrar(this.id)" type="checkbox" name="filter" id="Umidade com palha">
+      <label for="Umidade com palha">Umidade com palha</label>
 
-      <div class="filter-content">
-        <label for="single_input">Selecione a data para visualização</label>
-        <input type="text" id="single_input" class="filter-content__input" placeholder="Data">
-      </div>
+      <input onclick="filtrar(this.id)" type="checkbox" name="filter" id="Umidade sem palha">
+      <label for="Umidade sem palha">Umidade sem palha</label>
 
-    </div>
+      <input onclick="filtrar(this.id)" type="checkbox" name="filter" id="Conductividade com palha">
+      <label for="Conductividade com palha">Conductividade com palha</label>
 
+      <input onclick="filtrar(this.id)" type="checkbox" name="filter" id="Conductividade sem palha">
+      <label for="Conductividade sem palha">Conductividade sem palha</label>
 
-    <h1>Duas datas</h1>
-    <div class="filter">
+      <input onclick="filtrar(this.id)" type="checkbox" name="filter" id="Temperatura com palha">
+      <label for="Temperatura com palha">Temperatura com palha</label>
 
-      <div class="filter-content">
-        <label for="input_from">Começando em:</label>
-        <input type="text" id="input_from" class="filter-content__input" placeholder="Data de ínicio">
-      </div>
-
-      <div class="filter-content">
-        <label for="input_to">Até:</label>
-        <input type="text" id="input_to" class="filter-content__input" placeholder="Data de fim">
-      </div>
+      <input onclick="filtrar(this.id)" type="checkbox" name="filter" id="Temperatura sem palha">
+      <label for="Temperatura sem palha">Temperatura sem palha</label>
       
     </div>
 
-
    <div id="chart" class="grafico">
-   </div>
-
-   <div id="chart2" class="grafico">
-   </div>
-
-   <div id="chart3" class="grafico">
    </div>
 
   </main>
 
   <!-- JS Imports -->
-  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pickadate.js/3.6.4/picker.js" integrity="sha512-VQa5Pmc87GQrifaBaI+ejCQBHkca6yhwKH+iFihubE4Mf3NSj0jVN3cppGHPlFSa2MRmAD7xwuZ8fr9DOHUsgw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pickadate.js/3.6.4/picker.date.js" integrity="sha512-4UAypxd5+OVqRf2SeJTnkd+W47HoLnpHjwannVikXGsgJxH2Hl+SBDM9UYyi+3hpNc16aaGeOu5RvesbSwlRlA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.32.1/apexcharts.js" integrity="sha512-yHoQ1MRAuJq935uUKzJiLzCkuUWBSAeDvKF+LS3FBeISIv3FsBC2LS/JfybI5GauWpMszaefmGlpZF3iRoIfgg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="/js/apexcharts.js"></script>
-  <script src="/js/pickadate.js"></script>
 
 </body>
 
