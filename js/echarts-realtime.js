@@ -1,5 +1,3 @@
-console.log(new Date())
-console.log(Date.UTC(new Date()))
 const getData = () => {
 	var d = new Date()
 	h = new Date(d.getFullYear(), d.getMonth(), d.getDate(), d.getHours(), d.getMinutes() - (d.getMinutes() % 15) + 15, 0, 0)
@@ -44,6 +42,7 @@ const getData = () => {
 
 				let myChart = echarts.init(document.getElementById('chart'), 'echarts-theme', { renderer: 'svg' })
 				myChart.setOption(option)
+				console.log('cheguei')
 			})
 		}
 	)
