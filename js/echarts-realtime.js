@@ -1,3 +1,4 @@
+console.log(new Date.toLocaleDateString('pt-BR'))
 const getData = () => {
 	var d = new Date(),
 		h = new Date(d.getFullYear(), d.getMonth(), d.getDate(), d.getHours(), d.getMinutes() - (d.getMinutes() % 15) + 15, 0, 0),
