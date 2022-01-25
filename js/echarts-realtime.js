@@ -42,7 +42,7 @@ const getData = () => {
 
 				let myChart = echarts.init(document.getElementById('chart'), 'echarts-theme', { renderer: 'svg' })
 				myChart.setOption(option)
-				console.log(new Date().now.toLocaleDateString('pt-BR') + ' cheguei')
+				console.log(new Date().toLocaleDateString('pt-BR') + ' cheguei')
 			})
 		}
 	)
