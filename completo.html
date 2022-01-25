@@ -13,10 +13,10 @@
 	<body onload="getData()">
 		<header>
 			<nav class="tabs">
-				<input type="radio" id="Hoje" checked />
+				<input type="radio" id="Hoje" onclick="location.href = 'https://labvirtual.vercel.app/'" />
 				<label class="tab" for="Hoje">Hoje</label>
 
-				<input type="radio" id="Dias anteriores" onclick="location.href = 'https://labvirtual.vercel.app/completo.html'" />
+				<input type="radio" id="Dias anteriores" checked />
 				<label class="tab" for="Dias anteriores">Dias anteriores</label>
 
 				<input type="radio" id="Médias" disabled />
@@ -29,6 +29,9 @@
 
 		<main>
 			<div class="filtro">
+				<div class="filtro__item">
+					<p style="padding-top: 2rem">Escolhedor de data vai aqui</p>
+				</div>
 				<div class="filtro__item">
 					<h2>Dados</h2>
 					<input type="checkbox" name="filter" id="Umidade" />
@@ -63,6 +66,6 @@
 			referrerpolicy="no-referrer"
 		></script>
 		<script src="/js/echarts-theme.js"></script>
-		<script src="/js/echarts-realtime.js"></script>
+		<script src="/js/echarts.js"></script>
 	</body>
 </html>
