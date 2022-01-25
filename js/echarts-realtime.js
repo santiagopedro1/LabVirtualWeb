@@ -1,8 +1,9 @@
-console.log(new Date.toLocaleDateString('pt-BR'))
+console.log(new Date())
+console.log(Date.UTC(new Date()))
 const getData = () => {
-	var d = new Date(),
-		h = new Date(d.getFullYear(), d.getMonth(), d.getDate(), d.getHours(), d.getMinutes() - (d.getMinutes() % 15) + 15, 0, 0),
-		e = h - d
+	var d = new Date()
+	h = new Date(d.getFullYear(), d.getMonth(), d.getDate(), d.getHours(), d.getMinutes() - (d.getMinutes() % 15) + 15, 0, 0)
+	e = h - d
 	window.setTimeout(getData, e)
 
 	fetch(`https://labvirtualapi.loca.lt/?_id=${new Date().toLocaleDateString('pt-BR')}`, { method: 'GET', mode: 'cors', credentials: 'omit' }).then(
