@@ -1,40 +1,38 @@
 const myChart = echarts.init(document.getElementById('chart'), 'echarts-theme', { renderer: 'svg' })
 
-fetch(`https://labvirtualapi.loca.lt/?_id=${new Date().toLocaleDateString('pt-BR')}`, { method: 'GET', mode: 'cors', credentials: 'omit' }).then(
-	(res) => {
-		return res.json().then((dados) => {
-			let option = {
-				title: {
-					text: `Gráfico dia ${new Date().toLocaleDateString('pt-BR')}`,
+fetch(`https://labvirtualapi.loca.lt/?_id=${new Date().toLocaleDateString('pt-BR')}`, { method: 'GET', mode: 'cors' }).then((res) => {
+	return res.json().then((dados) => {
+		let option = {
+			title: {
+				text: `Gráfico dia ${new Date().toLocaleDateString('pt-BR')}`,
+			},
+			tooltip: {
+				trigger: 'axis',
+			},
+			xAxis: {
+				type: 'category',
+				boundaryGap: false,
+				data: dados.hora,
+			},
+			yAxis: {
+				type: 'value',
+			},
+			series: [
+				{
+					name: 'A',
+					type: 'line',
+					data: dados.distanciaA,
 				},
-				tooltip: {
-					trigger: 'axis',
+				{
+					name: 'B',
+					type: 'line',
+					data: dados.distanciaB,
 				},
-				xAxis: {
-					type: 'category',
-					boundaryGap: false,
-					data: dados.hora,
-				},
-				yAxis: {
-					type: 'value',
-				},
-				series: [
-					{
-						name: 'A',
-						type: 'line',
-						data: dados.distanciaA,
-					},
-					{
-						name: 'B',
-						type: 'line',
-						data: dados.distanciaB,
-					},
-				],
-			}
-			myChart.setOption(option)
-		})
-	}
-)
+			],
+		}
+		myChart.setOption(option)
+	})
+})
 
 const getData = () => {
 	var d = new Date()
