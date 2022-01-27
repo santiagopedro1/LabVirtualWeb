@@ -31,7 +31,7 @@ let option = {
 myChart.setOption(option)
 
 const getData = () => {
-	var d = new Date()
+	let d = new Date()
 	h = new Date(d.getFullYear(), d.getMonth(), d.getDate(), d.getHours(), d.getMinutes() - (d.getMinutes() % 15) + 15, 3, 0)
 	e = h - d
 	window.setTimeout(getData, e)
@@ -53,7 +53,8 @@ const getData = () => {
 					},
 				],
 			})
-			console.log(new Date().toLocaleTimeString('pt-BR') + ' cheguei')
+			let x = new Date()
+			console.log(`cheguei ${x.getHours()}:${x.getMinutes()}:${x.getSeconds()}:${x.getMilliseconds()}`)
 		})
 	})
 }
