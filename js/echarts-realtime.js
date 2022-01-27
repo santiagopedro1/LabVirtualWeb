@@ -1,6 +1,6 @@
 const myChart = echarts.init(document.getElementById('chart'), 'echarts-theme', { renderer: 'svg' })
 
-fetch(`https://labvirtualapi.loca.lt/?_id=${new Date().toLocaleDateString('pt-BR')}`, { method: 'GET', mode: 'cors' }).then((res) => {
+fetch(`https://labvirtualapi.loca.lt/?_id=${new Date().toLocaleDateString('pt-BR')}`, { method: 'GET' }).then((res) => {
 	return res.json().then((dados) => {
 		let option = {
 			title: {
@@ -40,28 +40,26 @@ const getData = () => {
 	e = h - d
 	window.setTimeout(getData, e)
 
-	fetch(`https://labvirtualapi.loca.lt/?_id=${new Date().toLocaleDateString('pt-BR')}`, { method: 'GET', mode: 'cors', credentials: 'omit' }).then(
-		(res) => {
-			return res.json().then((dados) => {
-				myChart.setOption({
-					xAxis: {
-						data: dados.hora,
+	fetch(`https://labvirtualapi.loca.lt/?_id=${new Date().toLocaleDateString('pt-BR')}`, { method: 'GET' }).then((res) => {
+		return res.json().then((dados) => {
+			myChart.setOption({
+				xAxis: {
+					data: dados.hora,
+				},
+				series: [
+					{
+						name: 'A',
+						data: dados.distanciaA,
 					},
-					series: [
-						{
-							name: 'A',
-							data: dados.distanciaA,
-						},
-						{
-							name: 'B',
-							data: dados.distanciaB,
-						},
-					],
-				})
-				console.log(new Date().toLocaleTimeString('pt-BR') + ' cheguei')
+					{
+						name: 'B',
+						data: dados.distanciaB,
+					},
+				],
 			})
-		}
-	)
+			console.log(new Date().toLocaleTimeString('pt-BR') + ' cheguei')
+		})
+	})
 }
 
 window.addEventListener('resize', () => {
