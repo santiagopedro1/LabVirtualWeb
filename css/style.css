@@ -33,7 +33,7 @@ input[type='radio'] {
 	transition: box-shadow 0.2s ease-in-out, color 0.2s;
 }
 
-.tab:hover {
+.tab:not(disabled):hover {
 	box-shadow: inset 0px -3px var(--eerie-black), inset 0px -6px var(--vivid-sky-blue);
 }
 
