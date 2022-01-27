@@ -54,7 +54,7 @@ const getData = () => {
 				],
 			})
 			let x = new Date()
-			console.log(`cheguei ${x.getHours()}:${x.getMinutes()}:${x.getSeconds()}:${x.getMilliseconds()}`)
+			console.log(`cheguei ${x.getHours()}:${x.getMinutes()}:${x.getSeconds()}.${x.getMilliseconds()}`)
 		})
 	})
 }
