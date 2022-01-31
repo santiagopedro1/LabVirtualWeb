@@ -1,5 +1,11 @@
 const myChart = echarts.init(document.getElementById('chart'), 'echarts-theme', { renderer: 'svg' })
 
+const header = new Headers({
+	'Content-Type': 'text/plain',
+	'Content-Length': content.length.toString(),
+	'Bypass-Tunnel-Reminder': 1,
+})
+
 let option = {
 	title: {
 		text: `Gráfico dia ${new Date().toLocaleDateString('pt-BR')}`,
@@ -36,7 +42,7 @@ const getData = () => {
 	e = h - d
 	window.setTimeout(getData, e)
 
-	fetch(`https://labvirtualapi.loca.lt/?_id=${new Date().toLocaleDateString('pt-BR')}`, { method: 'GET' }).then((res) => {
+	fetch(`https://labvirtualapi.loca.lt/?_id=${new Date().toLocaleDateString('pt-BR')}`, { method: 'GET', headers: header }).then((res) => {
 		return res.json().then((dados) => {
 			myChart.setOption({
 				xAxis: {
