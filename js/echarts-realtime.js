@@ -2,7 +2,6 @@ const myChart = echarts.init(document.getElementById('chart'), 'echarts-theme', 
 
 const header = new Headers({
 	'Content-Type': 'text/plain',
-	'Content-Length': content.length.toString(),
 	'Bypass-Tunnel-Reminder': 1,
 })
 
