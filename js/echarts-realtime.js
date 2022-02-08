@@ -6,7 +6,7 @@ const header = new Headers({
 
 let option = {
 	title: {
-		text: `Gráfico dia ${new Date().toLocaleDateString('pt-BR')}`,
+		text: `Gráfico do dia ${new Date().toLocaleDateString('pt-BR')}`,
 	},
 	tooltip: {
 		trigger: 'axis',
@@ -21,12 +21,33 @@ let option = {
 	},
 	series: [
 		{
-			name: 'A',
+			name: 'UmidadeA',
 			type: 'line',
 			data: [],
 		},
 		{
-			name: 'B',
+			name: 'UmidadeB',
+			type: 'line',
+			data: [],
+		},
+		{
+			name: 'ConductividadeA',
+			type: 'line',
+			data: [],
+		},
+		{
+			name: 'ConductividadeB',
+			type: 'line',
+			data: [],
+		},
+		{
+			name: 'TemperaturaA',
+			type: 'line',
+			data: [],
+		},
+
+		{
+			name: 'TemperaturaB',
 			type: 'line',
 			data: [],
 		},
@@ -48,12 +69,28 @@ const getData = () => {
 				},
 				series: [
 					{
-						name: 'A',
-						data: dados.distanciaA,
+						name: 'UmidadeA',
+						data: dados.sensor.A.Umidade,
 					},
 					{
-						name: 'B',
-						data: dados.distanciaB,
+						name: 'UmidadeB',
+						data: dados.sensor.B.Umidade,
+					},
+					{
+						name: 'ConductividadeA',
+						data: dados.sensor.A.Conductividade,
+					},
+					{
+						name: 'ConductividadeB',
+						data: dados.sensor.B.Conductividade,
+					},
+					{
+						name: 'TemperaturaA',
+						data: dados.sensor.A.Temperatura,
+					},
+					{
+						name: 'TemperaturaB',
+						data: dados.sensor.B.Temperatura,
 					},
 				],
 			})
