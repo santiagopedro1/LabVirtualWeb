@@ -1,7 +1,6 @@
 const myChart = echarts.init(document.getElementById('chart'), 'echarts-theme', { renderer: 'svg' })
 
 const header = new Headers({
-	'Content-Type': 'text/plain',
 	'Bypass-Tunnel-Reminder': 1,
 })
 
@@ -41,27 +40,29 @@ const getData = () => {
 	e = h - d
 	window.setTimeout(getData, e)
 
-	fetch(`https://apilabvirtual.loca.lt/?_id=${new Date().toLocaleDateString('pt-BR')}`, { method: 'GET', mode: 'no-cors' }).then((res) => {
-		return res.json().then((dados) => {
-			myChart.setOption({
-				xAxis: {
-					data: dados.hora,
-				},
-				series: [
-					{
-						name: 'A',
-						data: dados.distanciaA,
+	fetch(`https://apilabvirtual.loca.lt/?_id=${new Date().toLocaleDateString('pt-BR')}`, { method: 'GET', mode: 'no-cors', headers: header }).then(
+		(res) => {
+			return res.json().then((dados) => {
+				myChart.setOption({
+					xAxis: {
+						data: dados.hora,
 					},
-					{
-						name: 'B',
-						data: dados.distanciaB,
-					},
-				],
+					series: [
+						{
+							name: 'A',
+							data: dados.distanciaA,
+						},
+						{
+							name: 'B',
+							data: dados.distanciaB,
+						},
+					],
+				})
+				let x = new Date()
+				console.log(`cheguei ${x.getHours()}:${x.getMinutes()}:${x.getSeconds()}.${x.getMilliseconds()}`)
 			})
-			let x = new Date()
-			console.log(`cheguei ${x.getHours()}:${x.getMinutes()}:${x.getSeconds()}.${x.getMilliseconds()}`)
-		})
-	})
+		}
+	)
 }
 
 window.addEventListener('resize', () => {
