@@ -61,7 +61,7 @@ const getData = () => {
 	e = h - d
 	window.setTimeout(getData, e)
 
-	fetch(`https://apilabvirtual.loca.lt/?_id=${new Date().toLocaleDateString('pt-BR')}`, { method: 'GET', headers: header }).then((res) => {
+	fetch('https://apilabvirtual.loca.lt/hoje', { method: 'GET', headers: header }).then((res) => {
 		return res.json().then((dados) => {
 			myChart.setOption({
 				xAxis: {
