@@ -43,8 +43,8 @@
 			},
 		},
 		grid: {
-			containLabel: true,
-			left: 10,
+			containLabel: false,
+			left: 35,
 			right: 30,
 		},
 		line: {
