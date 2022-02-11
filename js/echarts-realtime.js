@@ -19,35 +19,38 @@ let option = {
 	yAxis: {
 		type: 'value',
 	},
+	legend: {
+		show: true,
+	},
 	series: [
 		{
-			name: 'UmidadeA',
+			name: 'Umidade do sensor A',
 			type: 'line',
 			data: [],
 		},
 		{
-			name: 'UmidadeB',
+			name: 'Umidade do sensor B',
 			type: 'line',
 			data: [],
 		},
 		{
-			name: 'ConductividadeA',
+			name: 'Conductividade do sensor A',
 			type: 'line',
 			data: [],
 		},
 		{
-			name: 'ConductividadeB',
+			name: 'Conductividade do sensor B',
 			type: 'line',
 			data: [],
 		},
 		{
-			name: 'TemperaturaA',
+			name: 'Temperatura do sensor A',
 			type: 'line',
 			data: [],
 		},
 
 		{
-			name: 'TemperaturaB',
+			name: 'Temperatura do sensor B',
 			type: 'line',
 			data: [],
 		},
