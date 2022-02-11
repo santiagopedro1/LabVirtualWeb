@@ -60,7 +60,7 @@ myChart.setOption(option)
 
 const getData = () => {
 	let d = new Date()
-	h = new Date(d.getFullYear(), d.getMonth(), d.getDate(), d.getHours(), d.getMinutes() - (d.getMinutes() % 15) + 15, 2, 0)
+	h = new Date(d.getFullYear(), d.getMonth(), d.getDate(), d.getHours(), d.getMinutes() - (d.getMinutes() % 10) + 10, 5, 0)
 	e = h - d
 	window.setTimeout(getData, e)
 
@@ -72,27 +72,27 @@ const getData = () => {
 				},
 				series: [
 					{
-						name: 'UmidadeA',
+						name: 'Umidade do sensor A',
 						data: dados.sensor.A.Umidade,
 					},
 					{
-						name: 'UmidadeB',
+						name: 'Umidade do sensor B',
 						data: dados.sensor.B.Umidade,
 					},
 					{
-						name: 'ConductividadeA',
+						name: 'Conductividade do sensor A',
 						data: dados.sensor.A.Conductividade,
 					},
 					{
-						name: 'ConductividadeB',
+						name: 'Conductividade do sensor B',
 						data: dados.sensor.B.Conductividade,
 					},
 					{
-						name: 'TemperaturaA',
+						name: 'Temperatura do sensor A',
 						data: dados.sensor.A.Temperatura,
 					},
 					{
-						name: 'TemperaturaB',
+						name: 'Temperatura do sensor B',
 						data: dados.sensor.B.Temperatura,
 					},
 				],
