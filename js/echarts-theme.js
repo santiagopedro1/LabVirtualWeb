@@ -111,7 +111,7 @@
 			formatter: (params) => {
 				let tooltipText = ''
 				params.forEach((item) => {
-					if (!item.value) item.value = 'Sem leitura'
+					if (isNaN(item.value)) item.value = 'Sem leitura'
 					tooltipText += `${item.marker}${item.seriesName}: <b>${item.value}</b></br>`
 				})
 				return (
