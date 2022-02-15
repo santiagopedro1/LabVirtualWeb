@@ -1,4 +1,11 @@
 const myChart = echarts.init(document.getElementById('chart'), 'echarts-theme', { renderer: 'svg' })
+myChart.showLoading({
+	text: 'CARREGANDO DADOS',
+	color: '#32c6efff',
+	fontSize: 25,
+	spinnerRadius: 30,
+	fontWeigth: 'bold',
+})
 
 const header = new Headers({
 	'Bypass-Tunnel-Reminder': 1,
@@ -20,7 +27,7 @@ let option = {
 		type: 'value',
 	},
 	legend: {
-		show: true,
+		show: false,
 	},
 	series: [
 		{
@@ -65,6 +72,7 @@ const getData = () => {
 	window.setTimeout(getData, e)
 
 	fetch('https://apilabvirtual.loca.lt/hoje', { method: 'GET', headers: header }).then((res) => {
+		myChart.hideLoading()
 		return res.json().then((dados) => {
 			myChart.setOption({
 				xAxis: {
@@ -106,3 +114,10 @@ const getData = () => {
 window.addEventListener('resize', () => {
 	myChart.resize()
 })
+
+function legenda(alvo) {
+	myChart.dispatchAction({
+		type: 'legendToggleSelect',
+		name: alvo,
+	})
+}

@@ -12,6 +12,11 @@ Bibliotecas utillizadas:
 
 # Changelogs
 
+### 14/02/2022
+
+- Adicionado fucionalidade de escolher data pra mostrar os dados na aba de Dias Anteriores;
+- Formatação de códigos.
+
 ### 25/01/2022
 
 - Fora apexcharts, Echarts agora é a biblioteca de gráficos 100%;
@@ -51,5 +56,5 @@ Bibliotecas utillizadas:
 
 # ToDo
 
-[] Esconder URL da API;
-[] Fazer o filtro funcionar.
+- [x] Fazer o filtro funcionar;
+- [ ] Preparar para a Grande Migração.
