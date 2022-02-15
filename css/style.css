@@ -36,7 +36,7 @@
 input[type='text'] {
 	cursor: default;
 	margin: -0.65rem 1rem 1rem 0px;
-	min-width: 20rem;
+	min-width: 10rem;
 	height: 2.7rem;
 	padding: 0.375rem 0.75rem;
 	font-size: 1rem;
@@ -74,6 +74,7 @@ input[type='radio']:checked + .tab {
 	margin: 1.5rem 0.5rem 3rem 0.5rem;
 	display: flex;
 	justify-content: center;
+	flex-wrap: wrap;
 }
 
 .filtro__item {
@@ -109,7 +110,7 @@ body {
 }
 
 button {
-	padding: 0.5rem 1rem;
+	padding: 0.15rem 0.75rem;
 	background-color: white;
 	color: var(--space-cadet);
 	font-weight: bolder;
