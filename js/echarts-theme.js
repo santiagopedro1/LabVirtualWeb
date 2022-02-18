@@ -130,9 +130,10 @@
 			},
 		},
 		toolbox: {
-			show: true,
 			feature: {
-				saveAsImage: {},
+				saveAsImage: {
+					title: 'Salvar como imagem',
+				},
 			},
 		},
 	})

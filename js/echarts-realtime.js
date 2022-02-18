@@ -18,6 +18,10 @@ let option = {
 	tooltip: {
 		trigger: 'axis',
 	},
+	toolbox: {
+		right: 60,
+		show: true,
+	},
 	xAxis: {
 		type: 'category',
 		boundaryGap: false,
