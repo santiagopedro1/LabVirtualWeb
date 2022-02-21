@@ -120,6 +120,7 @@ window.addEventListener('resize', () => {
 })
 
 function legenda(alvo) {
+	document.getElementById(alvo).classList.toggle('filtro__escondendo')
 	myChart.dispatchAction({
 		type: 'legendToggleSelect',
 		name: alvo,

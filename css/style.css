@@ -108,8 +108,12 @@ input[type='radio']:checked + .tab {
 body {
 	background: #dcdcdc;
 }
-
 button {
+	cursor: pointer;
+	font-weight: bolder;
+}
+
+.botao__fetch {
 	padding: 0.15rem 0.75rem;
 	background-color: white;
 	color: var(--space-cadet);
@@ -118,9 +122,24 @@ button {
 	border-radius: 0.25rem;
 	border: 1px solid #ced4da;
 }
-button:hover {
-	cursor: pointer;
+.botao__fetch:hover {
 	background-color: var(--vivid-sky-blue);
 	color: white;
 	border: 1px solid var(--space-cadet);
+}
+
+.botao__filtro {
+	margin: 0px 2px 5px 2px;
+	background-color: var(--vivid-sky-blue);
+	color: white;
+	border-radius: 1.75rem;
+	font-size: 14px;
+	border: 2px solid var(--space-cadet);
+	padding: 0.5rem 1rem;
+}
+
+.filtro__escondendo {
+	background-color: white;
+	color: var(--space-cadet);
+	border: 2px solid var(--vivid-sky-blue);
 }
