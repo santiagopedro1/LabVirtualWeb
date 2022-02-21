@@ -130,6 +130,7 @@
 			},
 		},
 		toolbox: {
+			top: 25,
 			feature: {
 				saveAsImage: {
 					title: 'Salvar como imagem',
