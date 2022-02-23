@@ -31,17 +31,8 @@
 				fontWeigth: 'bolder',
 				color: '#1b1b1b',
 			},
-			subtextStyle: {
-				color: '#555555',
-			},
 		},
-		legend: {
-			top: 30,
-			itemWidth: 10,
-			textStyle: {
-				color: '#2d2d2d',
-			},
-		},
+		legend: {},
 		grid: {
 			containLabel: false,
 			left: 35,
@@ -51,7 +42,6 @@
 			lineStyle: {
 				width: 3,
 			},
-			symbolSize: 10,
 			symbol: 'none',
 			smooth: false,
 		},
@@ -73,11 +63,9 @@
 				show: true,
 				color: '#000000',
 			},
+			//linha vertical do grid
 			splitLine: {
 				show: false,
-				lineStyle: {
-					color: '#ccc',
-				},
 			},
 		},
 		valueAxis: {
@@ -100,6 +88,7 @@
 				fontSize: 15,
 				color: '#333',
 			},
+			//linha horizontal do grid
 			splitLine: {
 				show: true,
 				lineStyle: {

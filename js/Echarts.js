@@ -1,7 +1,3 @@
-const header = new Headers({
-	'Bypass-Tunnel-Reminder': 1,
-})
-
 let myChart = echarts.init(document.getElementById('chart'), 'echarts-theme', { renderer: 'svg' })
 
 window.addEventListener('resize', () => {
@@ -88,7 +84,7 @@ function fetchdata() {
 
 	myChart.setOption(option)
 
-	fetch(`https://apilabvirtual.loca.lt/?data=${data}`, { method: 'GET', headers: header }).then((res) => {
+	fetch(`https://labvirtual-api.vercel.app/api/${data.replace(/\//g, '%2f')}`, { method: 'POST' }).then((res) => {
 		myChart.hideLoading()
 		return res.json().then((dados) => {
 			myChart.setOption({

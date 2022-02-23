@@ -7,10 +7,6 @@ myChart.showLoading({
 	fontWeigth: 'bold',
 })
 
-const header = new Headers({
-	'Bypass-Tunnel-Reminder': 1,
-})
-
 let option = {
 	title: {
 		text: `Gráfico do dia ${new Date().toLocaleDateString('pt-BR')}`,
@@ -38,32 +34,38 @@ let option = {
 			name: 'Umidade do sensor A',
 			type: 'line',
 			data: [],
+			zlevel: 7,
 		},
 		{
 			name: 'Umidade do sensor B',
 			type: 'line',
 			data: [],
+			zlevel: 6,
 		},
 		{
 			name: 'Conductividade do sensor A',
 			type: 'line',
 			data: [],
+			zlevel: 5,
 		},
 		{
 			name: 'Conductividade do sensor B',
 			type: 'line',
 			data: [],
+			zlevel: 4,
 		},
 		{
 			name: 'Temperatura do sensor A',
 			type: 'line',
 			data: [],
+			zlevel: 3,
 		},
 
 		{
 			name: 'Temperatura do sensor B',
 			type: 'line',
 			data: [],
+			zlevel: 2,
 		},
 	],
 }
@@ -71,11 +73,11 @@ myChart.setOption(option)
 
 const getData = () => {
 	let d = new Date()
-	h = new Date(d.getFullYear(), d.getMonth(), d.getDate(), d.getHours(), d.getMinutes() - (d.getMinutes() % 10) + 10, 30, 0)
+	h = new Date(d.getFullYear(), d.getMonth(), d.getDate(), d.getHours(), d.getMinutes() - (d.getMinutes() % 10) + 10, 2, 0)
 	e = h - d
 	window.setTimeout(getData, e)
 
-	fetch('https://apilabvirtual.loca.lt/hoje', { method: 'GET', headers: header }).then((res) => {
+	fetch('https://labvirtual-api.vercel.app/api/hoje', { method: 'POST' }).then((res) => {
 		myChart.hideLoading()
 		return res.json().then((dados) => {
 			myChart.setOption({
