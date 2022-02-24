@@ -73,7 +73,7 @@ myChart.setOption(option)
 
 const getData = () => {
 	let d = new Date()
-	h = new Date(d.getFullYear(), d.getMonth(), d.getDate(), d.getHours(), d.getMinutes() - (d.getMinutes() % 10) + 10, 2, 0)
+	h = new Date(d.getFullYear(), d.getMonth(), d.getDate(), d.getHours(), d.getMinutes() - (d.getMinutes() % 10) + 10, 30, 0)
 	e = h - d
 	window.setTimeout(getData, e)
 
