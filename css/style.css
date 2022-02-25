@@ -34,7 +34,6 @@
 }
 
 input[type='text'] {
-	cursor: default;
 	margin: -0.65rem 1rem 1rem 0px;
 	min-width: 10rem;
 	height: 2.7rem;
@@ -86,25 +85,6 @@ input[type='radio']:checked + .tab {
 	margin: 0rem 0rem 1rem 0rem;
 }
 
-.filtro__item input[type='checkbox'] {
-	display: none;
-}
-.filtro__item input[type='checkbox'] + label {
-	margin: 0px 1rem 0px 0px;
-	cursor: pointer;
-	font-weight: bolder;
-	color: var(--space-cadet);
-	padding: 0.5rem 1rem;
-	background-color: white;
-	border: 2px solid var(--vivid-sky-blue);
-	border-radius: 0.25rem;
-}
-.filtro__item input[type='checkbox']:checked + label {
-	background-color: var(--vivid-sky-blue);
-	color: white;
-	border: 2px solid var(--space-cadet);
-}
-
 body {
 	background: #dcdcdc;
 }
@@ -129,6 +109,7 @@ button {
 }
 
 .botao__filtro {
+	text-transform: uppercase;
 	margin: 0px 2px 5px 2px;
 	background-color: var(--vivid-sky-blue);
 	color: white;

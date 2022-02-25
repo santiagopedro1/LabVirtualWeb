@@ -81,6 +81,9 @@ const getData = () => {
 		myChart.hideLoading()
 		return res.json().then((dados) => {
 			myChart.setOption({
+				title: {
+					text: `Gráfico do dia ${d.toLocaleDateString('pt-BR')}`,
+				},
 				xAxis: {
 					data: dados.hora,
 				},
