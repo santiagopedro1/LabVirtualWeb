@@ -77,7 +77,7 @@ const getData = () => {
 	e = h - d
 	window.setTimeout(getData, e)
 
-	fetch('https://labvirtual-api.vercel.app/api/hoje', { method: 'POST' }).then((res) => {
+	fetch(`https://labvirtual-api.vercel.app/api/${d.toLocaleDateString('pt-BR').replace(/\//g, '%2f')}`, { method: 'POST' }).then((res) => {
 		myChart.hideLoading()
 		return res.json().then((dados) => {
 			myChart.setOption({
