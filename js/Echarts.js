@@ -16,7 +16,6 @@ function fetchdata() {
 	let data = document.getElementById('date-picker').value
 
 	document.getElementById('tutorial').style.display = 'none'
-	document.getElementById('sensores').style.display = 'block'
 
 	myChart.showLoading({
 		text: 'CARREGANDO DADOS',
