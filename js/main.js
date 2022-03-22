@@ -1,16 +1,6 @@
-const myChart = echarts.init(document.getElementById('chart'), 'echarts-theme', { renderer: 'svg' })
-myChart.showLoading({
-	text: 'CARREGANDO DADOS',
-	color: '#32c6efff',
-	fontSize: 25,
-	spinnerRadius: 30,
-	fontWeigth: 'bold',
-})
-
+let myChart = echarts.init(document.getElementById('chart'), 'echarts-theme', { renderer: 'svg' })
+document.getElementById('chart').style.display = 'none'
 let option = {
-	title: {
-		text: `Gráfico do dia ${new Date().toLocaleDateString('pt-BR')}`,
-	},
 	tooltip: {
 		trigger: 'axis',
 	},
@@ -34,55 +24,73 @@ let option = {
 			name: 'Umidade do sensor A',
 			type: 'line',
 			data: [],
-			zlevel: 7,
 		},
 		{
 			name: 'Umidade do sensor B',
 			type: 'line',
 			data: [],
-			zlevel: 6,
 		},
 		{
 			name: 'Conductividade do sensor A',
 			type: 'line',
 			data: [],
-			zlevel: 5,
 		},
 		{
 			name: 'Conductividade do sensor B',
 			type: 'line',
 			data: [],
-			zlevel: 4,
 		},
 		{
 			name: 'Temperatura do sensor A',
 			type: 'line',
 			data: [],
-			zlevel: 3,
 		},
 
 		{
 			name: 'Temperatura do sensor B',
 			type: 'line',
 			data: [],
-			zlevel: 2,
 		},
 	],
 }
 myChart.setOption(option)
 
-const getData = () => {
-	let d = new Date()
-	h = new Date(d.getFullYear(), d.getMonth(), d.getDate(), d.getHours(), d.getMinutes() - (d.getMinutes() % 10) + 10, 30, 0)
-	e = h - d
-	window.setTimeout(getData, e)
+window.addEventListener('resize', () => {
+	myChart.resize()
+})
 
-	fetch(`https://labvirtual-api.vercel.app/api/${d.toLocaleDateString('pt-BR').replace(/\//g, '%2f')}`, { method: 'POST' }).then((res) => {
-		myChart.hideLoading()
+function legenda(alvo) {
+	document.getElementById(alvo).classList.toggle('filtro__escondendo')
+	myChart.dispatchAction({
+		type: 'legendToggleSelect',
+		name: alvo,
+	})
+}
+
+function trigger(data) {
+	if (data) {
+		carregarDados(data.replace(/\//g, '%2f'))
+		document.getElementById('tutorial').style.display = 'none'
+	} else {
+		carregarDados('hoje')
+	}
+}
+
+function carregarDados(data) {
+	document.getElementById('chart').style.display = 'block'
+	myChart.showLoading({
+		text: 'CARREGANDO DADOS',
+		color: '#32c6efff',
+		fontSize: 25,
+		spinnerRadius: 30,
+		fontWeigth: 'bold',
+	})
+
+	fetch(`https://labvirtual-api.vercel.app/api/${data}`, { method: 'GET', mode: 'cors' }).then((res) => {
 		return res.json().then((dados) => {
 			myChart.setOption({
 				title: {
-					text: `Gráfico do dia ${d.toLocaleDateString('pt-BR')}`,
+					text: `Gráfico do dia ${dados._id}`,
 				},
 				xAxis: {
 					data: dados.hora,
@@ -114,20 +122,7 @@ const getData = () => {
 					},
 				],
 			})
-			let x = new Date()
-			console.log(`cheguei ${x.getHours()}:${x.getMinutes()}:${x.getSeconds()}.${x.getMilliseconds()}`)
+			myChart.hideLoading()
 		})
-	})
-}
-
-window.addEventListener('resize', () => {
-	myChart.resize()
-})
-
-function legenda(alvo) {
-	document.getElementById(alvo).classList.toggle('filtro__escondendo')
-	myChart.dispatchAction({
-		type: 'legendToggleSelect',
-		name: alvo,
 	})
 }
