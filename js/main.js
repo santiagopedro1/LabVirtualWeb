@@ -73,6 +73,12 @@ function trigger(data) {
 		document.getElementById('tutorial').style.display = 'none'
 	} else {
 		carregarDados('hoje')
+		let d = new Date()
+		h = new Date(d.getFullYear(), d.getMonth(), d.getDate(), d.getHours(), d.getMinutes() - (d.getMinutes() % 10) + 10, 10, 0)
+		e = h - d
+		setInterval(() => {
+			carregarDados('hoje')
+		}, e)
 	}
 }
 
