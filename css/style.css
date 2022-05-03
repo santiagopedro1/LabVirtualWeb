@@ -124,3 +124,7 @@ button {
 	color: var(--space-cadet);
 	border: 2px solid var(--vivid-sky-blue);
 }
+
+i {
+	position: absolute;
+}

@@ -132,3 +132,7 @@ function carregarDados(data) {
 		})
 	})
 }
+
+$(function () {
+	rome(input, { time: false, max: new Date(), inputFormat: 'DD/MM/YYYY' })
+})

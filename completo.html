@@ -6,6 +6,8 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 		<link rel="stylesheet" href="/css/style.css" />
+		<link rel="stylesheet" href="/css/rome.css" />
+		<script src="https://kit.fontawesome.com/1d31abe8e0.js" crossorigin="anonymous"></script>
 
 		<title>Labvirtual</title>
 	</head>
@@ -13,7 +15,7 @@
 	<body>
 		<header>
 			<nav class="tabs">
-				<input type="radio" id="Hoje" onclick="location.href = '/'" />
+				<input type="radio" id="Hoje" onclick="location.href = './index.html'" />
 				<label class="tab" for="Hoje">Hoje</label>
 
 				<input type="radio" id="Dias anteriores" checked />
@@ -25,12 +27,12 @@
 			<div class="filtro">
 				<div class="filtro__item">
 					<h2>Data</h2>
-					<input type="text" id="date-picker" placeholder="Escolha a data" />
-					<button class="botao__fetch" onclick="trigger(document.getElementById('date-picker').value)">Buscar dados</button>
+					<input type="text" id="input" placeholder="Escolha a data" />
+					<button class="botao__fetch" onclick="trigger(document.getElementById('input').value)">Buscar dados</button>
 				</div>
 
 				<div class="filtro__item">
-					<h2>Sensor A(Com palha)</h2>
+					<h2>Sensor A (Com palha)</h2>
 					<button onclick="legenda(this.id)" id="Umidade do sensor A" class="botao__filtro">Umidade</button>
 
 					<button onclick="legenda(this.id)" id="Conductividade do sensor A" class="botao__filtro">Conductividade</button>
@@ -39,7 +41,7 @@
 				</div>
 
 				<div class="filtro__item">
-					<h2>Sensor B(Sem palha)</h2>
+					<h2>Sensor B (Sem palha)</h2>
 					<button onclick="legenda(this.id)" id="Umidade do sensor B" class="botao__filtro">Umidade</button>
 
 					<button onclick="legenda(this.id)" id="Conductividade do sensor B" class="botao__filtro">Conductividade</button>
@@ -62,7 +64,10 @@
 			crossorigin="anonymous"
 			referrerpolicy="no-referrer"
 		></script>
+		<script src="/js/jquery-3.3.1.min.js"></script>
 		<script src="/js/echarts-theme.js"></script>
+		<script src="/js/popper.min.js"></script>
+		<script src="/js/rome.js"></script>
 		<script src="/js/main.js"></script>
 	</body>
 </html>
