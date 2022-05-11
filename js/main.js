@@ -13,12 +13,12 @@ function legenda(alvo) {
 }
 
 function trigger() {
-	carregarDados('hoje')
 	let coeff = 1000 * 60 * 10 //Ultimo numero é o numero minutos da para cada atualização do grafico
 	let date = new Date()
 	let rounded = new Date(Math.ceil(date.getTime() / coeff) * coeff + 10000) //Ultimo numero é o delay para compensar atrasos no BD
 
-	setInterval(carregarDados('hoje'), rounded)
+	window.setTimeout(trigger, rounded - date)
+	carregarDados('hoje')
 }
 
 function carregarDados(data) {
