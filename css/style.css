@@ -64,7 +64,7 @@ input[type='radio']:checked + .tab {
 }
 
 .grafico {
-	height: 30rem;
+	height: 26rem;
 	margin: 3rem 0px;
 }
 
@@ -72,12 +72,12 @@ input[type='radio']:checked + .tab {
 	text-transform: uppercase;
 	margin: 1.5rem 0.5rem 3rem 0.5rem;
 	display: flex;
-	justify-content: center;
+	justify-content: space-around;
 	flex-wrap: wrap;
 }
 
 .filtro__item {
-	margin: 0rem 3rem;
+	margin: 0rem 1rem;
 	text-align: center;
 }
 
