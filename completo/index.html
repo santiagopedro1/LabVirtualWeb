@@ -50,10 +50,13 @@
 			</div>
 
 			<div style="text-align: center" id="tutorial">
-				<h2>Digite uma data na caixa com o formato dd/mm/aaaa(Exemplo: 14/02/2022) ou selecione uma data no calendário e clique em "BUSCAR DADOS"</h2>
+				<h2 style="padding: 0rem 5rem">
+					Digite uma data na caixa com o formato dd/mm/aaaa(Exemplo: 14/02/2022) ou selecione uma data no calendário e clique em "BUSCAR DADOS"
+				</h2>
 			</div>
 
 			<div id="chart" class="grafico"></div>
+			<div id="newChart" class=""></div>
 		</main>
 
 		<!-- JS Imports -->
@@ -63,10 +66,11 @@
 			crossorigin="anonymous"
 			referrerpolicy="no-referrer"
 		></script>
-		<script src="/js/jquery-3.3.1.min.js"></script>
 		<script src="/js/echarts-theme.js"></script>
-		<script src="/js/popper.min.js"></script>
 		<script src="/js/rome.js"></script>
 		<script src="/js/main.js"></script>
+		<script>
+			rome(input, { time: false, max: new Date(), inputFormat: 'DD/MM/YYYY' })
+		</script>
 	</body>
 </html>
