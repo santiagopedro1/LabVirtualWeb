@@ -12,19 +12,13 @@ function legenda(alvo) {
 	})
 }
 
-function trigger(data) {
-	if (data) {
-		carregarDados(data.replace(/\//g, '%2f'))
-		document.getElementById('tutorial').style.display = 'none'
-	} else {
-		carregarDados('hoje')
-		let d = new Date()
-		h = new Date(d.getFullYear(), d.getMonth(), d.getDate(), d.getHours(), d.getMinutes() - (d.getMinutes() % 10) + 10, 10, 0)
-		e = h - d
-		setInterval(() => {
-			carregarDados('hoje')
-		}, e)
-	}
+function trigger() {
+	carregarDados('hoje')
+	let coeff = 1000 * 60 * 10 //Ultimo numero é o numero minutos da para cada atualização do grafico
+	let date = new Date()
+	let rounded = new Date(Math.ceil(date.getTime() / coeff) * coeff + 10000) //Ultimo numero é o delay para compensar atrasos no BD
+
+	setInterval(carregarDados('hoje'), rounded)
 }
 
 function carregarDados(data) {
