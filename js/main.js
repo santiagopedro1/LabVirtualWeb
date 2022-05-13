@@ -22,7 +22,11 @@ function trigger() {
 }
 
 function carregarDados(data) {
-	document.getElementById('tutorial').style.display = 'none'
+	if (document.getElementById('tutorial') != null) {
+		document.getElementById('tutorial').style.display = 'none'
+	} else {
+	}
+
 	myChart.showLoading({
 		text: 'CARREGANDO DADOS',
 		color: '#32c6efff',
