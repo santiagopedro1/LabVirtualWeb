@@ -22,6 +22,7 @@ function trigger() {
 }
 
 function carregarDados(data) {
+	document.getElementById('tutorial').style.display = 'none'
 	myChart.showLoading({
 		text: 'CARREGANDO DADOS',
 		color: '#32c6efff',
