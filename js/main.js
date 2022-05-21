@@ -15,17 +15,14 @@ function legenda(alvo) {
 function trigger() {
 	let coeff = 1000 * 60 * 10 //Ultimo numero é o numero minutos da para cada atualização do grafico
 	let date = new Date()
-	let rounded = new Date(Math.ceil(date.getTime() / coeff) * coeff + 10000) //Ultimo numero é o delay para compensar atrasos no BD
+	let rounded = new Date(Math.ceil(date.getTime() / coeff) * coeff + 10000) //Ultimo numero é o delay para compensar atrasos no BD(em ms)
 
 	window.setTimeout(trigger, rounded - date)
 	carregarDados('hoje')
 }
 
 function carregarDados(data) {
-	if (document.getElementById('tutorial') != null) {
-		document.getElementById('tutorial').style.display = 'none'
-	} else {
-	}
+	if (document.getElementById('tutorial') != null) document.getElementById('tutorial').style.display = 'none'
 
 	myChart.showLoading({
 		text: 'CARREGANDO DADOS',
@@ -42,9 +39,6 @@ function carregarDados(data) {
 	})
 }
 
-//functions
-
-//criar gráfico
 function criarGrafico(dados) {
 	myChart.setOption({
 		tooltip: {
@@ -80,14 +74,14 @@ function criarGrafico(dados) {
 				data: dados.sensor.B.Umidade,
 			},
 			{
-				name: 'Conductividade do sensor A',
+				name: 'Condutividade do sensor A',
 				type: 'line',
-				data: dados.sensor.A.Conductividade,
+				data: dados.sensor.A.Condutividade,
 			},
 			{
-				name: 'Conductividade do sensor B',
+				name: 'Condutividade do sensor B',
 				type: 'line',
-				data: dados.sensor.B.Conductividade,
+				data: dados.sensor.B.Condutividade,
 			},
 			{
 				name: 'Temperatura do sensor A',
