@@ -8,7 +8,7 @@ function legenda(alvo) {
 	document.getElementById(alvo).classList.toggle('filtro__escondendo')
 	myChart.dispatchAction({
 		type: 'legendToggleSelect',
-		name: alvo,
+		name: alvo
 	})
 }
 
@@ -22,6 +22,9 @@ function trigger() {
 }
 
 function carregarDados(data) {
+	if (data === '') {
+		return alert('Escolha uma data')
+	}
 	if (document.getElementById('tutorial') != null) document.getElementById('tutorial').style.display = 'none'
 
 	myChart.showLoading({
@@ -29,11 +32,12 @@ function carregarDados(data) {
 		color: '#32c6efff',
 		fontSize: 25,
 		spinnerRadius: 30,
-		fontWeigth: 'bold',
+		fontWeigth: 'bold'
 	})
 
-	fetch(`https://labvirtual-api.vercel.app/api/${data}`, { method: 'GET', mode: 'cors' }).then((res) => {
-		return res.json().then((dados) => {
+	fetch(`https://labvirtual-api.vercel.app/api/${data}`, { method: 'GET', mode: 'cors' }).then(res => {
+		return res.json().then(dados => {
+			if (dados._id === '' || dados._id === undefined || dados._id === null) return alert('Não há dados para esta data')
 			criarGrafico(dados)
 		})
 	})
@@ -42,58 +46,58 @@ function carregarDados(data) {
 function criarGrafico(dados) {
 	myChart.setOption({
 		tooltip: {
-			trigger: 'axis',
+			trigger: 'axis'
 		},
 		toolbox: {
 			right: 60,
-			show: true,
+			show: true
 		},
 		legend: {
-			show: false,
+			show: false
 		},
 		title: {
-			text: `Gráfico do dia ${dados._id}`,
+			text: `Gráfico do dia ${dados._id}`
 		},
 		xAxis: {
 			type: 'category',
 			boundaryGap: false,
-			data: dados.hora,
+			data: dados.hora
 		},
 		yAxis: {
-			type: 'value',
+			type: 'value'
 		},
 		series: [
 			{
 				name: 'Umidade do sensor A',
 				type: 'line',
-				data: dados.sensor.A.Umidade,
+				data: dados.sensor.A.Umidade
 			},
 			{
 				name: 'Umidade do sensor B',
 				type: 'line',
-				data: dados.sensor.B.Umidade,
+				data: dados.sensor.B.Umidade
 			},
 			{
 				name: 'Condutividade do sensor A',
 				type: 'line',
-				data: dados.sensor.A.Condutividade,
+				data: dados.sensor.A.Condutividade
 			},
 			{
 				name: 'Condutividade do sensor B',
 				type: 'line',
-				data: dados.sensor.B.Condutividade,
+				data: dados.sensor.B.Condutividade
 			},
 			{
 				name: 'Temperatura do sensor A',
 				type: 'line',
-				data: dados.sensor.A.Temperatura,
+				data: dados.sensor.A.Temperatura
 			},
 			{
 				name: 'Temperatura do sensor B',
 				type: 'line',
-				data: dados.sensor.B.Temperatura,
-			},
-		],
+				data: dados.sensor.B.Temperatura
+			}
+		]
 	})
 	myChart.hideLoading()
 }
