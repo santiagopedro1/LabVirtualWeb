@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Labvirtual - Download de dados</title>
+
+		<link rel="stylesheet" href="/css/style.css" />
+		<link rel="stylesheet" href="/css/rome.css" />
+	</head>
+	<body>
+		<header>
+			<nav class="tabs">
+				<input type="radio" id="Hoje" onclick="location.href = '../'" />
+				<label class="tab" for="Hoje">Hoje</label>
+
+				<input type="radio" id="Dias anteriores" onclick="location.href='../completo'" />
+				<label class="tab" for="Dias anteriores">Dias anteriores</label>
+
+				<input type="radio" id="Download de dados" checked />
+				<label class="tab" for="Download de dados">Download de dados</label>
+			</nav>
+		</header>
+		<div class="filtro">
+			<div class="filtro__item">
+				<h2>Data</h2>
+				<input type="text" inputmode="none" id="input" placeholder="Escolha uma data" />
+			</div>
+			<div class="filtro__item">
+				<h2>Selecione um tipo de arquivo</h2>
+				<select name="selecao-tipo" id="selecao-tipo">
+					<option value="csv">CSV</option>
+					<option value="json">JSON</option>
+				</select>
+			</div>
+
+			<button class="botao__download" onclick="download_file()">Download</button>
+		</div>
+
+		<script src="../js/rome.js"></script>
+		<script>
+			let inputdate
+			rome(input, { time: false, max: new Date(), inputFormat: 'DD/MM/YYYY' })
+
+			async function download_file() {
+				//get element with id inputdate
+				inputdate = document.getElementById('input').value
+				//alert user to inform inputdate if no input date
+				if (inputdate == '') {
+					return alert('Escolha uma data')
+				}
+
+				// get the response
+				fetch(`https://labvirtual-api.vercel.app/api/${inputdate.replace(/\//g, '%2f')}`, { method: 'GET', mode: 'cors' }).then(res => {
+					return res.json().then(dados => {
+						//if selection is csv call csv function
+						if (document.getElementById('selecao-tipo').value == 'csv') {
+							CSV(dados)
+						} else {
+							//if selection is json call json function
+							JSON(dados)
+						}
+					})
+				})
+			}
+
+			function JSON(dados) {
+				var a = document.createElement('a')
+				a.href = URL.createObjectURL(new Blob([JSON.stringify(dados)], { type: 'application/json' }))
+				a.download = `${inputdate.value}.json`
+				a.click()
+			}
+
+			function CSV(dados) {
+				let csv =
+					'Hora, SensorAUmidade, sensorACondutividade, sensorATemperatura, sensorBUmidade, sensorBCondutividade, sensorBTemperatura\r\n'
+				let hora = dados.hora
+				let sensorAUmidade = dados.sensor.A.Umidade
+				let sensorACondutividade = dados.sensor.A.Condutividade
+				let sensorATemperatura = dados.sensor.A.Temperatura
+				let sensorBUmidade = dados.sensor.B.Umidade
+				let sensorBCondutividade = dados.sensor.B.Condutividade
+				let sensorBTemperatura = dados.sensor.B.Temperatura
+
+				for (let i = 0; i < Object.keys(hora).length; i++) {
+					csv += `${hora[i]}, ${sensorAUmidade[i]}, ${sensorACondutividade[i]}, ${sensorATemperatura[i]}, ${sensorBUmidade[i]}, ${sensorBCondutividade[i]}, ${sensorBTemperatura[i]}\r\n`
+				}
+
+				var a = document.createElement('a')
+				a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv' }))
+				a.download = `${dados._id}.csv`
+				a.click()
+			}
+		</script>
+	</body>
+</html>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt-br">
 	<head>
 		<meta charset="UTF-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -19,6 +19,9 @@
 
 				<input type="radio" id="Dias anteriores" checked />
 				<label class="tab" for="Dias anteriores">Dias anteriores</label>
+
+				<input type="radio" id="Download de dados" onclick="location.href = '../download'" />
+				<label class="tab" for="Download de dados">Download de dados</label>
 			</nav>
 		</header>
 
@@ -26,8 +29,10 @@
 			<div class="filtro">
 				<div class="filtro__item">
 					<h2>Data</h2>
-					<input type="text" id="input" placeholder="Escolha a data" />
-					<button class="botao__fetch" onclick="carregarDados(document.getElementById('input').value.replace(/\//g, '%2f'))">Buscar dados</button>
+					<input type="text" inputmode="none" id="input" placeholder="Escolha a data" />
+					<button class="botao__fetch" onclick="carregarDados(document.getElementById('input').value.replace(/\//g, '%2f'))">
+						Buscar dados
+					</button>
 				</div>
 
 				<div class="filtro__item">
@@ -51,7 +56,8 @@
 
 			<div style="text-align: center" id="tutorial">
 				<h2 style="padding: 0rem 5rem">
-					Digite uma data na caixa com o formato dd/mm/aaaa(Exemplo: 14/02/2022) ou selecione uma data no calendário e clique em "BUSCAR DADOS"
+					Digite uma data na caixa com o formato dd/mm/aaaa(Exemplo: 14/02/2022) ou selecione uma data no calendário e clique em "BUSCAR
+					DADOS"
 				</h2>
 			</div>
 
