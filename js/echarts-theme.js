@@ -23,83 +23,83 @@
 		color: ['#ff355e', '#50bfe6', '#ff6037', '#13a013', '#ffff66', '#ff00cc'],
 		backgroundColor: '#dcdcdc',
 		textStyle: {
-			fontSize: 16,
+			fontSize: 16
 		},
 		title: {
 			left: 'center',
 			textStyle: {
 				fontWeigth: 'bolder',
-				color: '#1b1b1b',
-			},
+				color: '#1b1b1b'
+			}
 		},
 		legend: {},
 		grid: {
 			containLabel: false,
 			left: 35,
-			right: 30,
+			right: 30
 		},
 		line: {
 			lineStyle: {
-				width: 3,
+				width: 3
 			},
 			symbol: 'none',
-			smooth: false,
+			smooth: false
 		},
 		categoryAxis: {
 			axisLine: {
 				show: true,
 				lineStyle: {
-					color: '#000000',
-				},
+					color: '#000000'
+				}
 			},
 			axisTick: {
 				show: true,
 				lineStyle: {
-					color: '#000000',
-				},
+					color: '#000000'
+				}
 			},
 			axisLabel: {
 				fontSize: 15,
 				show: true,
-				color: '#000000',
+				color: '#000000'
 			},
 			//linha vertical do grid
 			splitLine: {
-				show: false,
-			},
+				show: false
+			}
 		},
 		valueAxis: {
-			min: (value) => {
+			min: value => {
 				if (Math.floor(value.min - 2) >= 0) return Math.floor(value.min - 2)
 				else return 0
 			},
 			axisLine: {
 				show: true,
 				lineStyle: {
-					color: '#000000',
-				},
+					color: '#000000'
+				}
 			},
 			axisTick: {
 				lineStyle: {
-					color: '#000000',
-				},
+					color: '#000000'
+				}
 			},
 			axisLabel: {
 				fontSize: 15,
-				color: '#333',
+				color: '#333'
 			},
 			//linha horizontal do grid
 			splitLine: {
 				show: true,
 				lineStyle: {
-					color: '#ccc',
-				},
-			},
+					color: '#ccc'
+				}
+			}
 		},
 		tooltip: {
-			formatter: (params) => {
+			formatter: params => {
 				let tooltipText = ''
-				params.forEach((item) => {
+				params.forEach(item => {
 					if (isNaN(item.value)) item.value = 'Sem leitura'
 					tooltipText += `${item.marker}${item.seriesName}: <b>${item.value}</b></br>`
 				})
@@ -109,22 +109,22 @@
 				)
 			},
 			textStyle: {
-				color: '#262626',
+				color: '#262626'
 			},
 			axisPointer: {
 				lineStyle: {
 					color: '#3333',
-					width: 2,
-				},
-			},
+					width: 2
+				}
+			}
 		},
 		toolbox: {
 			top: 25,
 			feature: {
 				saveAsImage: {
-					title: 'Salvar como imagem',
-				},
-			},
-		},
+					title: 'Salvar como imagem'
+				}
+			}
+		}
 	})
 })

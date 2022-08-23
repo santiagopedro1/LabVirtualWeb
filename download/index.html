@@ -2,40 +2,72 @@
 <html lang="pt-br">
 	<head>
 		<meta charset="UTF-8" />
-		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta
+			http-equiv="X-UA-Compatible"
+			content="IE=edge"
+		/>
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0"
+		/>
 		<title>Labvirtual - Download de dados</title>
 
-		<link rel="stylesheet" href="/css/style.css" />
-		<link rel="stylesheet" href="/css/rome.css" />
+		<link
+			rel="stylesheet"
+			href="/css/style.css"
+		/>
+		<link
+			rel="stylesheet"
+			href="/css/rome.css"
+		/>
 	</head>
 	<body>
 		<header>
-			<nav class="tabs">
-				<input type="radio" id="Hoje" onclick="location.href = '../'" />
-				<label class="tab" for="Hoje">Hoje</label>
-
-				<input type="radio" id="Dias anteriores" onclick="location.href='../completo'" />
-				<label class="tab" for="Dias anteriores">Dias anteriores</label>
-
-				<input type="radio" id="Download de dados" checked />
-				<label class="tab" for="Download de dados">Download de dados</label>
+			<nav>
+				<ul class="tabs">
+					<li
+						class="tab"
+						onclick="location.href = '../'"
+					>
+						HOJE
+					</li>
+					<li
+						class="tab"
+						onclick="location.href = '../completo'"
+					>
+						DIAS ANTERIORES
+					</li>
+					<li class="tab atual">Download</li>
+				</ul>
 			</nav>
 		</header>
 		<div class="filtro">
 			<div class="filtro__item">
 				<h2>Data</h2>
-				<input type="text" inputmode="none" id="input" placeholder="Escolha uma data" />
+				<input
+					type="text"
+					inputmode="none"
+					id="input"
+					placeholder="Escolha uma data"
+				/>
 			</div>
 			<div class="filtro__item">
 				<h2>Selecione um tipo de arquivo</h2>
-				<select name="selecao-tipo" id="selecao-tipo">
+				<select
+					name="selecao-tipo"
+					id="selecao-tipo"
+				>
 					<option value="csv">CSV</option>
 					<option value="json">JSON</option>
 				</select>
 			</div>
 
-			<button class="botao__download" onclick="download_file()">Download</button>
+			<button
+				class="botao__download"
+				onclick="download_file()"
+			>
+				Download
+			</button>
 		</div>
 
 		<script src="../js/rome.js"></script>

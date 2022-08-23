@@ -11,6 +11,15 @@
 	margin: 0;
 	padding: 0;
 	line-height: 1.4;
+	list-style: none;
+}
+
+body {
+	background: #dcdcdc;
+}
+button {
+	cursor: pointer;
+	font-weight: bolder;
 }
 
 .tabs {
@@ -29,8 +38,13 @@
 	transition: box-shadow 0.2s ease-in-out, color 0.2s;
 }
 
-.tab:not(disabled):hover {
+.tab:not(.atual):hover {
 	box-shadow: inset 0px -3px var(--eerie-black), inset 0px -6px var(--vivid-sky-blue);
+}
+
+.atual {
+	color: white;
+	box-shadow: inset 0px -3px var(--eerie-black), inset 0px -6px white;
 }
 
 input[type='text'] {
@@ -52,20 +66,9 @@ input[type='text']::placeholder {
 	color: #6c757d;
 }
 
-input[type='radio'] {
-	display: none;
-}
-
-input[type='radio']:checked + label {
-	color: white;
-}
-input[type='radio']:checked + .tab {
-	box-shadow: inset 0px -3px var(--eerie-black), inset 0px -6px white;
-}
-
 .grafico {
 	height: 26rem;
-	margin: 3rem 0px;
+	margin: 3rem 2rem 3rem 1.5rem;
 }
 
 .filtro {
@@ -83,14 +86,6 @@ input[type='radio']:checked + .tab {
 
 .filtro__item h2 {
 	margin: 0rem 0rem 1rem 0rem;
-}
-
-body {
-	background: #dcdcdc;
-}
-button {
-	cursor: pointer;
-	font-weight: bolder;
 }
 
 .botao__fetch {

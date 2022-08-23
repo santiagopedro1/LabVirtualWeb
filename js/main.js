@@ -1,4 +1,4 @@
-let myChart = echarts.init(document.getElementById('chart'), 'echarts-theme', { renderer: 'svg' })
+let myChart = echarts.init(document.getElementById('chart'), 'echarts-theme', { renderer: 'canvas' })
 
 window.addEventListener('resize', () => {
 	myChart.resize()
@@ -12,21 +12,7 @@ function legenda(alvo) {
 	})
 }
 
-function trigger() {
-	let coeff = 1000 * 60 * 10 //Ultimo numero é o numero minutos da para cada atualização do grafico
-	let date = new Date()
-	let rounded = new Date(Math.ceil(date.getTime() / coeff) * coeff + 10000) //Ultimo numero é o delay para compensar atrasos no BD(em ms)
-
-	window.setTimeout(trigger, rounded - date)
-	carregarDados('hoje')
-}
-
-function carregarDados(data) {
-	if (data === '') {
-		return alert('Escolha uma data')
-	}
-	if (document.getElementById('tutorial') != null) document.getElementById('tutorial').style.display = 'none'
-
+async function carregarDados(data) {
 	myChart.showLoading({
 		text: 'CARREGANDO DADOS',
 		color: '#32c6efff',
@@ -34,13 +20,35 @@ function carregarDados(data) {
 		spinnerRadius: 30,
 		fontWeigth: 'bold'
 	})
+	if (!data) {
+		myChart.hideLoading()
+		return alert('Selecione uma data')
+	} else if (data == 'hoje') {
+		//axios para buscar os dados do dia atual
+		let response = await axios.get('https://labvirtual-api.vercel.app/api/hoje', { cors: true })
 
-	fetch(`https://labvirtual-api.vercel.app/api/${data}`, { method: 'GET', mode: 'cors' }).then(res => {
-		return res.json().then(dados => {
-			if (dados._id === '' || dados._id === undefined || dados._id === null) return alert('Não há dados para esta data')
-			criarGrafico(dados)
-		})
-	})
+		if (!response.data) {
+			myChart.hideLoading()
+			return alert('Erro ao carregar dados')
+		} else {
+			let coeff = 1000 * 60 * 10 //Ultimo numero é o numero minutos da para cada atualização do grafico
+			let date = new Date()
+			let rounded = new Date(Math.ceil(date.getTime() / coeff) * coeff + 10) //Ultimo numero é o delay para compensar atrasos no BD(em ms)
+			setTimeout(() => {
+				carregarDados('hoje')
+			}, rounded - date)
+			criarGrafico(response.data)
+		}
+	} else {
+		if (document.getElementById('tutorial') != null) document.getElementById('tutorial').style.display = 'none'
+		//axios para buscar os dados do dia
+		let response = await axios.get(`https://labvirtual-api.vercel.app/api/${data}`, { cors: true })
+
+		if (!response.data) {
+			myChart.hideLoading()
+			return alert('Erro ao carregar dados')
+		} else return criarGrafico(response.data)
+	}
 }
 
 function criarGrafico(dados) {

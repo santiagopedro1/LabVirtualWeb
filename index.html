@@ -2,25 +2,41 @@
 <html lang="pt-br">
 	<head>
 		<meta charset="UTF-8" />
-		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta
+			http-equiv="X-UA-Compatible"
+			content="IE=edge"
+		/>
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0"
+		/>
 
-		<link rel="stylesheet" href="/css/style.css" />
+		<link
+			rel="stylesheet"
+			href="/css/style.css"
+		/>
 
 		<title>Labvirtual</title>
 	</head>
 
-	<body onload="trigger()">
+	<body onload="carregarDados('hoje')">
 		<header>
-			<nav class="tabs">
-				<input type="radio" id="Hoje" checked />
-				<label class="tab" for="Hoje">Hoje</label>
-
-				<input type="radio" id="Dias anteriores" onclick="location.href = './completo'" />
-				<label class="tab" for="Dias anteriores">Dias anteriores</label>
-
-				<input type="radio" id="Download de dados" onclick="location.href = './download'" />
-				<label class="tab" for="Download de dados">Download de dados</label>
+			<nav>
+				<ul class="tabs">
+					<li class="tab atual">HOJE</li>
+					<li
+						class="tab"
+						onclick="location.href = './completo'"
+					>
+						DIAS ANTERIORES
+					</li>
+					<li
+						class="tab"
+						onclick="location.href = './download'"
+					>
+						Download
+					</li>
+				</ul>
 			</nav>
 		</header>
 
@@ -28,25 +44,63 @@
 			<div class="filtro">
 				<div class="filtro__item">
 					<h2>Sensor A (Com palha)</h2>
-					<button onclick="legenda(this.id)" id="Umidade do sensor A" class="botao__filtro">Umidade</button>
+					<button
+						onclick="legenda(this.id)"
+						id="Umidade do sensor A"
+						class="botao__filtro"
+					>
+						Umidade
+					</button>
 
-					<button onclick="legenda(this.id)" id="Condutividade do sensor A" class="botao__filtro">Condutividade</button>
+					<button
+						onclick="legenda(this.id)"
+						id="Condutividade do sensor A"
+						class="botao__filtro"
+					>
+						Condutividade
+					</button>
 
-					<button onclick="legenda(this.id)" id="Temperatura do sensor A" class="botao__filtro">Temperatura</button>
+					<button
+						onclick="legenda(this.id)"
+						id="Temperatura do sensor A"
+						class="botao__filtro"
+					>
+						Temperatura
+					</button>
 				</div>
 
 				<div class="filtro__item">
 					<h2>Sensor B (Sem palha)</h2>
-					<button onclick="legenda(this.id)" id="Umidade do sensor B" class="botao__filtro">Umidade</button>
+					<button
+						onclick="legenda(this.id)"
+						id="Umidade do sensor B"
+						class="botao__filtro"
+					>
+						Umidade
+					</button>
 
-					<button onclick="legenda(this.id)" id="Condutividade do sensor B" class="botao__filtro">Condutividade</button>
+					<button
+						onclick="legenda(this.id)"
+						id="Condutividade do sensor B"
+						class="botao__filtro"
+					>
+						Condutividade
+					</button>
 
-					<button onclick="legenda(this.id)" id="Temperatura do sensor B" class="botao__filtro">Temperatura</button>
+					<button
+						onclick="legenda(this.id)"
+						id="Temperatura do sensor B"
+						class="botao__filtro"
+					>
+						Temperatura
+					</button>
 				</div>
 			</div>
 
-			<div id="chart" class="grafico"></div>
-			<div id="newChart" class=""></div>
+			<div
+				id="chart"
+				class="grafico"
+			></div>
 
 			<a
 				class="weatherwidget-io"
@@ -79,6 +133,7 @@
 			crossorigin="anonymous"
 			referrerpolicy="no-referrer"
 		></script>
+		<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 		<script src="/js/echarts-theme.js"></script>
 		<script src="/js/main.js"></script>
 	</body>

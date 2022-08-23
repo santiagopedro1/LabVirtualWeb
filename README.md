@@ -9,8 +9,16 @@ Projeto Alpha, utilizando:
 Bibliotecas utillizadas:
 
 - Echarts.js.
+- Axios.
 
 # Changelogs
+
+### 23/08/2022
+
+- Terminado o site para a versão 1.0;
+- Mudado as tabs para lista;
+- Mudada a função para carregar os dados;
+- Mudado o renderer dos gráficos para canvas.
 
 ### 14/02/2022
 
