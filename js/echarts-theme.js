@@ -119,6 +119,8 @@
                             'Umidade',
                             'Umidade gravimétrica'
                         )}: <b>${item.value} %</b><br>`
+                    } else if (item.seriesName.includes('Temperatura')) {
+                        tooltipText += `${item.marker} ${item.seriesName}: <b>${item.value} ºC</b><br>`
                     } else {
                         tooltipText += `${item.marker} ${item.seriesName}: <b>${item.value}</b><br>`
                     }
