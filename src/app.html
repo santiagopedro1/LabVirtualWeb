@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+
+<script>
+    const themeValue = localStorage.getItem('labv-theme')
+    if (themeValue) {
+        if (themeValue === 'dark') {
+            document.documentElement.classList.add('dark')
+        }
+    } else {
+        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.classList.add('dark')
+            localStorage.setItem('labv-theme', 'dark')
+        } else {
+            localStorage.setItem('labv-theme', 'light')
+        }
+    }
+</script>
+
+<html
+    lang="pt-BR"
+    class="h-full font-open-sans"
+>
+    <head>
+        <meta charset="utf-8" />
+        <link
+            rel="icon"
+            href="%sveltekit.assets%/favicon.png"
+        />
+        <meta
+            name="viewport"
+            content="width=device-width"
+        />
+        %sveltekit.head%
+    </head>
+    <body
+        data-sveltekit-preload-data="hover"
+        class="h-full bg-white dark:bg-slate-900"
+    >
+        <div style="display: contents">%sveltekit.body%</div>
+    </body>
+</html>
