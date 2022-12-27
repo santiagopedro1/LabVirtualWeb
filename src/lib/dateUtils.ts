@@ -10,13 +10,17 @@ export function isValidDate(date: string) {
 export function getDateObj(date: string) {
     if (isValidDate(date)) {
         const [day, month, year] = date.split('/').map(Number)
-        return dayjs(`${year}-${month}-${day}`).toDate()
+        return new Date(`${year}-${month}-${day}`)
     } else return false
 }
 
 export function getDateForQuery(date: Date) {
-    return {
-        inicioDia: dayjs(date).startOf('day').toDate(),
-        fimDia: dayjs(date).endOf('day').toDate()
-    }
+    const inicioDia = dayjs(date).startOf('day').subtract(3, 'hours').toDate()
+    const fimDia = dayjs(date).endOf('day').subtract(3, 'hours').toDate()
+
+    return { inicioDia, fimDia }
+}
+
+export function getDateInBRT(date: Date) {
+    return dayjs(date).add(3, 'hours').toDate()
 }

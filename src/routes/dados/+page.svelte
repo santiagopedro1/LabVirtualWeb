@@ -1,21 +1,31 @@
 <script lang="ts">
     import datepicker from '$lib/datepicker'
     import '$lib/css/datepicker.css'
+    import get from 'axios'
+    import { compressToUTF16, decompressFromUTF16 } from 'lz-string'
 
     import Modal from '$components/modal.svelte'
+    import LineChart from '$components/lineChart.svelte'
+
     import { page } from '$app/stores'
     import { onMount } from 'svelte'
 
     import { getDateObj } from '$lib/dateUtils'
 
-    import type { Leituras_de_sensor } from '@prisma/client'
-
-    import { compressToUTF16, decompressFromUTF16 } from 'lz-string'
-
     //-----------------------------------------------------------------------------
 
+    type Leituras_de_sensor = {
+        id_sensor_de_usuario: number
+        data_hora: string
+        leitura: {
+            Condutividade: number
+            Temperatura: number
+            Umidade_gravimetrica: number
+        }
+    }
+
     let selectedDate: Date
-    let dados: Array<Leituras_de_sensor>
+    let dados: Leituras_de_sensor[]
     const modal = {
         title: '',
         message: '',
@@ -45,30 +55,32 @@
 
     async function fetchLeituras(data: Date) {
         console.log('Buscando dados da API')
-        const response = await fetch(
-            `/api/leituras?date=${data.toLocaleDateString('pt-BR')}`,
-            {
-                headers: {
-                    key: '123'
-                }
+        get(`/api/leituras?date=${data.toLocaleDateString('pt-BR')}`, {
+            headers: {
+                key: '123'
             }
-        )
-        if (response.ok) {
-            dados = await response.json()
-            localStorage.setItem(
-                'leituras-' + data.toLocaleDateString('pt-BR'),
-                compressToUTF16(JSON.stringify(dados))
-            )
-        } else {
-            switch (response.status) {
-                case 404:
-                    showModal(
-                        'Nada encontrado',
-                        'Não foram encontradas leituras para a data selecionada'
+        })
+            .then(response => {
+                if (response.status === 200) {
+                    dados = response.data
+                    localStorage.setItem(
+                        'leituras-' + data.toLocaleDateString('pt-BR'),
+                        compressToUTF16(JSON.stringify(dados))
                     )
-                    break
-            }
-        }
+                } else {
+                    switch (response.status) {
+                        case 404:
+                            showModal(
+                                'Nada encontrado',
+                                'Não foram encontradas leituras para a data selecionada'
+                            )
+                            break
+                    }
+                }
+            })
+            .catch(err => {
+                console.error(err)
+            })
     }
 
     function showModal(title: string, message: string) {
@@ -90,10 +102,9 @@
 </svelte:head>
 
 <section class="dark:text-white">
-    <h2 class="text-xl ">About</h2>
+    <h2 class="text-xl ">Pick a date any date</h2>
 
     <section>
-        <h3>Pick a date any date</h3>
         <input
             id="datepicker"
             type="text"
@@ -107,40 +118,15 @@
         class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full"
         on:click={vai}
     >
-        VAI!
+        VAI
     </button>
 
     {#if dados}
-        <div class="mt-5">
-            <table class=" w-full">
-                <thead>
-                    <tr class="border border-red-600 text-center">
-                        <th class="border border-red-500 px-4">ID do sensor</th>
-                        <th class="border border-red-500 px-4">Data e hora</th>
-                        <th class="border border-red-500 px-4">Leitura</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {#each dados as dado}
-                        <tr class="border border-red-600 p-5 text-center">
-                            <td class="border border-red-600 p-5">
-                                {dado.id_sensor_de_usuario}
-                            </td>
-                            <td class="border border-red-600 p-5">
-                                {new Date(dado.data_hora).toLocaleString(
-                                    'pt-BR'
-                                )}
-                            </td>
-                            <td>
-                                {#each Object.entries(Object(dado.leitura)) as [keys, values]}
-                                    <p>{keys}: {values}</p>
-                                {/each}
-                            </td>
-                        </tr>
-                    {/each}
-                </tbody>
-            </table>
-        </div>
+        {#if dados.length > 0}
+            <LineChart data={dados} />
+        {/if}
+    {:else}
+        <p>Selecione uma data para ver os dados</p>
     {/if}
 
     <Modal

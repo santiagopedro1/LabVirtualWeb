@@ -9,6 +9,7 @@
     import { Bars3, Sun, Moon } from 'svelte-heros-v2'
 
     import { page } from '$app/stores'
+    import { labvTheme } from '$lib/store'
 
     let theme: 'dark' | 'light' | '' = ''
 
@@ -22,9 +23,11 @@
                 ? 'dark'
                 : 'light'
         )
-        theme = document.documentElement.classList.contains('dark')
-            ? 'dark'
-            : 'light'
+        labvTheme.update(() =>
+            document.documentElement.classList.contains('dark')
+                ? 'dark'
+                : 'light'
+        )
     }
 
     onMount(() => {
@@ -121,8 +124,8 @@
     </Disclosure>
 
     <header class="bg-white dark:bg-slate-900 shadow dark:shadow-black">
-        <div class="mx-auto max-w-7xl py-6 px-4 sm:px-6 lg:px-8">
-            <h1 class="text-3xl capitalize font-bold tracking-tight">
+        <div class="mx-auto max-w-7xl py-4 px-4 sm:px-6 lg:px-8">
+            <h1 class="text-2xl capitalize font-bold tracking-tight">
                 {navItems.find(item => item === $page.url.pathname)
                     ? $page.url.pathname === '/'
                         ? 'Início'
@@ -136,7 +139,7 @@
     <main>
         <div class="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
             <div
-                class="px-4 py-3 md:px-8 md:py-6 min-h-[78vh] dark:bg-zinc-900 bg-green-100"
+                class="px-4 py-3 md:px-8 md:py-6 min-h-[78vh] dark:bg-zinc-900 bg-green-50"
             >
                 <slot />
             </div>
