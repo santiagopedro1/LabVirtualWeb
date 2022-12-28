@@ -11,7 +11,11 @@
     import { page } from '$app/stores'
     import { labvTheme } from '$lib/store'
 
-    let theme: 'dark' | 'light' | '' = ''
+    let theme: string
+
+    labvTheme.subscribe(value => {
+        theme = value
+    })
 
     const navItems = ['/', '/dados']
 
@@ -82,7 +86,7 @@
                         {#if theme === 'dark'}
                             <Sun />
                         {:else if theme === 'light'}
-                            <Moon class="h-6 w-6" />
+                            <Moon />
                         {:else}
                             <span class="sr-only">Loading...</span>
                         {/if}
@@ -95,7 +99,7 @@
                     >
                         <span class="sr-only">Open main menu</span>
                         <Bars3
-                            class="block h-6 w-6"
+                            class="block h-6 w-6 text-white"
                             aria-hidden="true"
                         />
                     </DisclosureButton>
@@ -111,7 +115,7 @@
                         href={item}
                         class="{$page.url.pathname === item
                             ? 'bg-green-800 cursor-default'
-                            : 'hover:bg-green-700'} block px-3 py-2 rounded-md text-white"
+                            : 'hover:bg-green-700'} block px-3 py-2 rounded-md text-white capitalize"
                         aria-current={$page.url.pathname === item
                             ? 'page'
                             : undefined}

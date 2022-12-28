@@ -91,7 +91,6 @@
     }
 
     onMount(() => {
-        localStorage.clear()
         datepicker(
             (selectedDay: Date) => (selectedDate = selectedDay),
             selectedDate
