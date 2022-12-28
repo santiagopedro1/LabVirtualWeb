@@ -4,7 +4,6 @@
     import { onMount } from 'svelte'
     import { labvTheme } from '$lib/store'
     import chartInit from '$lib/echartsInit'
-    import { getDateInBRT } from '$lib/dateUtils'
 
     type Leituras_de_sensor = {
         id_sensor_de_usuario: number
@@ -17,6 +16,7 @@
     }
 
     export let data: Leituras_de_sensor[]
+    export let displayDate: string
 
     let myChart: ECharts
     let theme: string
@@ -45,13 +45,10 @@
         let bUmidadeGravimetrica: Number[] = []
 
         data.forEach(leituraDeSensor => {
-            horas.push(
-                getDateInBRT(
-                    new Date(leituraDeSensor.data_hora)
-                ).toLocaleTimeString('pt-BR', {
-                    timeStyle: 'short'
-                })
-            )
+            const displayHora = leituraDeSensor.data_hora
+                .split('T')[1]
+                .split(':')
+            horas.push(displayHora[0] + ':' + displayHora[1])
             switch (leituraDeSensor.id_sensor_de_usuario) {
                 case 1:
                     aCondutividade.push(leituraDeSensor.leitura.Condutividade)
@@ -107,9 +104,7 @@
             show: false
         },
         title: {
-            text: `Gráfico do dia ${getDateInBRT(
-                new Date(data[0].data_hora)
-            ).toLocaleDateString('pt-BR')}`
+            text: `Gráfico do dia ${displayDate}`
         },
         xAxis: {
             name: 'Tempo',
@@ -198,9 +193,7 @@
         const newDados = createDataset(newData)
         const newOpts = {
             title: {
-                text: `Gráfico do dia ${getDateInBRT(
-                    new Date(data[0].data_hora)
-                ).toLocaleDateString('pt-BR')}`
+                text: `Gráfico do dia ${displayDate}`
             },
             dataset: new Array(newDados.length).fill(0).map((_, i) => ({
                 source: newDados[i] as any

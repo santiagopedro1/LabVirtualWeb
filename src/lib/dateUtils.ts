@@ -1,26 +1,20 @@
 import dayjs from 'dayjs'
+import customParseFormat from 'dayjs/plugin/customParseFormat'
 
-dayjs.locale('pt-br')
+dayjs.extend(customParseFormat)
 
 export function isValidDate(date: string) {
-    const [day, month, year] = date.split('/').map(Number)
-    return dayjs(`${year}-${month}-${day}`).isValid()
+    return dayjs(date, ['DD/MM/YYYY', 'X'], true).isValid()
 }
 
 export function getDateObj(date: string) {
-    if (isValidDate(date)) {
-        const [day, month, year] = date.split('/').map(Number)
-        return new Date(`${year}-${month}-${day}`)
-    } else return false
+    if (!isValidDate(date)) return null
+    return dayjs(date, ['DD/MM/YYYY', 'X']).toDate()
 }
 
 export function getDateForQuery(date: Date) {
-    const inicioDia = dayjs(date).startOf('day').subtract(3, 'hours').toDate()
-    const fimDia = dayjs(date).endOf('day').subtract(3, 'hours').toDate()
+    const inicioDia = dayjs(date).startOf('day').toDate()
+    const fimDia = dayjs(date).endOf('day').toDate()
 
     return { inicioDia, fimDia }
-}
-
-export function getDateInBRT(date: Date) {
-    return dayjs(date).add(3, 'hours').toDate()
 }

@@ -1,9 +1,7 @@
-import { PrismaClient } from '@prisma/client'
+import { prisma } from '$lib/prisma'
 import { getDateForQuery, getDateObj } from '$lib/dateUtils'
 
 import type { RequestHandler } from './$types'
-
-const prisma = new PrismaClient()
 
 export const GET: RequestHandler = async ({ request, url }) => {
     const headers = request.headers
@@ -38,7 +36,13 @@ export const GET: RequestHandler = async ({ request, url }) => {
         }
     })
 
-    if (leituras.length !== 0)
-        return new Response(JSON.stringify(leituras), { status: 200 })
-    else return new Response(null, { status: 404 })
+    if (leituras.length === 0) return new Response(null, { status: 404 })
+    else
+        return new Response(
+            JSON.stringify({
+                displayDate: dateObj.toLocaleDateString('pt-BR'),
+                leituras: leituras
+            }),
+            { status: 200 }
+        )
 }

@@ -25,7 +25,10 @@
     }
 
     let selectedDate: Date
-    let dados: Leituras_de_sensor[]
+    let dados: {
+        leituras: Leituras_de_sensor[]
+        displayDate: string
+    }
     const modal = {
         title: '',
         message: '',
@@ -45,8 +48,6 @@
         )
         if (LS) {
             dados = JSON.parse(decompressFromUTF16(LS) ?? '')
-            if (!(dados satisfies Leituras_de_sensor[]))
-                fetchLeituras(selectedDate)
             console.log(
                 'Leituras desta data já foram buscadas, usando dados do cache'
             )
@@ -90,6 +91,7 @@
     }
 
     onMount(() => {
+        localStorage.clear()
         datepicker(
             (selectedDay: Date) => (selectedDate = selectedDay),
             selectedDate
@@ -122,8 +124,11 @@
     </button>
 
     {#if dados}
-        {#if dados.length > 0}
-            <LineChart data={dados} />
+        {#if dados.leituras.length > 0}
+            <LineChart
+                data={dados.leituras}
+                displayDate={dados.displayDate}
+            />
         {/if}
     {:else}
         <p>Selecione uma data para ver os dados</p>
