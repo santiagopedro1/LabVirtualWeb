@@ -12,7 +12,6 @@ specifiers:
   date-picker-svelte: ^2.2.5
   dayjs: ^1.11.7
   echarts: ^5.4.1
-  lz-string: ^1.4.4
   postcss: ^8.4.20
   prisma: ^4.8.0
   svelte: ^3.54.0
@@ -37,7 +36,6 @@ devDependencies:
   axios: 1.2.1
   date-picker-svelte: 2.2.5
   dayjs: 1.11.7
-  lz-string: 1.4.4
   postcss: 8.4.20
   prisma: 4.8.0
   svelte: 3.55.0
@@ -845,11 +843,6 @@ packages:
   /lilconfig/2.0.6:
     resolution: {integrity: sha512-9JROoBW7pobfsx+Sq2JsASvCo6Pfo6WWoUW79HuB1BCoBXD4PLWJPqDF6fNj67pqBYTbAHkE57M1kS/+L1neOg==}
     engines: {node: '>=10'}
-    dev: true
-
-  /lz-string/1.4.4:
-    resolution: {integrity: sha512-0ckx7ZHRPqb0oUm8zNr+90mtf9DQB60H1wMCjBtfi62Kl3a7JbHob6gA2bC+xRvZoOL+1hzUK8jeuEIQE8svEQ==}
-    hasBin: true
     dev: true
 
   /magic-string/0.25.9:

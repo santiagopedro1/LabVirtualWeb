@@ -1,9 +1,7 @@
 <script lang="ts">
-    import { dispose, init } from 'echarts'
     import type { EChartsOption, ECharts } from 'echarts'
     import { onMount } from 'svelte'
     import { labvTheme } from '$lib/store'
-    import chartInit from '$lib/echartsInit'
 
     type Leituras_de_sensor = {
         id_sensor_de_usuario: number
@@ -21,7 +19,9 @@
     let myChart: ECharts
     let theme: string
 
-    labvTheme.subscribe(value => {
+    labvTheme.subscribe(async value => {
+        const dispose = await import('echarts').then(m => m.dispose)
+        const init = await import('echarts').then(m => m.init)
         theme = value
         if (!myChart) return
         dispose(myChart)
@@ -204,7 +204,9 @@
 
     $: data, reload(data)
 
-    onMount(() => {
+    onMount(async () => {
+        const chartInit = (await import('$lib/echartsInit')).default
+        const init = await import('echarts').then(m => m.init)
         chartInit()
         theme = localStorage.getItem('labv-theme') === 'dark' ? 'dark' : 'light'
         myChart = init(

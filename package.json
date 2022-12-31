@@ -19,7 +19,6 @@
 		"axios": "^1.2.1",
 		"date-picker-svelte": "^2.2.5",
 		"dayjs": "^1.11.7",
-		"lz-string": "^1.4.4",
 		"postcss": "^8.4.20",
 		"prisma": "^4.8.0",
 		"svelte": "^3.54.0",

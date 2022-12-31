@@ -1,11 +1,8 @@
 <script lang="ts">
     import datepicker from '$lib/datepicker'
-    import '$lib/css/datepicker.css'
     import get from 'axios'
-    import { compressToUTF16, decompressFromUTF16 } from 'lz-string'
 
     import Modal from '$components/modal.svelte'
-    import LineChart from '$components/lineChart.svelte'
 
     import { page } from '$app/stores'
     import { onMount } from 'svelte'
@@ -23,7 +20,7 @@
             Umidade_gravimetrica: number
         }
     }
-
+    let LineChart: any
     let selectedDate: Date
     let dados: {
         leituras: Leituras_de_sensor[]
@@ -47,10 +44,23 @@
             'leituras-' + selectedDate.toLocaleDateString('pt-BR')
         )
         if (LS) {
-            dados = JSON.parse(decompressFromUTF16(LS) ?? '')
-            console.log(
-                'Leituras desta data já foram buscadas, usando dados do cache'
-            )
+            const decompress = await fetch('/api/compress', {
+                method: 'POST',
+                headers: {
+                    modo: 'decompress',
+                    key: '123'
+                },
+                body: JSON.stringify({
+                    input: LS
+                })
+            }).then(res => res.json())
+
+            if (decompress.output) {
+                dados = JSON.parse(decompress.output) as any
+                console.log(
+                    'Leituras desta data já foram buscadas, usando dados do cache'
+                )
+            }
         } else fetchLeituras(selectedDate)
     }
 
@@ -61,12 +71,22 @@
                 key: '123'
             }
         })
-            .then(response => {
+            .then(async response => {
                 if (response.status === 200) {
                     dados = response.data
+                    const compressedData = await fetch('/api/compress', {
+                        method: 'POST',
+                        headers: {
+                            modo: 'compress',
+                            key: '123'
+                        },
+                        body: JSON.stringify({
+                            input: JSON.stringify(dados)
+                        })
+                    }).then(res => res.json())
                     localStorage.setItem(
                         'leituras-' + data.toLocaleDateString('pt-BR'),
-                        compressToUTF16(JSON.stringify(dados))
+                        compressedData.output
                     )
                 } else {
                     switch (response.status) {
@@ -90,7 +110,9 @@
         modal.isOpen = true
     }
 
-    onMount(() => {
+    onMount(async () => {
+        LineChart = (await import('$components/lineChart.svelte')).default
+        await import('$lib/css/datepicker.css')
         datepicker(
             (selectedDay: Date) => (selectedDate = selectedDay),
             selectedDate
@@ -124,10 +146,15 @@
 
     {#if dados}
         {#if dados.leituras.length > 0}
-            <LineChart
+            <svelte:component
+                this={LineChart}
                 data={dados.leituras}
                 displayDate={dados.displayDate}
             />
+            <!-- <LineChart
+                data={dados.leituras}
+                displayDate={dados.displayDate}
+            /> -->
         {/if}
     {:else}
         <p>Selecione uma data para ver os dados</p>
