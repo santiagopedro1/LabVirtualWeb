@@ -151,10 +151,6 @@
                 data={dados.leituras}
                 displayDate={dados.displayDate}
             />
-            <!-- <LineChart
-                data={dados.leituras}
-                displayDate={dados.displayDate}
-            /> -->
         {/if}
     {:else}
         <p>Selecione uma data para ver os dados</p>

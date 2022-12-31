@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { init } from 'echarts'
     import type { EChartsOption, ECharts } from 'echarts'
     import { onMount } from 'svelte'
     import { labvTheme } from '$lib/store'
@@ -206,7 +207,6 @@
 
     onMount(async () => {
         const chartInit = (await import('$lib/echartsInit')).default
-        const init = await import('echarts').then(m => m.init)
         chartInit()
         theme = localStorage.getItem('labv-theme') === 'dark' ? 'dark' : 'light'
         myChart = init(
@@ -225,18 +225,22 @@
     <div class="flex gap-5">
         <button
             id="A"
-            class="px-4 py-2 my-4 h-8 bg-cyan-600"
+            class="px-4 my-4 h-8 bg-cyan-600"
             on:mouseenter={highlight}
             on:mouseleave={unhighlight}
             on:click={toggle}
-        />
+        >
+            A
+        </button>
         <button
             id="B"
-            class="px-4 py-2 my-4 h-8 bg-cyan-600"
+            class="px-4 my-4 h-8 bg-cyan-600"
             on:mouseenter={highlight}
             on:mouseleave={unhighlight}
             on:click={toggle}
-        />
+        >
+            B
+        </button>
     </div>
     <div
         id="chart"
