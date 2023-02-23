@@ -20,6 +20,7 @@
 		"date-picker-svelte": "^2.2.5",
 		"dayjs": "^1.11.7",
 		"postcss": "^8.4.20",
+		"prettier": "^2.8.4",
 		"prisma": "^4.8.0",
 		"svelte": "^3.54.0",
 		"svelte-check": "^2.9.2",
