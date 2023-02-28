@@ -2,7 +2,6 @@
     import { init } from 'echarts'
     import type { EChartsOption, ECharts } from 'echarts'
     import { onMount } from 'svelte'
-    import { labvTheme } from '$lib/store'
 
     type Leituras_de_sensor = {
         id_sensor_de_usuario: number
@@ -19,22 +18,6 @@
 
     let myChart: ECharts
     let theme: string
-
-    labvTheme.subscribe(async value => {
-        const dispose = await import('echarts').then(m => m.dispose)
-        const init = await import('echarts').then(m => m.init)
-        theme = value
-        if (!myChart) return
-        dispose(myChart)
-        myChart = init(
-            document.getElementById('chart') as HTMLDivElement,
-            theme,
-            {
-                renderer: 'svg'
-            }
-        )
-        myChart.setOption(chartOpts)
-    })
 
     function createDataset(data: Leituras_de_sensor[]) {
         let horas: string[] = []
