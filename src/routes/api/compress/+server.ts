@@ -9,9 +9,10 @@ export const POST: RequestHandler = async ({ request }) => {
     const headers = request.headers
 
     const input = JSON.parse(
-        await (
-            await request.arrayBuffer().then(buffer => Buffer.from(buffer))
-        ).toString()
+        request
+            .arrayBuffer()
+            .then(buffer => Buffer.from(buffer))
+            .toString()
     ).input
 
     if (!input) return new Response(null, { status: 400 })
