@@ -1,5 +1,5 @@
 {
-    "tabWidth": 4,
+    "tabWidth": 2,
     "tabs": true,
     "semi": false,
     "quoteProps": "as-needed",
