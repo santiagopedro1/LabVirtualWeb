@@ -17,7 +17,6 @@
   export let displayDate: string
 
   let myChart: ECharts
-  let theme: string
 
   function createDataset(data: Leituras_de_sensor[]) {
     let horas: string[] = []
@@ -189,7 +188,7 @@
   onMount(async () => {
     const chartInit = (await import('$lib/echartsInit')).default
     chartInit()
-    theme = localStorage.getItem('labv-theme') === 'dark' ? 'dark' : 'light'
+    let theme = document.cookie.split('=')[1]
     myChart = init(document.getElementById('chart') as HTMLDivElement, theme, {
       renderer: 'svg'
     })
@@ -198,7 +197,6 @@
 </script>
 
 <div>
-  <h1>Chart!</h1>
   <div class="flex gap-5">
     <button
       id="A"
