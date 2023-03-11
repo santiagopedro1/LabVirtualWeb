@@ -5,7 +5,7 @@
         DisclosureButton,
         DisclosurePanel
     } from '@rgossiaux/svelte-headlessui'
-    import { Bars3, Sun, Moon } from 'svelte-heros-v2'
+    import { Menu, Sun, Moon } from 'lucide-svelte'
     import { page } from '$app/stores'
 
     let theme: 'light' | 'dark' = $page.data.theme
@@ -78,7 +78,7 @@
                             class="inline-flex items-center justify-center rounded-md p-2 shadow hover:bg-green-900 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
                         >
                             <span class="sr-only">Open main menu</span>
-                            <Bars3
+                            <Menu
                                 class="block h-6 w-6 text-white"
                                 aria-hidden="true"
                             />

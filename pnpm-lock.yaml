@@ -12,12 +12,12 @@ specifiers:
   date-picker-svelte: ^2.2.5
   dayjs: ^1.11.7
   echarts: ^5.4.1
+  lucide-svelte: ^0.125.0
   postcss: ^8.4.21
   prettier: ^2.8.4
   prisma: ^4.11.0
   svelte: ^3.55.1
   svelte-check: ^2.10.3
-  svelte-heros-v2: ^0.3.21
   tailwindcss: ^3.2.7
   tslib: ^2.5.0
   typescript: ^4.9.5
@@ -26,6 +26,7 @@ specifiers:
 dependencies:
   '@prisma/client': 4.11.0_prisma@4.11.0
   echarts: 5.4.1
+  lucide-svelte: 0.125.0_svelte@3.55.1
 
 devDependencies:
   '@rgossiaux/svelte-headlessui': 1.0.2_svelte@3.55.1
@@ -42,7 +43,6 @@ devDependencies:
   prisma: 4.11.0
   svelte: 3.55.1
   svelte-check: 2.10.3_pehl75e5jsy22vp33udjja4soi
-  svelte-heros-v2: 0.3.21_svelte@3.55.1
   tailwindcss: 3.2.7_postcss@8.4.21
   tslib: 2.5.0
   typescript: 4.9.5
@@ -848,6 +848,14 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
+  /lucide-svelte/0.125.0_svelte@3.55.1:
+    resolution: {integrity: sha512-IP0uFGUBUe30H/dKhmvQbRkHQaFLM5klJljjLTCUSsrIAbGjPWkqPVjYUXl8VVqnFYLR9l8qJq1Bt4QYUq+hog==}
+    peerDependencies:
+      svelte: ^3.49.0
+    dependencies:
+      svelte: 3.55.1
+    dev: false
+
   /magic-string/0.25.9:
     resolution: {integrity: sha512-RmF0AsMzgt25qzqqLc1+MbHmhdx0ojF2Fvs4XnOqz2ZOBXzzkEwc/dJQZCYHAn7v1jbVOjAZfK8msRn4BxO4VQ==}
     dependencies:
@@ -1250,14 +1258,6 @@ packages:
       - sugarss
     dev: true
 
-  /svelte-heros-v2/0.3.21_svelte@3.55.1:
-    resolution: {integrity: sha512-IcFzoKuDJ6i0qiINfwwaDX5ZTsx/0A5EgB/LPZXMZa+BzxXnlalbcDwyV9ukNvdQLfxVamTb9HuZS677pD/rdQ==}
-    peerDependencies:
-      svelte: ^3.54.0
-    dependencies:
-      svelte: 3.55.1
-    dev: true
-
   /svelte-hmr/0.15.1_svelte@3.55.1:
     resolution: {integrity: sha512-BiKB4RZ8YSwRKCNVdNxK/GfY+r4Kjgp9jCLEy0DuqAKfmQtpL38cQK3afdpjw4sqSs4PLi3jIPJIFp259NkZtA==}
     engines: {node: ^12.20 || ^14.13.1 || >= 16}
@@ -1322,7 +1322,6 @@ packages:
   /svelte/3.55.1:
     resolution: {integrity: sha512-S+87/P0Ve67HxKkEV23iCdAh/SX1xiSfjF1HOglno/YTbSTW7RniICMCofWGdJJbdjw3S+0PfFb1JtGfTXE0oQ==}
     engines: {node: '>= 8'}
-    dev: true
 
   /tailwindcss/3.2.7_postcss@8.4.21:
     resolution: {integrity: sha512-B6DLqJzc21x7wntlH/GsZwEXTBttVSl1FtCzC8WP4oBc/NKef7kaax5jeihkkCEWc831/5NDJ9gRNDK6NEioQQ==}

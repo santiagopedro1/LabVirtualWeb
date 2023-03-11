@@ -1,6 +1,6 @@
 <script lang="ts">
     import { Dialog, DialogTitle } from '@rgossiaux/svelte-headlessui'
-    import { ExclamationTriangle } from 'svelte-heros-v2'
+    import { AlertCircle } from 'lucide-svelte'
 
     export let title: string
     export let message: string
@@ -25,7 +25,7 @@
                     <div
                         class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10"
                     >
-                        <ExclamationTriangle class="w-8 h-8 text-red-500" />
+                        <AlertCircle class="text-red-500" />
                     </div>
                     <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
                         <DialogTitle
