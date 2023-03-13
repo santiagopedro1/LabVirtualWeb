@@ -13,7 +13,7 @@ export function isValidDate(date: string) {
 
 export function getDateObj(date: string) {
     if (!isValidDate(date)) return null
-    return dayjs(date, 'DD/MM/YYYY').add(12, 'hours').toDate()
+    return dayjs(date, 'DD/MM/YYYY').add(4, 'hours').toDate()
 }
 
 export function getDateForQuery(date: Date) {
@@ -23,5 +23,5 @@ export function getDateForQuery(date: Date) {
         .toDate()
     const fimDia = dayjs.tz(date, 'America/Sao_Paulo').endOf('day').toDate()
 
-    return { inicioDia, fimDia, date }
+    return { inicioDia, fimDia }
 }
