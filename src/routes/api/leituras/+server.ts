@@ -66,6 +66,7 @@ export const GET: RequestHandler = async ({ request, url }) => {
             displayDate: dateObj.toLocaleDateString('pt-BR'),
             leituras,
             datas: {
+                dateObj,
                 inicioDia,
                 fimDia
             }

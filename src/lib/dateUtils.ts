@@ -23,5 +23,5 @@ export function getDateForQuery(date: Date) {
         .toDate()
     const fimDia = dayjs.tz(date, 'America/Sao_Paulo').endOf('day').toDate()
 
-    return { inicioDia, fimDia }
+    return { inicioDia, fimDia, date }
 }

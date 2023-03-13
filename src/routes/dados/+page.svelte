@@ -25,11 +25,15 @@
     }
 
     if ($page.url.searchParams.has('data')) {
-        const date = $page.url.searchParams.get('data')!
-        const parsedDate = getDateObj(date)
+        const data = $page.url.searchParams.get('data')!
+        const parsedDate = getDateObj(data)
         if (parsedDate && parsedDate < new Date()) selectedDate = parsedDate
-        const { inicioDia, fimDia } = getDateForQuery(parsedDate)
-        console.log(inicioDia.toUTCString(), fimDia.toUTCString())
+        const { inicioDia, fimDia, date } = getDateForQuery(parsedDate)
+        console.log(
+            inicioDia.toUTCString(),
+            fimDia.toUTCString(),
+            date.toUTCString()
+        )
     }
 
     async function fetchLeituras(data: Date) {
