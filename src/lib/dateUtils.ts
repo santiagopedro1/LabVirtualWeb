@@ -13,7 +13,7 @@ export function isValidDate(date: string) {
 
 export function getDateObj(date: string) {
     if (!isValidDate(date)) return null
-    return dayjs(date, ['DD/MM/YYYY', 'X']).startOf('day').toDate()
+    return dayjs(date, 'DD/MM/YYYY').add(12, 'hours').toDate()
 }
 
 export function getDateForQuery(date: Date) {
