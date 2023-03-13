@@ -24,7 +24,7 @@ export const GET: RequestHandler = async ({ request, url }) => {
 
     const { inicioDia, fimDia } = getDateForQuery(dateObj)
 
-    const leituras = await prisma.leituras_de_sensor.findMany({
+    const queryRes = await prisma.leituras_de_sensor.findMany({
         where: {
             data_hora: {
                 gte: inicioDia,
@@ -36,13 +36,36 @@ export const GET: RequestHandler = async ({ request, url }) => {
         }
     })
 
-    if (leituras.length === 0) return new Response(null, { status: 404 })
-    else
-        return new Response(
-            JSON.stringify({
-                displayDate: dateObj.toLocaleDateString('pt-BR'),
-                leituras: leituras
-            }),
-            { status: 200 }
-        )
+    if (queryRes.length === 0) return new Response(null, { status: 404 })
+
+    const leituras = queryRes.reduce((acc: Leitura, item) => {
+        const { id_sensor_de_usuario, data_hora, leitura } = item as LeituraDB
+
+        if (!(id_sensor_de_usuario in acc)) {
+            acc[id_sensor_de_usuario] = []
+        }
+
+        Object.keys(leitura).forEach(key => {
+            if (key.includes('_')) {
+                const newKey = key.replace('_', ' ')
+                leitura[newKey] = leitura[key]
+                delete leitura[key]
+            }
+        })
+
+        acc[id_sensor_de_usuario].push({
+            data_hora: data_hora.toISOString(),
+            ...leitura
+        })
+
+        return acc
+    }, {})
+
+    return new Response(
+        JSON.stringify({
+            displayDate: dateObj.toLocaleDateString('pt-BR'),
+            leituras
+        }),
+        { status: 200 }
+    )
 }

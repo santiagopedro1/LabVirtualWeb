@@ -1,6 +1,6 @@
 import { use, registerTheme } from 'echarts/core'
 import { SVGRenderer } from 'echarts/renderers'
-import { LineChart, BarChart } from 'echarts/charts'
+import { LineChart } from 'echarts/charts'
 import {
     GridComponent,
     TooltipComponent,
@@ -89,7 +89,7 @@ const LightTheme = {
             const header = `<span style = 'padding-bottom: 5px; margin-bottom: 5px; border-bottom: 1px solid black; display: block; font-weight: 900'>${data[0].name}</span>`
             let dadosA = `<span style = 'font-weight: 900'>Sensor A:</span> </br>`
             let dadosB = `<span style = 'font-weight: 900'>Sensor B:</span> </br>`
-
+            const Total = data.length
             data.forEach((item: any, index: number) => {
                 let formattedValue = Object.values(item.value)[
                     (index % 3) + 1
@@ -99,17 +99,11 @@ const LightTheme = {
                     formattedValue += 'ºC'
                 else if (item.seriesName.includes('Umidade'))
                     formattedValue += '%'
-                switch (item.seriesName.charAt(0)) {
-                    case 'a':
-                        dadosA += `${item.marker}${item.seriesName.slice(
-                            1
-                        )}: <b>${formattedValue}</b></br>`
-                        break
-                    case 'b':
-                        dadosB += `${item.marker}${item.seriesName.slice(
-                            1
-                        )}: <b>${formattedValue}</b></br>`
-                }
+
+                if (index < Total / 2)
+                    dadosA += `${item.marker}${item.seriesName}: <b>${formattedValue}</b></br>`
+                else
+                    dadosB += `${item.marker}${item.seriesName}: <b>${formattedValue}</b></br>`
             })
             return header + dadosA + dadosB
         },
@@ -208,7 +202,7 @@ const DarkTheme = {
             const header = `<span style = 'padding-bottom: 5px; margin-bottom: 5px; border-bottom: 1px solid white; display: block; font-weight: 900'>${data[0].name}</span>`
             let dadosA = `<span style = 'font-weight: 900'>Sensor A:</span> </br>`
             let dadosB = `<span style = 'font-weight: 900'>Sensor B:</span> </br>`
-
+            const Total = data.length
             data.forEach((item: any, index: number) => {
                 let formattedValue = Object.values(item.value)[
                     (index % 3) + 1
@@ -218,17 +212,11 @@ const DarkTheme = {
                     formattedValue += 'ºC'
                 else if (item.seriesName.includes('Umidade'))
                     formattedValue += '%'
-                switch (item.seriesName.charAt(0)) {
-                    case 'a':
-                        dadosA += `${item.marker}${item.seriesName.slice(
-                            1
-                        )}: <b>${formattedValue}</b></br>`
-                        break
-                    case 'b':
-                        dadosB += `${item.marker}${item.seriesName.slice(
-                            1
-                        )}: <b>${formattedValue}</b></br>`
-                }
+
+                if (index < Total / 2)
+                    dadosA += `${item.marker}${item.seriesName}: <b>${formattedValue}</b></br>`
+                else
+                    dadosB += `${item.marker}${item.seriesName}: <b>${formattedValue}</b></br>`
             })
             return header + dadosA + dadosB
         },
@@ -274,7 +262,6 @@ export default function chartInit() {
         TooltipComponent,
         LegendComponent,
         ToolboxComponent,
-        DatasetComponent,
-        BarChart
+        DatasetComponent
     ])
 }

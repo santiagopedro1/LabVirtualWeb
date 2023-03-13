@@ -2,29 +2,22 @@
     import datepicker from '$lib/datepicker'
 
     import Modal from '$components/modal.svelte'
+    import LineChart from '$components/lineChart.svelte'
 
     import { page } from '$app/stores'
     import { onMount } from 'svelte'
 
     import { getDateObj } from '$lib/dateUtils'
 
+    import { LineChartIcon } from 'lucide-svelte'
+
     //-----------------------------------------------------------------------------
 
-    type Leituras_de_sensor = {
-        id_sensor_de_usuario: number
-        data_hora: string
-        leitura: {
-            Condutividade: number
-            Temperatura: number
-            Umidade_gravimetrica: number
-        }
-    }
-    let LineChart: any
     let selectedDate: Date
     let dados: {
-        leituras: Leituras_de_sensor[]
+        leituras: Leitura
         displayDate: string
-    }
+    } | null = null
     const modal = {
         title: '',
         message: '',
@@ -34,10 +27,11 @@
     if ($page.url.searchParams.has('data')) {
         const date = $page.url.searchParams.get('data')!
         const parsedDate = getDateObj(date)
-        if (parsedDate) selectedDate = parsedDate
+        if (parsedDate && parsedDate < new Date()) selectedDate = parsedDate
     }
 
     async function fetchLeituras(data: Date) {
+        dados = null
         console.log('Buscando dados da API')
         fetch(`/api/leituras?date=${data.toLocaleDateString('pt-BR')}`, {
             headers: {
@@ -69,7 +63,6 @@
     }
 
     onMount(async () => {
-        LineChart = (await import('$components/lineChart.svelte')).default
         await import('$lib/css/datepicker.css')
         datepicker(
             (selectedDay: Date) => (selectedDate = selectedDay),
@@ -97,18 +90,15 @@
             class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full"
             on:click={() => fetchLeituras(selectedDate)}
         >
-            GERAR GRÁFICO
+            <LineChartIcon />
         </button>
     </section>
 
     {#if dados}
-        {#if dados.leituras.length > 0}
-            <svelte:component
-                this={LineChart}
-                data={dados.leituras}
-                displayDate={dados.displayDate}
-            />
-        {/if}
+        <LineChart
+            data={dados.leituras}
+            displayDate={dados.displayDate}
+        />
     {/if}
 
     <Modal
