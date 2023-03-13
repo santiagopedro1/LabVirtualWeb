@@ -7,7 +7,7 @@
     import { page } from '$app/stores'
     import { onMount } from 'svelte'
 
-    import { getDateObj } from '$lib/dateUtils'
+    import { getDateObj, getDateForQuery } from '$lib/dateUtils'
 
     import { LineChartIcon } from 'lucide-svelte'
 
@@ -28,6 +28,8 @@
         const date = $page.url.searchParams.get('data')!
         const parsedDate = getDateObj(date)
         if (parsedDate && parsedDate < new Date()) selectedDate = parsedDate
+        const { inicioDia, fimDia } = getDateForQuery(parsedDate)
+        console.log(inicioDia.toUTCString(), fimDia.toUTCString())
     }
 
     async function fetchLeituras(data: Date) {
@@ -42,6 +44,7 @@
                 switch (response.status) {
                     case 200:
                         dados = await response.json()
+                        console.log(dados.datas)
                         break
                     default:
                         showModal(
