@@ -13,7 +13,10 @@ export function isValidDate(date: string) {
 
 export function getDateObj(date: string) {
     if (!isValidDate(date)) return null
-    return dayjs(date, ['DD/MM/YYYY', 'X']).tz('America/Sao_Paulo').toDate()
+    return dayjs(date, ['DD/MM/YYYY', 'X'])
+        .tz('America/Sao_Paulo')
+        .startOf('day')
+        .toDate()
 }
 
 export function getDateForQuery(date: Date) {
