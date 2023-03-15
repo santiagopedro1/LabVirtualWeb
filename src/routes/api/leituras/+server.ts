@@ -64,11 +64,7 @@ export const GET: RequestHandler = async ({ request, url }) => {
     return new Response(
         JSON.stringify({
             displayDate: dateObj.toLocaleDateString('pt-BR'),
-            leituras,
-            datas: {
-                inicioDia,
-                fimDia
-            }
+            leituras
         }),
         { status: 200 }
     )

@@ -9,7 +9,14 @@
 
     import { getDateObj } from '$lib/dateUtils'
 
-    import { LineChartIcon } from 'lucide-svelte'
+    import { LineChartIcon, FileDown } from 'lucide-svelte'
+
+    import {
+        Menu,
+        MenuButton,
+        MenuItem,
+        MenuItems
+    } from '@rgossiaux/svelte-headlessui'
 
     //-----------------------------------------------------------------------------
 
@@ -62,6 +69,41 @@
         modal.isOpen = true
     }
 
+    async function download(format: 'json' | 'csv') {
+        await fetch(
+            `/api/download?date=${selectedDate.toLocaleDateString(
+                'pt-BR'
+            )}&format=${format}`,
+            {
+                headers: {
+                    key: '123',
+                    format: format
+                }
+            }
+        ).then(async response => {
+            switch (response.status) {
+                case 200:
+                    const blob = await response.blob()
+                    const url = window.URL.createObjectURL(blob)
+                    const a = document.createElement('a')
+                    a.href = url
+                    a.download = `dados-${selectedDate.toLocaleDateString(
+                        'pt-BR'
+                    )}.${format}`
+                    document.body.appendChild(a)
+                    a.click()
+                    a.remove()
+                    break
+                default:
+                    showModal(
+                        'Nada encontrado',
+                        'Não foram encontradas leituras para a data selecionada'
+                    )
+                    break
+            }
+        })
+    }
+
     onMount(async () => {
         await import('$lib/css/datepicker.css')
         datepicker(
@@ -87,11 +129,38 @@
             class="select-none"
         />
         <button
-            class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full"
+            title="Criar gráfico dos dados"
+            class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-md"
             on:click={() => fetchLeituras(selectedDate)}
         >
             <LineChartIcon />
         </button>
+        <Menu class="relative">
+            <MenuButton
+                title="Baixar dados"
+                class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-md aria-expanded:rounded-b-none aria-expanded:bg-green-700"
+            >
+                <FileDown />
+            </MenuButton>
+            <div class="absolute bg-green-500 rounded-b-md">
+                <MenuItems class="flex flex-col gap-3">
+                    <MenuItem class="flex-grow hover:bg-green-700">
+                        <button
+                            class="w-full px-4 py-3"
+                            id="csv"
+                            on:click={() => download('csv')}>CSV</button
+                        >
+                    </MenuItem>
+                    <MenuItem class="flex-grow hover:bg-green-700"
+                        ><button
+                            class="w-full px-4 py-3"
+                            id="json"
+                            on:click={() => download('json')}>JSON</button
+                        ></MenuItem
+                    >
+                </MenuItems>
+            </div>
+        </Menu>
     </section>
 
     {#if dados}
