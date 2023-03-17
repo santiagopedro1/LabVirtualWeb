@@ -8,22 +8,28 @@
 
     let myChart: ECharts
 
-    Object.values(data).forEach((_, i) => {
-        Object.values(data)[i].forEach((_, j) => {
-            Object.values(data)[i][j].data_hora = new Date(
-                Object.values(data)[i][j].data_hora
-            ).toLocaleTimeString('pt-BR', {
-                hour: '2-digit',
-                minute: '2-digit'
+    Object.entries(data).forEach(([key1, value1]) => {
+        value1.forEach(obj => {
+            obj.data_hora = new Date(obj.data_hora).toLocaleTimeString(
+                'pt-BR',
+                {
+                    hour: '2-digit',
+                    minute: '2-digit'
+                }
+            )
+            Object.entries(obj).forEach(([key2, value2], index) => {
+                if (index === 0) return
+                obj[`${key1}_${key2}`] = value2
+                delete obj[key2]
             })
         })
     })
 
     const TotalSensores = Object.keys(data).length
-    let TotalLeituras = 0
-    Object.values(data).forEach((_, i) => {
-        TotalLeituras += Object.keys(Object.values(data)[i][0]).length - 1
-    })
+    const TotalLeituras = Object.keys(data).reduce(
+        (total, key) => total + Object.keys(data[key][0]).length - 1,
+        0
+    )
 
     const chartOpts: EChartsOption = {
         tooltip: {},
@@ -53,7 +59,7 @@
             scale: true,
             nameLocation: 'middle',
             nameRotate: 90,
-            nameGap: 30
+            nameGap: 40
         },
 
         dataset: new Array(TotalSensores).fill(0).map((_, i) => ({
@@ -66,7 +72,7 @@
             emphasis: {
                 focus: 'series'
             },
-            datasetIndex: i < 3 ? 0 : 1
+            datasetIndex: i % TotalSensores
         }))
     }
 
