@@ -5,7 +5,6 @@ specifiers:
   '@rgossiaux/svelte-headlessui': ^1.0.2
   '@sveltejs/adapter-auto': ^1.0.3
   '@sveltejs/kit': ^1.11.0
-  '@types/lz-string': ^1.5.0
   air-datepicker: ^3.3.5
   autoprefixer: ^10.4.14
   axios: ^1.3.4
@@ -32,7 +31,6 @@ devDependencies:
   '@rgossiaux/svelte-headlessui': 1.0.2_svelte@3.56.0
   '@sveltejs/adapter-auto': 1.0.3_@sveltejs+kit@1.11.0
   '@sveltejs/kit': 1.11.0_svelte@3.56.0+vite@4.1.4
-  '@types/lz-string': 1.5.0
   air-datepicker: 3.3.5
   autoprefixer: 10.4.14_postcss@8.4.21
   axios: 1.3.4
@@ -377,13 +375,6 @@ packages:
 
   /@types/cookie/0.5.1:
     resolution: {integrity: sha512-COUnqfB2+ckwXXSFInsFdOAWQzCCx+a5hq2ruyj+Vjund94RJQd4LG2u9hnvJrTgunKAaax7ancBYlDrNYxA0g==}
-    dev: true
-
-  /@types/lz-string/1.5.0:
-    resolution: {integrity: sha512-s84fKOrzqqNCAPljhVyC5TjAo6BH4jKHw9NRNFNiRUY5QSgZCmVm5XILlWbisiKl+0OcS7eWihmKGS5akc2iQw==}
-    deprecated: This is a stub types definition. lz-string provides its own type definitions, so you do not need this installed.
-    dependencies:
-      lz-string: 1.5.0
     dev: true
 
   /@types/pug/2.0.6:
@@ -862,11 +853,6 @@ packages:
     dependencies:
       svelte: 3.56.0
     dev: false
-
-  /lz-string/1.5.0:
-    resolution: {integrity: sha512-h5bgJWpxJNswbU7qCrV0tIKQCaS3blPDrqKWx+QxzuzL1zGUzij9XCWLrSLsJPu5t+eWA/ycetzYAO5IOMcWAQ==}
-    hasBin: true
-    dev: true
 
   /magic-string/0.25.9:
     resolution: {integrity: sha512-RmF0AsMzgt25qzqqLc1+MbHmhdx0ojF2Fvs4XnOqz2ZOBXzzkEwc/dJQZCYHAn7v1jbVOjAZfK8msRn4BxO4VQ==}
