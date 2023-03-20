@@ -164,10 +164,12 @@
     </section>
 
     {#if dados}
-        <LineChart
-            data={dados.leituras}
-            displayDate={dados.displayDate}
-        />
+        <div class="mt-28">
+            <LineChart
+                data={dados.leituras}
+                displayDate={dados.displayDate}
+            />
+        </div>
     {/if}
 
     <Modal
