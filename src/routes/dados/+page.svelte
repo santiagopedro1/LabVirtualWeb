@@ -1,15 +1,15 @@
 <script lang="ts">
     import datepicker from '$lib/datepicker'
 
-    import Modal from '$lib/modal.svelte'
-    import LineChart from '$lib/lineChart.svelte'
+    import Modal from '$lib/Modal.svelte'
+    import DataChart from '$lib/DataChart.svelte'
 
     import { page } from '$app/stores'
     import { onMount } from 'svelte'
 
     import { getDateObj } from '$lib/dateUtils'
 
-    import { LineChartIcon, FileDown } from 'lucide-svelte'
+    import { LineChart, FileDown } from 'lucide-svelte'
 
     import {
         Menu,
@@ -133,7 +133,7 @@
             class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-md"
             on:click={() => fetchLeituras(selectedDate)}
         >
-            <LineChartIcon />
+            <LineChart />
         </button>
         <Menu class="relative">
             <MenuButton
@@ -165,7 +165,7 @@
 
     {#if dados}
         <div class="mt-28">
-            <LineChart
+            <DataChart
                 data={dados.leituras}
                 displayDate={dados.displayDate}
             />
