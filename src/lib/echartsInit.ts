@@ -86,26 +86,42 @@ const LightTheme = {
         backgroundColor: '#ffffff',
         borderColor: '#000000',
         formatter: (data: any) => {
-            const header = `<span style = 'padding-bottom: 5px; margin-bottom: 5px; border-bottom: 1px solid black; display: block; font-weight: 900'>${data[0].name}</span>`
-            let dadosA = `<span style = 'font-weight: 900'>Sensor A:</span> </br>`
-            let dadosB = `<span style = 'font-weight: 900'>Sensor B:</span> </br>`
-            const Total = data.length
-            data.forEach((item: any, index: number) => {
-                let formattedValue = Object.values(item.value)[
-                    (index % 3) + 1
-                ] as any
-                if (isNaN(formattedValue)) formattedValue = 'Sem leitura'
-                if (item.seriesName.includes('Temperatura'))
-                    formattedValue += 'ºC'
-                else if (item.seriesName.includes('Umidade'))
-                    formattedValue += '%'
-
-                if (index < Total / 2)
-                    dadosA += `${item.marker}${item.seriesName}: <b>${formattedValue}</b></br>`
-                else
-                    dadosB += `${item.marker}${item.seriesName}: <b>${formattedValue}</b></br>`
+            const header = `<span style = 'padding-bottom: 5px; margin-bottom: 5px; border-bottom: 1px solid white; display: block; font-weight: 900'>${data[0].name}</span>`
+            const attrMap = new Map()
+            data.forEach((item: any) => {
+                if (attrMap.has(item.seriesName.split('_')[0]))
+                    attrMap.set(
+                        item.seriesName.split('_')[0],
+                        attrMap.get(item.seriesName.split('_')[0]) + 1
+                    )
+                else attrMap.set(item.seriesName.split('_')[0], 1)
             })
-            return header + dadosA + dadosB
+
+            let sensors = ''
+            attrMap.forEach((value: number, key: string) => {
+                sensors += `<span style = 'font-weight: 900'>Sensor ${key}:</span> </br>`
+                for (let i = 0; i < value; i++) {
+                    const item = data.find((item: any) =>
+                        item.seriesName.includes(key)
+                    )
+                    if (item) {
+                        let formattedValue = Object.values(item.value)[
+                            (i % attrMap.size) + 1
+                        ] as any
+                        if (isNaN(formattedValue))
+                            formattedValue = 'Sem leitura'
+                        if (item.seriesName.includes('Temperatura'))
+                            formattedValue += 'ºC'
+                        else if (item.seriesName.includes('Umidade'))
+                            formattedValue += '%'
+                        sensors += `${item.marker}${
+                            item.seriesName.split('_')[1]
+                        }: <b>${formattedValue}</b></br>`
+                        data.splice(data.indexOf(item), 1)
+                    }
+                }
+            })
+            return header + sensors
         },
         textStyle: {
             color: '#1c1917',
@@ -199,7 +215,6 @@ const DarkTheme = {
         trigger: 'axis',
         backgroundColor: '#262626',
         formatter: (data: any) => {
-            console.log(data)
             const header = `<span style = 'padding-bottom: 5px; margin-bottom: 5px; border-bottom: 1px solid white; display: block; font-weight: 900'>${data[0].name}</span>`
             const attrMap = new Map()
             data.forEach((item: any) => {
@@ -213,7 +228,7 @@ const DarkTheme = {
 
             let sensors = ''
             attrMap.forEach((value: number, key: string) => {
-                sensors += `<span style = 'font-weight: 900'>${key}:</span> </br>`
+                sensors += `<span style = 'font-weight: 900'>Sensor ${key}:</span> </br>`
                 for (let i = 0; i < value; i++) {
                     const item = data.find((item: any) =>
                         item.seriesName.includes(key)
