@@ -1,8 +1,8 @@
 <script lang="ts">
     import datepicker from '$lib/datepicker'
 
-    import Modal from '$components/modal.svelte'
-    import LineChart from '$components/lineChart.svelte'
+    import Modal from '$lib/modal.svelte'
+    import LineChart from '$lib/lineChart.svelte'
 
     import { page } from '$app/stores'
     import { onMount } from 'svelte'
