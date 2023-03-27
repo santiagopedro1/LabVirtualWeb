@@ -24,7 +24,7 @@
     <div class="min-h-screen dark:text-white bg-white dark:bg-slate-900">
         <Disclosure
             as="nav"
-            class="bg-primary sticky inset-0 w-full"
+            class="bg-primary sticky inset-0 w-full z-50"
         >
             <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative">
                 <div class="flex h-16 items-center justify-between">
