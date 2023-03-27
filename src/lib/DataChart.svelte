@@ -3,10 +3,27 @@
     import type { EChartsOption, ECharts } from 'echarts'
     import { onMount } from 'svelte'
 
+    import ChartFilter from './ChartFilter.svelte'
+
     export let data: Leitura
     export let displayDate: string
 
     let myChart: ECharts
+
+    const sensores = [
+        {
+            id: 1,
+            name: '5TE',
+            dataRead: ['Condutividade', 'Temperatura', 'Umidade gravimetrica'],
+            description: 'Sensor na cova com palha'
+        },
+        {
+            id: 2,
+            name: '5TE',
+            dataRead: ['Condutividade', 'Temperatura', 'Umidade gravimetrica'],
+            description: 'Sensor na cova sem palha'
+        }
+    ]
 
     Object.entries(data).forEach(([key1, value1]) => {
         value1.forEach(obj => {
@@ -76,6 +93,15 @@
         }))
     }
 
+    function chartDataToggle(id: number, data: string) {
+        const chart = myChart
+
+        chart.dispatchAction({
+            type: 'legendToggleSelect',
+            name: `${id}_${data}`
+        })
+    }
+
     onMount(async () => {
         const chartInit = (await import('$lib/echartsInit')).default
         chartInit()
@@ -91,7 +117,14 @@
     })
 </script>
 
-<div
-    id="chart"
-    class="w-full h-96 md:h-[500px]"
-/>
+<div>
+    <ChartFilter
+        {sensores}
+        fn={chartDataToggle}
+    />
+
+    <div
+        id="chart"
+        class="w-full h-96 md:h-[500px]"
+    />
+</div>

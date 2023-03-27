@@ -164,7 +164,7 @@
     </section>
 
     {#if dados}
-        <div class="mt-28">
+        <div>
             <DataChart
                 data={dados.leituras}
                 displayDate={dados.displayDate}
