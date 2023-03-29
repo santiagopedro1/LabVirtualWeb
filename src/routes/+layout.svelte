@@ -10,7 +10,16 @@
 
     let theme: 'light' | 'dark' = $page.data.theme
 
-    const navItems = ['/', '/dados']
+    const navItems = [
+        {
+            name: 'início',
+            href: '/'
+        },
+        {
+            name: 'dados',
+            href: '/dados'
+        }
+    ]
 
     function toggleTheme() {
         theme = theme === 'dark' ? 'light' : 'dark'
@@ -24,7 +33,7 @@
     <div class="min-h-screen dark:text-white bg-white dark:bg-slate-900">
         <Disclosure
             as="nav"
-            class="bg-primary sticky inset-0 w-full z-50"
+            class="bg-primary w-full"
         >
             <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative">
                 <div class="flex h-16 items-center justify-between">
@@ -40,19 +49,17 @@
                             <div class="ml-10 flex items-baseline space-x-4">
                                 {#each navItems as item}
                                     <a
-                                        href={item}
-                                        class="{$page.url.pathname === item
+                                        href={item.href}
+                                        class="{$page.url.pathname === item.href
                                             ? 'bg-green-800 cursor-default'
                                             : 'hover:bg-green-700'}
                                         text-white text-md font-bold uppercase px-3 py-2 rounded-md"
                                         aria-current={$page.url.pathname ===
-                                        item
+                                        item.href
                                             ? 'page'
                                             : undefined}
                                     >
-                                        {item === '/'
-                                            ? 'início'
-                                            : item.slice(1)}
+                                        {item.name}
                                     </a>
                                 {/each}
                             </div>
@@ -92,36 +99,22 @@
                     {#each navItems as item}
                         <DisclosureButton
                             as="a"
-                            href={item}
-                            class="{$page.url.pathname === item
+                            href={item.href}
+                            class="{$page.url.pathname === item.href
                                 ? 'bg-green-800 cursor-default'
-                                : 'hover:bg-green-700'} block px-3 py-2 rounded-md text-white capitalize"
-                            aria-current={$page.url.pathname === item
+                                : 'hover:bg-green-700'} block px-3 py-2 rounded-md text-white uppercase"
+                            aria-current={$page.url.pathname === item.href
                                 ? 'page'
                                 : undefined}
                         >
-                            {item === '/' ? 'início' : item.slice(1)}
+                            {item.name}
                         </DisclosureButton>
                     {/each}
                 </div>
             </DisclosurePanel>
         </Disclosure>
-
-        <header class="bg-white dark:bg-slate-900 shadow dark:shadow-black">
-            <div class="mx-auto max-w-7xl py-4 px-4 sm:px-6 lg:px-8">
-                <h1 class="text-2xl capitalize font-bold tracking-tight">
-                    {navItems.find(item => item === $page.url.pathname)
-                        ? $page.url.pathname === '/'
-                            ? 'Início'
-                            : navItems
-                                  .find(item => item === $page.url.pathname)
-                                  ?.slice(1)
-                        : 'Página não encontrada'}
-                </h1>
-            </div>
-        </header>
         <main>
-            <div class="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
+            <div class="py-6 sm:px-6 lg:px-8">
                 <div
                     class="px-4 py-3 md:px-8 md:py-6 min-h-[78vh] dark:bg-zinc-900 bg-green-50"
                 >
