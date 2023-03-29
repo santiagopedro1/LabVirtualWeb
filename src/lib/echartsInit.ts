@@ -10,8 +10,19 @@ import {
     ToolboxComponent
 } from 'echarts/components'
 
+const colors = [
+    '#1f77b4',
+    '#ff7f0e',
+    '#2ca02c',
+    '#d62728',
+    '#17becf',
+    '#e377c2',
+    '#9467bd',
+    '#8c564b'
+]
+
 const LightTheme = {
-    color: ['#FDBF6F', '#B2DF8A', '#FB9A99', '#FF7F00', '#33A02C', '#E31A1C'],
+    color: colors,
     textStyle: {
         color: '#000000',
         fontSize: 16
