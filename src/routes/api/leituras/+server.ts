@@ -1,5 +1,5 @@
 import { prisma } from '$lib/prisma'
-import { getDateForQuery, getDateObj } from '$lib/dateUtils'
+import { getDateForQuery, getDateObj, fixDate } from '$lib/dateUtils'
 
 import type { RequestHandler } from './$types'
 
@@ -54,7 +54,7 @@ export const GET: RequestHandler = async ({ request, url }) => {
         })
 
         acc[id_sensor_de_usuario].push({
-            data_hora: data_hora.toISOString(),
+            data_hora: fixDate(data_hora, 3),
             ...leitura
         })
 
