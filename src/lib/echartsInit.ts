@@ -117,7 +117,7 @@ const LightTheme = {
                     )
                     if (item) {
                         let formattedValue = Object.values(item.value)[
-                            (i % attrMap.size) + 1
+                            (i % attrMap.get(key)) + 1
                         ] as any
                         if (isNaN(formattedValue))
                             formattedValue = 'Sem leitura'
@@ -246,7 +246,7 @@ const DarkTheme = {
                     )
                     if (item) {
                         let formattedValue = Object.values(item.value)[
-                            (i % attrMap.size) + 1
+                            (i % attrMap.get(key)) + 1
                         ] as any
                         if (isNaN(formattedValue))
                             formattedValue = 'Sem leitura'
