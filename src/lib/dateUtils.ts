@@ -1,5 +1,6 @@
 import dayjs from 'dayjs'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
+import { dev } from '$app/environment'
 
 dayjs.extend(customParseFormat)
 
@@ -13,9 +14,14 @@ export function getDateObj(date: string) {
 }
 
 export function getDateForQuery(date: Date) {
-    const inicioDia = dayjs(date).startOf('day').subtract(3, 'hours').toDate()
-    const fimDia = dayjs(date).endOf('day').subtract(3, 'hours').toDate()
-
+    let inicioDia: Date, fimDia: Date
+    if (dev) {
+        inicioDia = dayjs(date).startOf('day').subtract(3, 'hours').toDate()
+        fimDia = dayjs(date).endOf('day').subtract(3, 'hours').toDate()
+    } else {
+        inicioDia = dayjs(date).startOf('day').toDate()
+        fimDia = dayjs(date).endOf('day').toDate()
+    }
     return { inicioDia, fimDia }
 }
 
