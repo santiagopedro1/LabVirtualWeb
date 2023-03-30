@@ -55,7 +55,7 @@ export const GET: RequestHandler = async ({ request, url }) => {
         })
 
         acc[id_sensor_de_usuario].push({
-            data_hora: dev ? fixDate(data_hora, 3) : data_hora.toISOString(),
+            data_hora: dev ? fixDate(data_hora, 3) : fixDate(data_hora, 6),
             ...leitura
         })
 
