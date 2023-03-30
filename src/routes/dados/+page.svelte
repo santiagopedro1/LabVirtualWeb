@@ -135,14 +135,14 @@
         >
             <LineChart />
         </button>
-        <Menu class="relative">
+        <Menu class="relative z-50">
             <MenuButton
                 title="Baixar dados"
                 class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-md aria-expanded:rounded-b-none aria-expanded:bg-green-700"
             >
                 <FileDown />
             </MenuButton>
-            <div class="absolute bg-green-500 rounded-b-md">
+            <div class="absolute bg-green-500 rounded-b-md text-white">
                 <MenuItems class="flex flex-col gap-3">
                     <MenuItem class="flex-grow hover:bg-green-700">
                         <button
