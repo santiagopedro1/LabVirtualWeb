@@ -36,9 +36,6 @@ devDependencies:
   dayjs:
     specifier: ^1.11.7
     version: 1.11.7
-  flatpickr:
-    specifier: ^4.6.13
-    version: 4.6.13
   postcss:
     specifier: ^8.4.21
     version: 8.4.21
@@ -54,9 +51,6 @@ devDependencies:
   svelte-check:
     specifier: ^2.10.3
     version: 2.10.3(postcss@8.4.21)(svelte@3.58.0)
-  svelte-flatpickr:
-    specifier: ^3.3.2
-    version: 3.3.2(svelte@3.58.0)
   tailwindcss:
     specifier: ^3.3.1
     version: 3.3.1(postcss@8.4.21)
@@ -696,10 +690,6 @@ packages:
       to-regex-range: 5.0.1
     dev: true
 
-  /flatpickr@4.6.13:
-    resolution: {integrity: sha512-97PMG/aywoYpB4IvbvUJi0RQi8vearvU0oov1WW3k0WZPBMrTQVqekSX5CjSG/M4Q3i6A/0FKXC7RyAoAUUSPw==}
-    dev: true
-
   /follow-redirects@1.15.2:
     resolution: {integrity: sha512-VQLG33o04KaQ8uYi2tVNbdrWp1QWxNNea+nmIB4EVM28v0hmP17z7aG1+wAkNzVq4KeXTq3221ye5qTJP91JwA==}
     engines: {node: '>=4.0'}
@@ -1302,15 +1292,6 @@ packages:
       - sass
       - stylus
       - sugarss
-    dev: true
-
-  /svelte-flatpickr@3.3.2(svelte@3.58.0):
-    resolution: {integrity: sha512-VNJLYyLRDplI63oWX5hJylzAJc2VhTh3z9SNecfjtuPZmP6FZPpg9Fw7rXpkEV2DPovIWj2PtaVxB6Kp9r423w==}
-    peerDependencies:
-      svelte: ^3.31.0
-    dependencies:
-      flatpickr: 4.6.13
-      svelte: 3.58.0
     dev: true
 
   /svelte-hmr@0.15.1(svelte@3.58.0):
