@@ -123,9 +123,6 @@
                 newTheme = (await import('$lib/echartsInit')).buildTheme(
                     'light'
                 )
-
-            console.log(newTheme)
-
             myChart.setOption({
                 ...(newTheme as any)
             })
