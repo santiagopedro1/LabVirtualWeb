@@ -3,6 +3,8 @@
     import type { EChartsOption, ECharts } from 'echarts'
     import { onMount } from 'svelte'
 
+    import { theme } from '$lib/stores'
+
     import ChartFilter from './ChartFilter.svelte'
 
     export let data: Leitura
@@ -103,17 +105,31 @@
     }
 
     onMount(async () => {
-        const chartInit = (await import('$lib/echartsInit')).default
-        chartInit()
-        let theme = document.cookie.split('=')[1]
+        ;(await import('$lib/echartsInit')).chartInit()
         myChart = init(
             document.getElementById('chart') as HTMLDivElement,
-            theme,
+            $theme,
             {
                 renderer: 'svg'
             }
         )
         myChart.setOption(chartOpts)
+
+        theme.subscribe(async theme => {
+            let newTheme
+            if (theme === 'dark')
+                newTheme = (await import('$lib/echartsInit')).buildTheme('dark')
+            else
+                newTheme = (await import('$lib/echartsInit')).buildTheme(
+                    'light'
+                )
+
+            console.log(newTheme)
+
+            myChart.setOption({
+                ...(newTheme as any)
+            })
+        })
     })
 </script>
 

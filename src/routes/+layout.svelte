@@ -7,8 +7,9 @@
     } from '@rgossiaux/svelte-headlessui'
     import { Menu, Sun, Moon } from 'lucide-svelte'
     import { page } from '$app/stores'
+    import { theme } from '$lib/stores'
 
-    let theme: 'light' | 'dark' = $page.data.theme
+    theme.set($page.data.theme)
 
     const navItems = [
         {
@@ -22,14 +23,14 @@
     ]
 
     function toggleTheme() {
-        theme = theme === 'dark' ? 'light' : 'dark'
-        document.cookie = `labvTheme=${theme}; path=/; max-age=${
+        theme.update(t => (t === 'dark' ? 'light' : 'dark'))
+        document.cookie = `labvTheme=${$theme}; path=/; max-age=${
             60 * 60 * 24 * 365
         }; sameSite=lax;`
     }
 </script>
 
-<div class="{theme === 'dark' ? 'dark' : ''} min-h-screen">
+<div class="{$theme === 'dark' ? 'dark' : ''} min-h-screen">
     <div class="min-h-screen dark:text-white bg-white dark:bg-slate-900">
         <Disclosure
             as="nav"
@@ -70,9 +71,9 @@
                             on:click={toggleTheme}
                             class="h-10 w-10 flex justify-center items-center rounded-md text-white hover:text-black"
                         >
-                            {#if theme === 'dark'}
+                            {#if $theme === 'dark'}
                                 <Sun />
-                            {:else if theme === 'light'}
+                            {:else if $theme === 'light'}
                                 <Moon />
                             {:else}
                                 <span class="sr-only">Loading...</span>
