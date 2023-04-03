@@ -109,40 +109,31 @@ export const buildTheme = (theme: string) => {
                 const header = `<span style = 'padding-bottom: 5px; margin-bottom: 5px; border-bottom: 1px solid ${
                     isDark ? 'white' : 'black'
                 }; display: block; font-weight: 900'>${data[0].name}</span>`
-                const attrMap = new Map()
-                data.forEach((item: any) => {
-                    if (attrMap.has(item.seriesName.split('_')[0]))
-                        attrMap.set(
-                            item.seriesName.split('_')[0],
-                            attrMap.get(item.seriesName.split('_')[0]) + 1
+
+                const numberOfSensors = new Set(
+                    data.map((item: any) => item.seriesName.split('_')[0])
+                ).size
+
+                const dataMap = new Map(
+                    Array.from({ length: numberOfSensors }, (_, i) => {
+                        const sensorData = data.filter((item: any) =>
+                            item.seriesName.includes(i + 1)
                         )
-                    else attrMap.set(item.seriesName.split('_')[0], 1)
-                })
+                        return [i + 1, sensorData]
+                    })
+                )
 
                 let sensors = ''
-                attrMap.forEach((value: number, key: string) => {
+
+                dataMap.forEach((value: any, key: number) => {
                     sensors += `<span style = 'font-weight: 900'>Sensor ${key}:</span> </br>`
-                    for (let i = 0; i < value; i++) {
-                        const item = data.find((item: any) =>
-                            item.seriesName.includes(key)
-                        )
-                        if (item) {
-                            let formattedValue = Object.values(item.value)[
-                                (i % attrMap.get(key)) + 1
-                            ] as any
-                            if (isNaN(formattedValue))
-                                formattedValue = 'Sem leitura'
-                            if (item.seriesName.includes('Temperatura'))
-                                formattedValue += 'ºC'
-                            else if (item.seriesName.includes('Umidade'))
-                                formattedValue += '%'
-                            sensors += `${item.marker}${
-                                item.seriesName.split('_')[1]
-                            }: <b>${formattedValue}</b></br>`
-                            data.splice(data.indexOf(item), 1)
-                        }
-                    }
+                    value.forEach((item: any) => {
+                        sensors += `${item.marker}${
+                            item.seriesName.split('_')[1]
+                        }: <b>${item.data[item.seriesName]}</b></br>`
+                    })
                 })
+
                 return header + sensors
             },
             textStyle: {
@@ -191,3 +182,40 @@ export function chartInit() {
         DatasetComponent
     ])
 }
+
+// formatter: (data: any) => {
+//                 const header = `<span style = 'padding-bottom: 5px; margin-bottom: 5px; border-bottom: 1px solid ${
+//                     isDark ? 'white' : 'black'
+//                 }; display: block; font-weight: 900'>${data[0].name}</span>`
+//                 const attrMap = new Map()
+//                 data.forEach((item: any) => {
+//                     if (attrMap.has(item.seriesName.split('_')[0]))
+//                         attrMap.set(
+//                             item.seriesName.split('_')[0],
+//                             attrMap.get(item.seriesName.split('_')[0]) + 1
+//                         )
+//                     else attrMap.set(item.seriesName.split('_')[0], 1)
+//                 })
+
+//                 let sensors = ''
+//                 attrMap.forEach((value: number, key: string) => {
+//                     sensors += `<span style = 'font-weight: 900'>Sensor ${key}:</span> </br>`
+//                     for (let i = 0; i < value; i++) {
+//                         const item = data.find((item: any) =>
+//                             item.seriesName.includes(key)
+//                         )
+//                         if (item) {
+//                             let formattedValue = Object.values(item.value)[
+//                                 (i % attrMap.get(key)) + 1
+//                             ] as any
+//                             if (isNaN(formattedValue))
+//                                 formattedValue = 'Sem leitura'
+//                             sensors += `${item.marker}${
+//                                 item.seriesName.split('_')[1]
+//                             }: <b>${formattedValue}</b></br>`
+//                             data.splice(data.indexOf(item), 1)
+//                         }
+//                     }
+//                 })
+//                 return header + sensors
+//             },
