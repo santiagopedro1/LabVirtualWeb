@@ -1,5 +1,6 @@
 <script lang="ts">
-    import datepicker from '$lib/datepicker'
+    import flatpickr from 'flatpickr'
+    import { Portuguese } from 'flatpickr/dist/l10n/pt.js'
 
     import Modal from '$lib/Modal.svelte'
     import DataChart from '$lib/DataChart.svelte'
@@ -104,12 +105,27 @@
         })
     }
 
-    onMount(async () => {
-        await import('$lib/css/datepicker.css')
-        datepicker(
-            (selectedDay: Date) => (selectedDate = selectedDay),
-            selectedDate
-        )
+    onMount(() => {
+        const datepickerEl = document.getElementById(
+            'datepicker'
+        ) as HTMLInputElement
+
+        if (selectedDate) {
+            datepickerEl.value = selectedDate.toLocaleDateString('pt-BR')
+        }
+        import('flatpickr/dist/themes/material_green.css')
+
+        flatpickr(datepickerEl, {
+            locale: Portuguese,
+            dateFormat: 'd/m/Y',
+            allowInput: true,
+            maxDate: 'today',
+            onChange: dates => {
+                if (dates[0]) {
+                    selectedDate = dates[0]
+                }
+            }
+        })
     })
 </script>
 
@@ -124,9 +140,7 @@
         <input
             id="datepicker"
             type="text"
-            readonly
             placeholder="Pick a date"
-            class="select-none"
         />
         <button
             title="Criar gráfico dos dados"
