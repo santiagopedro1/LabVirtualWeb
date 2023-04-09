@@ -10,15 +10,18 @@ function JSONtoCSV(dados: Leitura): string {
             Object.keys(leitura).forEach(key => {
                 if (key === 'data_hora') {
                     headers.add('horario')
-                    const date = new Date(leitura[key]).toLocaleTimeString(
-                        'pt-BR',
-                        {
-                            hour: '2-digit',
-                            minute: '2-digit'
-                        }
-                    )
+                    const date = new Date(leitura[key])
+                    const hora =
+                        date.getHours() < 10
+                            ? `0${date.getHours()}`
+                            : date.getHours()
+                    const minuto =
+                        date.getMinutes() < 10
+                            ? `0${date.getMinutes()}`
+                            : date.getMinutes()
+                    const horario = `${hora}:${minuto}`
                     key = 'horario'
-                    rows[index][key] = date
+                    rows[index][key] = horario
                 } else {
                     headers.add(`${sensor}/${key}`)
                     rows[index][`${sensor}/${key}`] = leitura[key]
