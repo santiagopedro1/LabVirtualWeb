@@ -44,6 +44,17 @@ function JSONtoCSV(dados: Leitura): string {
     return csv
 }
 
+function fixDates(dados: Leitura): Leitura {
+    Object.keys(dados).forEach(sensor => {
+        Object.values(dados[sensor]).forEach(leitura => {
+            const newDate = new Date(leitura.data_hora)
+            newDate.setHours(newDate.getHours() - 3)
+            leitura.data_hora = newDate.toISOString()
+        })
+    })
+    return dados
+}
+
 export const GET: RequestHandler = async ({ request, url, fetch }) => {
     const headers = request.headers
     if (headers.get('key') !== '123')
@@ -71,7 +82,8 @@ export const GET: RequestHandler = async ({ request, url, fetch }) => {
             return new Response(null, { status: 400 })
 
         case 'json':
-            return new Response(JSON.stringify(leiturasJson.leituras), {
+            const leiturasJsonFixed = fixDates(leiturasJson.leituras)
+            return new Response(JSON.stringify(leiturasJsonFixed), {
                 headers: {
                     'Content-Type': 'application/json'
                 },
