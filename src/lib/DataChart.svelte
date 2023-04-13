@@ -16,13 +16,21 @@
         {
             id: 1,
             name: '5TE',
-            dataRead: ['Condutividade', 'Temperatura', 'Umidade gravimetrica'],
+            dataRead: [
+                'Condutividade',
+                'Temperatura(ºC)',
+                'Umidade gravimetrica(%)'
+            ],
             description: 'Sensor na cova com palha'
         },
         {
             id: 2,
             name: '5TE',
-            dataRead: ['Condutividade', 'Temperatura', 'Umidade gravimetrica'],
+            dataRead: [
+                'Condutividade',
+                'Temperatura(ºC)',
+                'Umidade gravimetrica(%)'
+            ],
             description: 'Sensor na cova sem palha'
         }
     ]
