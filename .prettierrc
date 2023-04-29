@@ -7,5 +7,5 @@
     "arrowParens": "avoid",
     "singleAttributePerLine": true,
     "singleQuote": true,
-    "plugins": ["prettier-plugin-svelte"]
+    "plugins": ["prettier-plugin-tailwindcss"]
 }
