@@ -1,13 +1,28 @@
 <script lang="ts">
-    import '$lib/css/app.css'
-    import {
-        Disclosure,
-        DisclosureButton,
-        DisclosurePanel
-    } from '@rgossiaux/svelte-headlessui'
-    import { Menu, Sun, Moon } from 'lucide-svelte'
+    import '$lib/css/theme.postcss'
+    import '@skeletonlabs/skeleton/styles/all.css'
+    import '$lib/css/app.postcss'
+
+    import { Menu, Sun, Moon, X } from 'lucide-svelte'
     import { page } from '$app/stores'
     import { theme } from '$lib/stores'
+    import {
+        AppBar,
+        AppShell,
+        Drawer,
+        drawerStore,
+        Modal,
+        storePopup
+    } from '@skeletonlabs/skeleton'
+    import {
+        computePosition,
+        autoUpdate,
+        flip,
+        shift,
+        offset,
+        arrow
+    } from '@floating-ui/dom'
+    storePopup.set({ computePosition, autoUpdate, flip, shift, offset, arrow })
 
     theme.set($page.data.theme)
 
@@ -28,100 +43,103 @@
             60 * 60 * 24 * 365
         }; sameSite=lax;`
     }
+
+    function openDrawer() {
+        drawerStore.open()
+    }
 </script>
 
-<div class="{$theme === 'dark' ? 'dark' : ''} min-h-screen">
-    <div class="min-h-screen dark:text-white bg-white dark:bg-slate-900">
-        <Disclosure
-            as="nav"
-            class="bg-primary w-full"
-        >
-            <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative">
-                <div class="flex h-16 items-center justify-between">
-                    <div class="flex items-center">
-                        <div class="flex-shrink-0">
-                            <img
-                                class="h-8 w-8"
-                                src="https://tailwindui.com/img/logos/mark.svg?color=white"
-                                alt="Your Company"
-                            />
-                        </div>
-                        <div class="hidden md:block">
-                            <div class="ml-10 flex items-baseline space-x-4">
-                                {#each navItems as item}
-                                    <a
-                                        href={item.href}
-                                        class="{$page.url.pathname === item.href
-                                            ? 'bg-green-800 cursor-default'
-                                            : 'hover:bg-green-700'}
-                                        text-white text-md font-bold uppercase px-3 py-2 rounded-md"
-                                        aria-current={$page.url.pathname ===
-                                        item.href
-                                            ? 'page'
-                                            : undefined}
-                                    >
-                                        {item.name}
-                                    </a>
-                                {/each}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="ml-auto flex items-center md:ml-6">
-                        <button
-                            on:click={toggleTheme}
-                            class="h-10 w-10 flex justify-center items-center rounded-md text-white hover:text-black"
-                        >
-                            {#if $theme === 'dark'}
-                                <Sun />
-                            {:else if $theme === 'light'}
-                                <Moon />
-                            {:else}
-                                <span class="sr-only">Loading...</span>
-                            {/if}
-                        </button>
-                    </div>
-                    <div class="-mr-2 flex md:hidden">
-                        <!-- Mobile menu button -->
-                        <DisclosureButton
-                            class="inline-flex items-center justify-center rounded-md p-2 shadow hover:bg-green-900 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-                        >
-                            <span class="sr-only">Open main menu</span>
-                            <Menu
-                                class="block h-6 w-6 text-white"
-                                aria-hidden="true"
-                            />
-                        </DisclosureButton>
-                    </div>
-                </div>
-            </div>
-
-            <DisclosurePanel class="md:hidden">
-                <div class="space-y-1 px-2 pt-2 pb-3 sm:px-3">
-                    {#each navItems as item}
-                        <DisclosureButton
-                            as="a"
+<Drawer
+    bgDrawer="bg-primary-500"
+    width=" w-1/2"
+    rounded="rounded-none"
+>
+    <div class="p-6 space-y-4">
+        <button on:click={drawerStore.close}>
+            <X color="white" />
+        </button>
+        <nav class="list-nav">
+            <ul>
+                {#each navItems as item}
+                    <li>
+                        <a
                             href={item.href}
                             class="{$page.url.pathname === item.href
-                                ? 'bg-green-800 cursor-default'
-                                : 'hover:bg-green-700'} block px-3 py-2 rounded-md text-white uppercase"
+                                ? 'bg-primary-800 cursor-default'
+                                : 'hover:bg-primary-700'}
+                                            text-white text-md font-bold uppercase px-3 py-2 rounded-md"
                             aria-current={$page.url.pathname === item.href
                                 ? 'page'
                                 : undefined}
                         >
                             {item.name}
-                        </DisclosureButton>
-                    {/each}
-                </div>
-            </DisclosurePanel>
-        </Disclosure>
-        <main>
-            <div class="py-6 sm:px-6 lg:px-8">
-                <div
-                    class="px-4 py-3 md:px-8 md:py-6 min-h-[78vh] dark:bg-zinc-900 bg-green-50"
-                >
-                    <slot />
-                </div>
-            </div>
-        </main>
+                        </a>
+                    </li>
+                {/each}
+            </ul>
+        </nav>
     </div>
-</div>
+</Drawer>
+
+<Modal duration={0} />
+
+<AppShell class={$theme === 'dark' ? 'dark bg-zinc-900' : 'bg-primary-50'}>
+    <svelte:fragment slot="header">
+        <AppBar
+            background="bg-primary-500"
+            padding="px-6 py-3"
+        >
+            <svelte:fragment slot="lead">
+                <button
+                    class="md:hidden mr-4"
+                    on:click={openDrawer}
+                >
+                    <Menu color="white" />
+                </button>
+                <img
+                    class="h-8 w-8 mr-8"
+                    src="https://tailwindui.com/img/logos/mark.svg?color=white"
+                    alt="Your Company"
+                />
+                <nav class="hidden md:block">
+                    <ul class="flex items-baseline space-x-4">
+                        {#each navItems as item}
+                            <li>
+                                <a
+                                    href={item.href}
+                                    class="{$page.url.pathname === item.href
+                                        ? 'bg-primary-900 cursor-default text-white'
+                                        : 'hover:bg-primary-800 text-white'}
+                                        text-md font-bold uppercase px-3 py-2 rounded-md"
+                                    aria-current={$page.url.pathname ===
+                                    item.href
+                                        ? 'page'
+                                        : undefined}
+                                >
+                                    {item.name}
+                                </a>
+                            </li>
+                        {/each}
+                    </ul>
+                </nav>
+            </svelte:fragment>
+            <svelte:fragment slot="trail">
+                <button
+                    on:click={toggleTheme}
+                    class="h-10 w-10 flex justify-center items-center rounded-md text-white hover:text-black"
+                >
+                    {#if $theme === 'dark'}
+                        <Sun />
+                    {:else if $theme === 'light'}
+                        <Moon />
+                    {:else}
+                        <span class="sr-only">Loading...</span>
+                    {/if}
+                </button>
+            </svelte:fragment>
+        </AppBar>
+    </svelte:fragment>
+    <main class="p-10 md:mx-8 md:my-6">
+        <slot />
+    </main>
+</AppShell>

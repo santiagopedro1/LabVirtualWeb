@@ -2,8 +2,12 @@
     import flatpickr from 'flatpickr'
     import { Portuguese } from 'flatpickr/dist/l10n/pt.js'
 
-    import Modal from '$lib/Modal.svelte'
     import DataChart from '$lib/DataChart.svelte'
+    import {
+        modalStore,
+        popup,
+        type PopupSettings
+    } from '@skeletonlabs/skeleton'
 
     import { page } from '$app/stores'
     import { onMount } from 'svelte'
@@ -12,12 +16,12 @@
 
     import { LineChart, FileDown } from 'lucide-svelte'
 
-    import {
-        Menu,
-        MenuButton,
-        MenuItem,
-        MenuItems
-    } from '@rgossiaux/svelte-headlessui'
+    let popupCombobox: PopupSettings = {
+        event: 'focus-click',
+        target: 'combobox',
+        placement: 'bottom',
+        closeQuery: 'li'
+    }
 
     //-----------------------------------------------------------------------------
 
@@ -26,11 +30,6 @@
         leituras: Leitura
         displayDate: string
     } | null = null
-    const modal = {
-        title: '',
-        message: '',
-        isOpen: false
-    }
 
     if ($page.url.searchParams.has('data')) {
         const data = $page.url.searchParams.get('data')!
@@ -52,22 +51,18 @@
                         dados = await response.json()
                         break
                     default:
-                        showModal(
-                            'Nada encontrado',
-                            'Não foram encontradas leituras para a data selecionada'
-                        )
+                        modalStore.trigger({
+                            type: 'alert',
+                            title: 'Nada encontrado',
+                            body: 'Não foram encontradas leituras para a data selecionada',
+                            buttonTextCancel: 'Ok'
+                        })
                         break
                 }
             })
             .catch(err => {
                 console.error(err)
             })
-    }
-
-    function showModal(title: string, message: string) {
-        modal.title = title
-        modal.message = message
-        modal.isOpen = true
     }
 
     async function download(format: 'json' | 'csv') {
@@ -96,10 +91,12 @@
                     a.remove()
                     break
                 default:
-                    showModal(
-                        'Nada encontrado',
-                        'Não foram encontradas leituras para a data selecionada'
-                    )
+                    modalStore.trigger({
+                        type: 'alert',
+                        title: 'Nada encontrado',
+                        body: 'Não foram encontradas leituras para a data selecionada',
+                        buttonTextCancel: 'Ok'
+                    })
                     break
             }
         })
@@ -149,32 +146,14 @@
         >
             <LineChart />
         </button>
-        <Menu class="relative z-50">
-            <MenuButton
-                title="Baixar dados"
-                class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-md aria-expanded:rounded-b-none aria-expanded:bg-green-700"
-            >
-                <FileDown />
-            </MenuButton>
-            <div class="absolute bg-green-500 rounded-b-md text-white">
-                <MenuItems class="flex flex-col gap-3">
-                    <MenuItem class="flex-grow hover:bg-green-700">
-                        <button
-                            class="w-full px-4 py-3"
-                            id="csv"
-                            on:click={() => download('csv')}>CSV</button
-                        >
-                    </MenuItem>
-                    <MenuItem class="flex-grow hover:bg-green-700"
-                        ><button
-                            class="w-full px-4 py-3"
-                            id="json"
-                            on:click={() => download('json')}>JSON</button
-                        ></MenuItem
-                    >
-                </MenuItems>
-            </div>
-        </Menu>
+
+        <button
+            title="Download dos dados"
+            class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-md"
+            use:popup={popupCombobox}
+        >
+            <FileDown />
+        </button>
     </section>
 
     {#if dados}
@@ -185,10 +164,26 @@
             />
         </div>
     {/if}
-
-    <Modal
-        bind:isOpen={modal.isOpen}
-        title={modal.title}
-        message={modal.message}
-    />
 </section>
+
+<div
+    class="card shadow-xl py-2"
+    data-popup="combobox"
+>
+    <ul class="space-y-1 mx-px flex flex-col w-32 dark:text-white text-black">
+        <li class="hover:bg-surface-200-700-token">
+            <button
+                class="p-2 w-full"
+                on:click={() => download('json')}>JSON</button
+            >
+        </li>
+        <li class="hover:bg-surface-200-700-token">
+            <button
+                class="p-2 w-full"
+                on:click={() => download('csv')}>CSV</button
+            >
+        </li>
+    </ul>
+    <!-- Arrow -->
+    <div class="arrow bg-surface-100-800-token" />
+</div>
