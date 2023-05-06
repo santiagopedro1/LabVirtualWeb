@@ -1,16 +1,14 @@
 <script lang="ts">
-    import { init } from 'echarts'
     import type { EChartsOption, ECharts } from 'echarts'
     import { onMount } from 'svelte'
 
     import { theme } from '$lib/stores'
 
-    import ChartFilter from './ChartFilter.svelte'
-
     export let data: Leitura
     export let displayDate: string
 
     let myChart: ECharts
+    let chartFilter: typeof import('$lib/ChartFilter.svelte').default
 
     const sensores = [
         {
@@ -113,13 +111,14 @@
     }
 
     onMount(async () => {
+        chartFilter = await import('$lib/ChartFilter.svelte').then(
+            ({ default: ChartFilter }) => ChartFilter
+        )
         ;(await import('$lib/echartsInit')).chartInit()
-        myChart = init(
-            document.getElementById('chart') as HTMLDivElement,
-            $theme,
-            {
+        myChart = await import('echarts').then(({ init }) =>
+            init(document.getElementById('chart') as HTMLDivElement, $theme, {
                 renderer: 'svg'
-            }
+            })
         )
         myChart.setOption(chartOpts)
 
@@ -139,7 +138,8 @@
 </script>
 
 <div>
-    <ChartFilter
+    <svelte:component
+        this={chartFilter}
         {sensores}
         fn={chartDataToggle}
     />

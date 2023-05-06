@@ -1,8 +1,4 @@
 <script lang="ts">
-    import flatpickr from 'flatpickr'
-    import { Portuguese } from 'flatpickr/dist/l10n/pt.js'
-
-    import DataChart from '$lib/DataChart.svelte'
     import {
         modalStore,
         popup,
@@ -12,52 +8,20 @@
     import { page } from '$app/stores'
     import { onMount } from 'svelte'
 
-    import { getDateObj } from '$lib/dateUtils'
-
     import { LineChart, FileDown } from 'lucide-svelte'
 
+    let selectedDate: Date
     let popupCombobox: PopupSettings = {
         event: 'focus-click',
         target: 'combobox',
         placement: 'bottom',
         closeQuery: 'li'
     }
-
-    //-----------------------------------------------------------------------------
-    let selectedDate: Date
     let dados: {
         leituras: Leitura
         displayDate: string
     } | null = null
-
-    if ($page.url.searchParams.has('data')) {
-        const data = $page.url.searchParams.get('data')!
-        const parsedDate = getDateObj(data)
-        if (parsedDate && parsedDate < new Date()) selectedDate = parsedDate
-    }
-
-    onMount(() => {
-        const datepickerEl = document.getElementById(
-            'datepicker'
-        ) as HTMLInputElement
-
-        if (selectedDate) {
-            datepickerEl.value = selectedDate.toLocaleDateString('pt-BR')
-        }
-        import('flatpickr/dist/themes/material_green.css')
-
-        flatpickr(datepickerEl, {
-            locale: Portuguese,
-            dateFormat: 'd/m/Y',
-            allowInput: true,
-            maxDate: 'today',
-            onChange: dates => {
-                if (dates[0]) {
-                    selectedDate = dates[0]
-                }
-            }
-        })
-    })
+    let dataChartComponent: typeof import('$lib/DataChart.svelte').default
 
     async function handleSubmit(foda: Event) {
         const form = foda.target as HTMLFormElement
@@ -75,6 +39,7 @@
             }
         })
         if (res.ok) {
+            dataChartComponent = (await import('$lib/DataChart.svelte')).default
             if (params.get('download')) {
                 const blob = await res.blob()
                 const url = window.URL.createObjectURL(blob)
@@ -112,6 +77,37 @@
         input.value = format
         target.form?.appendChild(input)
     }
+
+    onMount(async () => {
+        let date: string | null = null
+        if ($page.url.searchParams.has('data')) {
+            date = $page.url.searchParams.get('data')
+        }
+        const datepickerEl = document.getElementById(
+            'datepicker'
+        ) as HTMLInputElement
+        if (date) {
+            datepickerEl.value = date
+        }
+        import('flatpickr/dist/themes/material_green.css')
+        import('flatpickr')
+            .then(({ default: flatpickr }) => flatpickr)
+            .then(flatpickr => {
+                import('flatpickr/dist/l10n/pt.js').then(({ Portuguese }) => {
+                    flatpickr.localize(Portuguese)
+                    flatpickr(datepickerEl, {
+                        dateFormat: 'd/m/Y',
+                        allowInput: true,
+                        maxDate: 'today',
+                        onChange: dates => {
+                            if (dates[0]) {
+                                selectedDate = dates[0]
+                            }
+                        }
+                    })
+                })
+            })
+    })
 </script>
 
 <svelte:head>
@@ -206,7 +202,8 @@
 
     {#if dados}
         <div>
-            <DataChart
+            <svelte:component
+                this={dataChartComponent}
                 data={dados.leituras}
                 displayDate={dados.displayDate}
             />

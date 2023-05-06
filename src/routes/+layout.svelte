@@ -139,7 +139,7 @@
             </svelte:fragment>
         </AppBar>
     </svelte:fragment>
-    <main class="p-10 md:mx-8 md:my-6">
+    <div class="p-10 md:mx-8 md:my-6">
         <slot />
-    </main>
+    </div>
 </AppShell>
