@@ -36,34 +36,6 @@
         if (parsedDate && parsedDate < new Date()) selectedDate = parsedDate
     }
 
-    async function fetchLeituras(data: Date) {
-        dados = null
-        console.log('Buscando dados da API')
-        fetch(`/api/leituras?date=${data.toLocaleDateString('pt-BR')}`, {
-            headers: {
-                key: '123'
-            }
-        })
-            .then(async response => {
-                switch (response.status) {
-                    case 200:
-                        dados = await response.json()
-                        break
-                    default:
-                        modalStore.trigger({
-                            type: 'alert',
-                            title: 'Nada encontrado',
-                            body: 'Não foram encontradas leituras para a data selecionada',
-                            buttonTextCancel: 'Ok'
-                        })
-                        break
-                }
-            })
-            .catch(err => {
-                console.error(err)
-            })
-    }
-
     onMount(() => {
         const datepickerEl = document.getElementById(
             'datepicker'
@@ -115,6 +87,14 @@
                 a.click()
                 a.remove()
             } else dados = await res.json()
+        } else {
+            const body = await res.json()
+            modalStore.trigger({
+                type: 'alert',
+                title: 'Erro ao buscar dados',
+                body: body.message,
+                buttonTextCancel: 'Ok'
+            })
         }
 
         const inputs = document.querySelectorAll(

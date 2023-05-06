@@ -1,4 +1,4 @@
-import { json } from '@sveltejs/kit'
+import { json, error } from '@sveltejs/kit'
 import { prisma } from '$lib/prisma'
 import { getDateForQuery, getDateObj, fixDate } from '$lib/dateUtils'
 
@@ -6,9 +6,16 @@ import type { RequestHandler } from './$types'
 
 export const GET: RequestHandler = async ({ request, url }) => {
     const headers = request.headers
-    if (headers.get('key') !== '123')
+    if (!headers.get('key'))
         return json(
             { message: 'Sem chave de API' },
+            {
+                status: 403
+            }
+        )
+    if (headers.get('key') !== '123')
+        return json(
+            { message: 'Chave de API errada' },
             {
                 status: 403
             }
@@ -18,7 +25,7 @@ export const GET: RequestHandler = async ({ request, url }) => {
     const download = url.searchParams.get('download')
     if (!date)
         return json(
-            { message: 'Sem data' },
+            { message: 'Nenhuma data foi fornecida' },
             {
                 status: 400
             }
@@ -47,7 +54,11 @@ export const GET: RequestHandler = async ({ request, url }) => {
         }
     })
 
-    if (queryRes.length === 0) return new Response(null, { status: 404 })
+    if (queryRes.length === 0)
+        return json(
+            { message: 'Sem dados para a data fornecida' },
+            { status: 404 }
+        )
 
     const leituras = queryRes.reduce((acc: Leitura, item) => {
         const { id_sensor_de_usuario, data_hora, leitura } = item as LeituraDB
