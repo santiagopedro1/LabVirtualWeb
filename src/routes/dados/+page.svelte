@@ -138,20 +138,18 @@
     <title>Dados - Labvirtual</title>
 </svelte:head>
 
-<section
-    on:submit|preventDefault={handleSubmit}
-    class="dark:text-white"
->
+<section class="dark:text-white">
     <p>Selecione uma data para ver os dados</p>
 
     <form
         action="/api/leituras"
+        on:submit|preventDefault={handleSubmit}
         class="flex gap-6 items-center my-4"
     >
         <input
             id="datepicker"
             type="text"
-            placeholder="Pick a date"
+            placeholder="Escolha uma data"
             name="data"
             required
         />
