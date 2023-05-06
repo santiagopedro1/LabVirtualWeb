@@ -119,36 +119,64 @@
 </svelte:head>
 
 <section class="dark:text-white">
-    <p>Selecione uma data para ver os dados</p>
-
     <form
         action="/api/leituras"
         on:submit|preventDefault={handleSubmit}
-        class="flex gap-6 items-center my-4"
+        class="flex flex-wrap gap-6 items-center my-4"
     >
-        <input
-            id="datepicker"
-            type="text"
-            placeholder="Escolha uma data"
-            name="data"
-            required
-        />
-        <button
-            type="submit"
-            title="Criar gráfico dos dados"
-            class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-md"
-        >
-            <LineChart />
-        </button>
-
-        <button
-            type="button"
-            title="Download dos dados"
-            class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-md"
-            use:popup={popupCombobox}
-        >
-            <FileDown />
-        </button>
+        <div class="space-y-2">
+            <label for="datepicker">Data</label>
+            <input
+                id="datepicker"
+                type="text"
+                placeholder="Escolha uma data"
+                name="data"
+                required
+            />
+        </div>
+        <div class="space-y-2 rounded-lg outline outline-primary-500 p-2">
+            <legend>Quais dados deseja ver</legend>
+            <div class="flex space-x-2 p-3">
+                <label class="flex items-center space-x-2">
+                    <input
+                        class="radio"
+                        type="radio"
+                        checked
+                        name="userId"
+                        value="1"
+                    />
+                    <p>Solo</p>
+                </label>
+                <label class="flex items-center space-x-2">
+                    <input
+                        class="radio"
+                        type="radio"
+                        name="userId"
+                        value="2"
+                    />
+                    <p>Abelhas</p>
+                </label>
+            </div>
+            <p>No momento isto não está funcionando</p>
+            <p>Só estão sendo pegos os dados do solo</p>
+        </div>
+        <div class="space-x-3">
+            <button
+                type="submit"
+                title="Criar gráfico dos dados"
+                class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-md"
+            >
+                <LineChart />
+            </button>
+            <button
+                type="button"
+                title="Download dos dados"
+                class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-md"
+                use:popup={popupCombobox}
+            >
+                <FileDown />
+            </button>
+        </div>
         <div
             class="card shadow-xl py-2"
             data-popup="combobox"

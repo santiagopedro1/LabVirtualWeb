@@ -23,6 +23,9 @@ export const GET: RequestHandler = async ({ request, url }) => {
 
     const date = url.searchParams.get('data')
     const download = url.searchParams.get('download')
+    const userId = url.searchParams.get('userId')
+
+    console.log(userId)
     if (!date)
         return json(
             { message: 'Nenhuma data foi fornecida' },
