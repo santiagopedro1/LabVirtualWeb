@@ -41,16 +41,9 @@
             const user2 = await fetch('/api/dados_usuario?userId=2')
 
             if (user1.ok && user2.ok) {
-                await Promise.all([user1, user2]).then(
-                    async ([user1, user2]) => {
-                        const users = await Promise.all([
-                            user1.json(),
-                            user2.json()
-                        ])
-                        localStorage.setItem('users', JSON.stringify(users))
-                        return users
-                    }
-                )
+                const users = await Promise.all([user1.json(), user2.json()])
+                localStorage.setItem('users', JSON.stringify(users))
+                return users
             } else {
                 modalStore.trigger({
                     type: 'alert',
