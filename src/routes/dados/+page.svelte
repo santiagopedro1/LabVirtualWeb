@@ -65,10 +65,10 @@
         }
     }
 
-    async function handleSubmit(foda: Event) {
+    async function handleSubmit(ev: Event) {
         dados = null
         sensores = []
-        const form = foda.target as HTMLFormElement
+        const form = ev.target as HTMLFormElement
 
         const params = new URLSearchParams(
             new FormData(form) as unknown as Record<string, string>
