@@ -19,7 +19,7 @@ model Leituras_de_sensor {
 model Sensores {
   id          Int    @id @default(autoincrement())
   nome        String @db.VarChar(255)
-  dados_lidos Json
+  dados_lidos String @db.VarChar(255)
 }
 
 model Sensores_de_usuario {
@@ -27,8 +27,6 @@ model Sensores_de_usuario {
   id_de_usuario Int
   id_de_sensor  Int
   descricao     String @db.VarChar(255)
-
-  @@unique([id_de_usuario, id_de_sensor], map: "id_de_usuario")
 }
 
 model Usuarios {
