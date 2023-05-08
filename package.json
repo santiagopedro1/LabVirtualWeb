@@ -1,6 +1,6 @@
 {
-    "name": "my-app",
-    "version": "0.0.1",
+    "name": "labvirtualweb",
+    "version": "1.0.0",
     "private": true,
     "scripts": {
         "dev": "vite dev",
