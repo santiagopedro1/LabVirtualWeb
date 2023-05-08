@@ -2,6 +2,7 @@
     import {
         modalStore,
         popup,
+        ProgressRadial,
         type PopupSettings
     } from '@skeletonlabs/skeleton'
 
@@ -9,6 +10,12 @@
     import { onMount } from 'svelte'
 
     import { LineChart, FileDown } from 'lucide-svelte'
+
+    type Sensor = {
+        nome: string
+        descricao: string
+        dados_lidos: string
+    }
 
     let selectedDate: Date
     let popupCombobox: PopupSettings = {
@@ -20,15 +27,69 @@
     let dados: {
         leituras: Leitura
         displayDate: string
-    } | null = null
+    } | null
+
+    let userId: number
+    let sensores: Sensor[] = []
+
     let dataChartComponent: typeof import('$lib/DataChart.svelte').default
 
+    async function getUserData() {
+        const usersLS = localStorage.getItem('users')
+        if (!usersLS) {
+            const user1 = await fetch('/api/dados_usuario?userId=1')
+            const user2 = await fetch('/api/dados_usuario?userId=2')
+
+            if (user1.ok && user2.ok) {
+                await Promise.all([user1, user2]).then(
+                    async ([user1, user2]) => {
+                        const users = await Promise.all([
+                            user1.json(),
+                            user2.json()
+                        ])
+                        localStorage.setItem('users', JSON.stringify(users))
+                        return users
+                    }
+                )
+            } else {
+                modalStore.trigger({
+                    type: 'alert',
+                    title: 'Erro ao buscar dados',
+                    body: 'Não foi possível buscar os dados dos usuários',
+                    buttonTextCancel: 'Ok'
+                })
+            }
+        } else {
+            const users = JSON.parse(usersLS)
+            return users
+        }
+    }
+
     async function handleSubmit(foda: Event) {
+        dados = null
+        sensores = []
         const form = foda.target as HTMLFormElement
 
         const params = new URLSearchParams(
             new FormData(form) as unknown as Record<string, string>
         )
+
+        // userId = Number(params.get('userId'))
+        userId = 1
+
+        const users = await getUserData()
+
+        const user = users[userId - 1]
+        user.user.sensores_do_usuario.forEach((sensor: any) => {
+            sensores.push({
+                nome: user.sensores[sensor.id_de_sensor - 1].nome,
+                descricao: sensor.descricao,
+                dados_lidos:
+                    user.sensores[sensor.id_de_sensor - 1].dados_lidos.split(
+                        ','
+                    )
+            })
+        })
 
         const url = new URL(form.action)
         url.search = params.toString()
@@ -206,6 +267,14 @@
                 this={dataChartComponent}
                 data={dados.leituras}
                 displayDate={dados.displayDate}
+                {sensores}
+            />
+        </div>
+    {:else if dados === null}
+        <div class="flex justify-center items-center mt-12">
+            <ProgressRadial
+                meter="stroke-primary-500"
+                track="stroke-green-300 dark:stroke-green-100"
             />
         </div>
     {/if}

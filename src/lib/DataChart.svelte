@@ -4,34 +4,19 @@
 
     import { theme } from '$lib/stores'
 
+    type Sensor = {
+        nome: string
+        descricao: string
+        dados_lidos: string
+    }
+
     export let data: Leitura
     export let displayDate: string
 
     let myChart: ECharts
     let chartFilter: typeof import('$lib/ChartFilter.svelte').default
 
-    const sensores = [
-        {
-            id: 1,
-            name: '5TE',
-            dataRead: [
-                'Condutividade',
-                'Temperatura(ºC)',
-                'Umidade gravimetrica(%)'
-            ],
-            description: 'Sensor na cova com palha'
-        },
-        {
-            id: 2,
-            name: '5TE',
-            dataRead: [
-                'Condutividade',
-                'Temperatura(ºC)',
-                'Umidade gravimetrica(%)'
-            ],
-            description: 'Sensor na cova sem palha'
-        }
-    ]
+    export let sensores: Sensor[]
 
     Object.entries(data).forEach(([key1, value1]) => {
         value1.forEach(obj => {

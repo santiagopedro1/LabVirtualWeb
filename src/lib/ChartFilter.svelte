@@ -1,35 +1,34 @@
 <script lang="ts">
     import { SlideToggle } from '@skeletonlabs/skeleton'
 
-    export let sensores: SensorData[]
-    export let fn: (id: number, data: string) => void
-
-    interface SensorData {
-        id: number
-        dataRead: string[]
-        name: string
-        description: string
+    type Sensor = {
+        nome: string
+        descricao: string
+        dados_lidos: string
     }
+
+    export let sensores: Sensor[]
+    export let fn: (id: number, data: string) => void
 </script>
 
 <div class="flex justify-around">
-    {#each sensores as sensor}
+    {#each sensores as sensor, index}
         <div class="flex flex-col items-center">
             <span
-                title="Tipo: {sensor.name}"
-                class="text-xl capitalize font-bold">Sensor {sensor.id}</span
+                title="Tipo: {sensor.nome}"
+                class="text-xl capitalize font-bold">Sensor {index + 1}</span
             >
             <div class="flex flex-col gap-3 items-center">
-                <span class="text-xs">({sensor.description})</span>
-                {#each sensor.dataRead as data}
+                <span class="text-xs">({sensor.descricao})</span>
+                {#each sensor.dados_lidos as dados}
                     <div class="flex space-x-4">
-                        <p>{data}</p>
+                        <p>{dados}</p>
                         <SlideToggle
                             name="slider-label"
                             active="bg-secondary-500"
                             size="sm"
                             checked
-                            on:change={() => fn(sensor.id, data)}
+                            on:change={() => fn(index + 1, dados)}
                         />
                     </div>
                 {/each}
