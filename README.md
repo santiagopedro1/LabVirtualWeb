@@ -1,68 +1,38 @@
-# Labvirtual_alpha
+# create-svelte
 
-Projeto Alpha, utilizando:
+Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
 
-- HTML;
-- CSS;
-- Javascript.
+## Creating a project
 
-Bibliotecas utillizadas:
+If you're seeing this, you've probably already done this step. Congrats!
 
-- Echarts.js.
-- Axios.
+```bash
+# create a new project in the current directory
+npm create svelte@latest
 
-# Changelogs
+# create a new project in my-app
+npm create svelte@latest my-app
+```
 
-### 23/08/2022
+## Developing
 
-- Terminado o site para a versão 1.0;
-- Mudado as tabs para lista;
-- Mudada a função para carregar os dados;
-- Mudado o renderer dos gráficos para canvas.
+Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
 
-### 14/02/2022
+```bash
+npm run dev
 
-- Adicionado fucionalidade de escolher data pra mostrar os dados na aba de Dias Anteriores;
-- Formatação de códigos.
+# or start the server and open the app in a new browser tab
+npm run dev -- --open
+```
 
-### 25/01/2022
+## Building
 
-- Fora apexcharts, Echarts agora é a biblioteca de gráficos 100%;
-- Formatação de códigos.
+To create a production version of your app:
 
-### 16/01/2022
+```bash
+npm run build
+```
 
-- Os códigos do Echarts foram mesclados com este;
-- Arquivo de dados agora é em JSON.
+You can preview the production build with `npm run preview`.
 
-### 08/01/2022
-
-- Limpeza do arquivo apexcharts.js;
-- Novo menu de navegação;
-- Atualização do arquivo README.
-
-### 29/12/2021
-
-- Adicionados exemplos de seleção de datas;
-- Arquivos css, js e de dados agora tem suas próprias pastas.
-
-### 19/12/2021
-
-- index.html agora é com apexcharts. Versão com chart.js pode encontrada em chartjs.html;
-- Separado o arquivo javascript para as duas bibliotecas de gráfico.
-
-### 15/12/2021
-
-- Movido o plot dos graficos para o arquivo JS.
-
-### 09/12/2021
-
-- Adicionado a função de zoom no gráfico;
-- Adicionado uma mira nos gráficos;
-- Removidas todas as animações nos gráficos e tooltips;
-- Limpeza do arquivo CSS.
-
-# ToDo
-
-- [x] Fazer o filtro funcionar;
-- [ ] Preparar para a Grande Migração.
+> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
