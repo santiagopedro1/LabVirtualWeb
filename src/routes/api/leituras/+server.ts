@@ -1,4 +1,4 @@
-import { json, error } from '@sveltejs/kit'
+import { json } from '@sveltejs/kit'
 import { prisma } from '$lib/prisma'
 import { getDateForQuery, getDateObj, fixDate } from '$lib/dateUtils'
 
@@ -25,7 +25,6 @@ export const GET: RequestHandler = async ({ request, url }) => {
     const download = url.searchParams.get('download')
     const userId = url.searchParams.get('userId')
 
-    console.log(userId)
     if (!date)
         return json(
             { message: 'Nenhuma data foi fornecida' },
