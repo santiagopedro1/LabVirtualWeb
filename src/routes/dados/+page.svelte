@@ -175,7 +175,12 @@
         class="flex flex-wrap gap-6 items-center my-4"
     >
         <div class="space-y-2">
-            <label for="datepicker">Data</label>
+            <div class="flex gap-2 items-center">
+                <label for="datepicker">Data</label>
+                <span class="text-sm"
+                    >(Início: 11/02/2022, fim: 05/10/2022)</span
+                >
+            </div>
             <input
                 id="datepicker"
                 type="text"
