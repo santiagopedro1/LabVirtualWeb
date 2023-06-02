@@ -29,6 +29,7 @@
         displayDate: string
     } | null
 
+    let chartLoading = false
     let userId: number
     let sensores: Sensor[] = []
 
@@ -60,6 +61,7 @@
 
     async function handleSubmit(ev: Event) {
         dados = null
+        chartLoading = true
         sensores = []
         const form = ev.target as HTMLFormElement
 
@@ -93,6 +95,7 @@
             }
         })
         if (res.ok) {
+            chartLoading = false
             dataChartComponent = (await import('$lib/DataChart.svelte')).default
             if (params.get('download')) {
                 const blob = await res.blob()
@@ -114,6 +117,7 @@
                 body: body.message,
                 buttonTextCancel: 'Ok'
             })
+            chartLoading = false
         }
 
         const inputs = document.querySelectorAll(
@@ -259,20 +263,20 @@
         </div>
     </form>
 
-    {#if dados}
+    {#if chartLoading}
+        <div class="flex justify-center items-center mt-12">
+            <ProgressRadial
+                meter="stroke-primary-500"
+                track="stroke-green-300 dark:stroke-green-100"
+            />
+        </div>
+    {:else if dados}
         <div>
             <svelte:component
                 this={dataChartComponent}
                 data={dados.leituras}
                 displayDate={dados.displayDate}
                 {sensores}
-            />
-        </div>
-    {:else if dados === null}
-        <div class="flex justify-center items-center mt-12">
-            <ProgressRadial
-                meter="stroke-primary-500"
-                track="stroke-green-300 dark:stroke-green-100"
             />
         </div>
     {/if}
