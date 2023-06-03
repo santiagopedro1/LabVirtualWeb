@@ -98,7 +98,15 @@
             chartLoading = false
             dataChartComponent = (await import('$lib/DataChart.svelte')).default
             if (params.get('download')) {
-                const blob = await res.blob()
+                const json = await res.json()
+                const blob =
+                    params.get('download') === 'json'
+                        ? new Blob([JSON.stringify(json)], {
+                              type: 'application/json'
+                          })
+                        : new Blob([json], {
+                              type: 'text/csv'
+                          })
                 const url = window.URL.createObjectURL(blob)
                 const a = document.createElement('a')
                 a.href = url
