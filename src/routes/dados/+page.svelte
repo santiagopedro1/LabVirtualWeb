@@ -144,9 +144,7 @@
         const datepickerEl = document.getElementById(
             'datepicker'
         ) as HTMLInputElement
-        if (date) {
-            datepickerEl.value = date
-        }
+        datepickerEl.value = '16/04/2022'
         import('flatpickr/dist/themes/material_green.css')
         import('flatpickr')
             .then(({ default: flatpickr }) => flatpickr)
@@ -271,13 +269,14 @@
             />
         </div>
     {:else if dados}
-        <div>
+        <!-- <div>
             <svelte:component
                 this={dataChartComponent}
                 data={dados.leituras}
                 displayDate={dados.displayDate}
                 {sensores}
             />
-        </div>
+        </div> -->
+        <pre>{JSON.stringify(dados, null, 2)}</pre>
     {/if}
 </section>

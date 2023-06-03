@@ -1,8 +1,9 @@
 import { json } from '@sveltejs/kit'
 import { prisma } from '$lib/prisma'
-import { getDateForQuery, getDateObj, fixDate } from '$lib/dateUtils'
+import { getDateForQuery, getDateObj } from '$lib/dateUtils'
 
 import type { RequestHandler } from './$types'
+import type { Leituras_de_sensor } from '@prisma/client'
 
 export const GET: RequestHandler = async ({ request, url }) => {
     const headers = request.headers
@@ -62,34 +63,11 @@ export const GET: RequestHandler = async ({ request, url }) => {
             { status: 404 }
         )
 
-    const leituras = queryRes.reduce((acc: Leitura, item) => {
-        const { id_sensor_de_usuario, data_hora, leitura } = item as LeituraDB
-
-        if (!(id_sensor_de_usuario in acc)) {
-            acc[id_sensor_de_usuario] = []
-        }
-
-        Object.keys(leitura).forEach(key => {
-            if (key.includes('_')) {
-                const newKey = key.replace('_', ' ')
-                leitura[newKey] = leitura[key]
-                delete leitura[key]
-            }
-        })
-
-        acc[id_sensor_de_usuario].push({
-            data_hora: fixDate(data_hora, 3),
-            ...leitura
-        })
-
-        return acc
-    }, {})
-
     if (!download)
         return json(
             {
                 displayDate: dateObj.toLocaleDateString('pt-BR'),
-                leituras
+                data: processSensorData(queryRes)
             },
             { status: 200 }
         )
@@ -101,8 +79,7 @@ export const GET: RequestHandler = async ({ request, url }) => {
                 return json(null, { status: 400 })
 
             case 'json':
-                const leiturasJsonFixed = fixDates(leituras)
-                return json(leiturasJsonFixed, {
+                return json(processSensorData(queryRes), {
                     headers: {
                         'Content-Type': 'application/json'
                     },
@@ -110,7 +87,7 @@ export const GET: RequestHandler = async ({ request, url }) => {
                 })
 
             case 'csv':
-                return json(JSONtoCSV(leituras), {
+                return json(JSONtoCSV(queryRes), {
                     headers: {
                         'Content-Type': 'text/csv'
                     },
@@ -120,57 +97,78 @@ export const GET: RequestHandler = async ({ request, url }) => {
     }
 }
 
-function JSONtoCSV(dados: Leitura): string {
+function processSensorData(data: Leituras_de_sensor[]) {
+    interface Result {
+        horarios: string[]
+        leituras: {
+            [key: string]: {
+                [key: string]: number[]
+            }
+        }
+    }
+    const result: Result = {
+        horarios: [],
+        leituras: {}
+    }
+
+    const sensorIds = new Set<number>()
+    const horarios = new Set<string>()
+
+    for (let i = 0; i < data.length; i++) {
+        const item = data[i]
+        const sensorId = item.id_sensor_de_usuario
+        const time = new Date(item.data_hora)
+            .toLocaleTimeString('pt-BR', { timeZone: 'UTC' })
+            .slice(0, -3)
+
+        sensorIds.add(sensorId)
+        horarios.add(time)
+
+        if (!result.leituras[sensorId]) {
+            result.leituras[sensorId] = {}
+            Object.keys(item.leitura as object).forEach(reading => {
+                result.leituras[sensorId][reading] = []
+            })
+        }
+
+        Object.entries(item.leitura as object).forEach(([reading, value]) => {
+            result.leituras[sensorId][reading].push(value)
+        })
+    }
+
+    result.horarios = Array.from(horarios)
+    sensorIds.forEach(sensorId => {
+        if (!result.leituras[sensorId]) {
+            result.leituras[sensorId] = {}
+        }
+    })
+
+    return result
+}
+
+function JSONtoCSV(dados: Leituras_de_sensor[]) {
     const headers = new Set<string>()
     const rows: Record<string, string | number>[] = []
 
-    Object.keys(dados).forEach(sensor => {
-        Object.values(dados[sensor]).forEach((leitura, index) => {
-            if (!rows[index]) rows[index] = {}
-            Object.keys(leitura).forEach(key => {
-                if (key === 'data_hora') {
-                    headers.add('horario')
-                    const date = new Date(leitura[key])
-                    const hora =
-                        date.getHours() < 10
-                            ? `0${date.getHours()}`
-                            : date.getHours()
-                    const minuto =
-                        date.getMinutes() < 10
-                            ? `0${date.getMinutes()}`
-                            : date.getMinutes()
-                    const horario = `${hora}:${minuto}`
-                    key = 'horario'
-                    rows[index][key] = horario
-                } else {
-                    headers.add(`${sensor}/${key}`)
-                    rows[index][`${sensor}/${key}`] = leitura[key]
-                }
-            })
-        })
-    })
+    for (let i = 0; i < dados.length; i++) {
+        const item = dados[i]
+        const row: Record<string, string | number> = {}
 
-    const csv =
-        Array.from(headers).join(',') +
-        '\n' +
-        rows
-            .map(row =>
-                Array.from(headers)
-                    .map(header => String(row[header]))
-                    .join(',')
-            )
-            .join('\n')
+        Object.entries(item.leitura as object).forEach(([reading, value]) => {
+            headers.add(reading)
+            row[reading] = value
+        })
+    }
+
+    const csv = [Array.from(headers).join(',')]
+    for (let i = 0; i < rows.length; i++) {
+        const row = rows[i]
+        csv.push(
+            Array.from(headers)
+                .map(header => row[header])
+                .join(',')
+        )
+    }
 
     return csv
-}
-
-function fixDates(dados: Leitura): Leitura {
-    Object.keys(dados).forEach(sensor => {
-        Object.values(dados[sensor]).forEach(leitura => {
-            const newDate = new Date(leitura.data_hora)
-            newDate.setHours(newDate.getHours() - 3)
-            leitura.data_hora = newDate.toISOString()
-        })
-    })
-    return dados
 }
