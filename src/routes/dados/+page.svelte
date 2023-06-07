@@ -27,7 +27,6 @@
     let dados: Leitura | null
 
     let chartLoading = false
-    let userId: number
     let sensores: Sensor[] = []
 
     let dataChartComponent: typeof import('$lib/DataChart.svelte').default
@@ -57,31 +56,63 @@
     }
 
     async function handleSubmit(ev: Event) {
-        dados = null
-        chartLoading = true
-        sensores = []
         const form = ev.target as HTMLFormElement
 
         const params = new URLSearchParams(
             new FormData(form) as unknown as Record<string, string>
         )
 
-        // userId = Number(params.get('userId'))
-        userId = 1
+        // const userId = Number(params.get('userId'))
+        const userId = 1
 
-        const users = await getUserData()
+        if (!params.get('download')) {
+            dados = null
+            chartLoading = true
 
-        const user = users[userId - 1]
-        user.user.sensores_do_usuario.forEach((sensor: any) => {
-            sensores.push({
-                nome: user.sensores[sensor.id_de_sensor - 1].nome,
-                descricao: sensor.descricao,
-                dados_lidos:
-                    user.sensores[sensor.id_de_sensor - 1].dados_lidos.split(
-                        ','
-                    )
+            const users = await getUserData()
+
+            const user = users[userId - 1]
+            user.user.sensores_do_usuario.forEach((sensor: any) => {
+                sensores.push({
+                    nome: user.sensores[sensor.id_de_sensor - 1].nome,
+                    descricao: sensor.descricao,
+                    dados_lidos:
+                        user.sensores[
+                            sensor.id_de_sensor - 1
+                        ].dados_lidos.split(',')
+                })
             })
-        })
+        }
+
+        if (
+            dados &&
+            new Date(dados?.data).toLocaleDateString('pt-BR') ===
+                params.get('data')
+        ) {
+            if (!params.get('download')) {
+                chartLoading = false
+                return
+            } else {
+                const json = await fetch('/api/dados_usuario?userId=1')
+                const blob =
+                    params.get('download') === 'json'
+                        ? new Blob([JSON.stringify(json)], {
+                              type: 'application/json'
+                          })
+                        : new Blob([await json.json()], {
+                              type: 'text/csv'
+                          })
+                const url = window.URL.createObjectURL(blob)
+                const a = document.createElement('a')
+                a.href = url
+                a.download = `dados-${selectedDate.toLocaleDateString(
+                    'pt-BR'
+                )}.${params.get('download')}`
+                document.body.appendChild(a)
+                a.click()
+                a.remove()
+            }
+        }
 
         const url = new URL(form.action)
         url.search = params.toString()
