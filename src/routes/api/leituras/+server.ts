@@ -63,16 +63,9 @@ export const GET: RequestHandler = async ({ request, url }) => {
             { status: 404 }
         )
 
-    const leituras = processSensorData(queryRes)
+    const leituras = processSensorData(queryRes, dateObj)
 
-    if (!download)
-        return json(
-            {
-                displayDate: dateObj.toLocaleDateString('pt-BR'),
-                data: processSensorData(queryRes)
-            },
-            { status: 200 }
-        )
+    if (!download) return json(leituras, { status: 200 })
     else {
         const format = download
 
@@ -99,26 +92,18 @@ export const GET: RequestHandler = async ({ request, url }) => {
     }
 }
 
-interface JSON_return {
-    horarios: string[]
-    leituras: {
-        [key: string]: {
-            [key: string]: number[]
-        }
-    }
-}
-
-function processSensorData(data: Leituras_de_sensor[]) {
-    const result: JSON_return = {
-        horarios: [],
-        leituras: {}
+function processSensorData(dados: Leituras_de_sensor[], data: Date) {
+    const result: Leitura = {
+        data,
+        horario: [],
+        leituras: []
     }
 
     const sensorIds = new Set<number>()
     const horarios = new Set<string>()
 
-    for (let i = 0; i < data.length; i++) {
-        const item = data[i]
+    for (let i = 0; i < dados.length; i++) {
+        const item = dados[i]
         const sensorId = item.id_sensor_de_usuario
         const time = new Date(item.data_hora)
             .toLocaleTimeString('pt-BR', { timeZone: 'UTC' })
@@ -139,32 +124,35 @@ function processSensorData(data: Leituras_de_sensor[]) {
         })
     }
 
-    result.horarios = Array.from(horarios)
+    result.horario = Array.from(horarios)
     sensorIds.forEach(sensorId => {
         if (!result.leituras[sensorId]) {
             result.leituras[sensorId] = {}
         }
     })
 
+    // Convert the leituras object to an array
+    result.leituras = Object.values(result.leituras)
+
     return result
 }
 
-function JSONtoCSV(data: JSON_return) {
+function JSONtoCSV(data: Leitura) {
     const headers = ['horarios']
     const sensors = Object.keys(data.leituras)
     const rows: Array<Array<string | number>> = []
 
-    for (const sensor of sensors) {
+    for (const sensor in sensors) {
         const dataTypes = Object.keys(data.leituras[sensor])
         for (const dataType of dataTypes) {
             headers.push(`sensor${sensor}_${dataType}`)
         }
     }
 
-    const horarios = data.horarios
+    const horarios = data.horario
     for (const horario of horarios) {
         const row: Array<string | number> = [horario]
-        for (const sensor of sensors) {
+        for (const sensor in sensors) {
             const dataTypes = Object.keys(data.leituras[sensor])
             for (const dataType of dataTypes) {
                 row.push(data.leituras[sensor][dataType][rows.length])
@@ -176,6 +164,5 @@ function JSONtoCSV(data: JSON_return) {
     const csv = [headers.join(',')]
         .concat(rows.map(row => row.join(',')))
         .join('\n')
-    console.log(csv)
     return csv
 }

@@ -24,10 +24,7 @@
         placement: 'bottom',
         closeQuery: 'li'
     }
-    let dados: {
-        leituras: Leitura
-        displayDate: string
-    } | null
+    let dados: Leitura | null
 
     let chartLoading = false
     let userId: number
@@ -145,6 +142,7 @@
     }
 
     onMount(async () => {
+        dataChartComponent = (await import('$lib/DataChart.svelte')).default
         let date: string | null = null
         if ($page.url.searchParams.has('data')) {
             date = $page.url.searchParams.get('data')
@@ -152,7 +150,10 @@
         const datepickerEl = document.getElementById(
             'datepicker'
         ) as HTMLInputElement
-        datepickerEl.value = '16/04/2022'
+        if (date)
+            selectedDate = new Date(
+                date.split('/').reverse().join('-') + 'T00:00:00'
+            )
         import('flatpickr/dist/themes/material_green.css')
         import('flatpickr')
             .then(({ default: flatpickr }) => flatpickr)
@@ -161,6 +162,7 @@
                     flatpickr.localize(Portuguese)
                     flatpickr(datepickerEl, {
                         dateFormat: 'd/m/Y',
+                        defaultDate: date ? date : undefined,
                         allowInput: true,
                         maxDate: 'today',
                         onChange: dates => {
@@ -277,14 +279,12 @@
             />
         </div>
     {:else if dados}
-        <!-- <div>
+        <div>
             <svelte:component
                 this={dataChartComponent}
-                data={dados.leituras}
-                displayDate={dados.displayDate}
+                data={dados}
                 {sensores}
             />
-        </div> -->
-        <pre>{JSON.stringify(dados, null, 2)}</pre>
+        </div>
     {/if}
 </section>
