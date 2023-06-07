@@ -1,8 +1,9 @@
 import { json } from '@sveltejs/kit'
 import { prisma } from '$lib/prisma'
-import { getDateForQuery, getDateObj, fixDate } from '$lib/dateUtils'
+import { getDateForQuery, getDateObj } from '$lib/dateUtils'
 
 import type { RequestHandler } from './$types'
+import type { Leituras_de_sensor } from '@prisma/client'
 
 export const GET: RequestHandler = async ({ request, url }) => {
     const headers = request.headers
@@ -62,37 +63,9 @@ export const GET: RequestHandler = async ({ request, url }) => {
             { status: 404 }
         )
 
-    const leituras = queryRes.reduce((acc: Leitura, item) => {
-        const { id_sensor_de_usuario, data_hora, leitura } = item as LeituraDB
+    const leituras = processSensorData(queryRes, dateObj)
 
-        if (!(id_sensor_de_usuario in acc)) {
-            acc[id_sensor_de_usuario] = []
-        }
-
-        Object.keys(leitura).forEach(key => {
-            if (key.includes('_')) {
-                const newKey = key.replace('_', ' ')
-                leitura[newKey] = leitura[key]
-                delete leitura[key]
-            }
-        })
-
-        acc[id_sensor_de_usuario].push({
-            data_hora: fixDate(data_hora, 3),
-            ...leitura
-        })
-
-        return acc
-    }, {})
-
-    if (!download)
-        return json(
-            {
-                displayDate: dateObj.toLocaleDateString('pt-BR'),
-                leituras
-            },
-            { status: 200 }
-        )
+    if (!download) return json(leituras, { status: 200 })
     else {
         const format = download
 
@@ -101,8 +74,7 @@ export const GET: RequestHandler = async ({ request, url }) => {
                 return json(null, { status: 400 })
 
             case 'json':
-                const leiturasJsonFixed = fixDates(leituras)
-                return json(leiturasJsonFixed, {
+                return json(leituras, {
                     headers: {
                         'Content-Type': 'application/json'
                     },
@@ -120,57 +92,77 @@ export const GET: RequestHandler = async ({ request, url }) => {
     }
 }
 
-function JSONtoCSV(dados: Leitura): string {
-    const headers = new Set<string>()
-    const rows: Record<string, string | number>[] = []
+function processSensorData(dados: Leituras_de_sensor[], data: Date) {
+    const result: Leitura = {
+        data,
+        horario: [],
+        leituras: []
+    }
 
-    Object.keys(dados).forEach(sensor => {
-        Object.values(dados[sensor]).forEach((leitura, index) => {
-            if (!rows[index]) rows[index] = {}
-            Object.keys(leitura).forEach(key => {
-                if (key === 'data_hora') {
-                    headers.add('horario')
-                    const date = new Date(leitura[key])
-                    const hora =
-                        date.getHours() < 10
-                            ? `0${date.getHours()}`
-                            : date.getHours()
-                    const minuto =
-                        date.getMinutes() < 10
-                            ? `0${date.getMinutes()}`
-                            : date.getMinutes()
-                    const horario = `${hora}:${minuto}`
-                    key = 'horario'
-                    rows[index][key] = horario
-                } else {
-                    headers.add(`${sensor}/${key}`)
-                    rows[index][`${sensor}/${key}`] = leitura[key]
-                }
+    const sensorIds = new Set<number>()
+    const horarios = new Set<string>()
+
+    for (let i = 0; i < dados.length; i++) {
+        const item = dados[i]
+        const sensorId = item.id_sensor_de_usuario
+        const time = new Date(item.data_hora)
+            .toLocaleTimeString('pt-BR', { timeZone: 'UTC' })
+            .slice(0, -3)
+
+        sensorIds.add(sensorId)
+        horarios.add(time)
+
+        if (!result.leituras[sensorId]) {
+            result.leituras[sensorId] = {}
+            Object.keys(item.leitura as object).forEach(reading => {
+                result.leituras[sensorId][reading] = []
             })
+        }
+
+        Object.entries(item.leitura as object).forEach(([reading, value]) => {
+            result.leituras[sensorId][reading].push(value)
         })
+    }
+
+    result.horario = Array.from(horarios)
+    sensorIds.forEach(sensorId => {
+        if (!result.leituras[sensorId]) {
+            result.leituras[sensorId] = {}
+        }
     })
 
-    const csv =
-        Array.from(headers).join(',') +
-        '\n' +
-        rows
-            .map(row =>
-                Array.from(headers)
-                    .map(header => String(row[header]))
-                    .join(',')
-            )
-            .join('\n')
+    // Convert the leituras object to an array
+    result.leituras = Object.values(result.leituras)
 
-    return csv
+    return result
 }
 
-function fixDates(dados: Leitura): Leitura {
-    Object.keys(dados).forEach(sensor => {
-        Object.values(dados[sensor]).forEach(leitura => {
-            const newDate = new Date(leitura.data_hora)
-            newDate.setHours(newDate.getHours() - 3)
-            leitura.data_hora = newDate.toISOString()
-        })
-    })
-    return dados
+function JSONtoCSV(data: Leitura) {
+    const headers = ['horarios']
+    const sensors = Object.keys(data.leituras)
+    const rows: Array<Array<string | number>> = []
+
+    for (const sensor in sensors) {
+        const dataTypes = Object.keys(data.leituras[sensor])
+        for (const dataType of dataTypes) {
+            headers.push(`sensor${sensor}_${dataType}`)
+        }
+    }
+
+    const horarios = data.horario
+    for (const horario of horarios) {
+        const row: Array<string | number> = [horario]
+        for (const sensor in sensors) {
+            const dataTypes = Object.keys(data.leituras[sensor])
+            for (const dataType of dataTypes) {
+                row.push(data.leituras[sensor][dataType][rows.length])
+            }
+        }
+        rows.push(row)
+    }
+
+    const csv = [headers.join(',')]
+        .concat(rows.map(row => row.join(',')))
+        .join('\n')
+    return csv
 }

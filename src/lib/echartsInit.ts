@@ -110,31 +110,49 @@ export const buildTheme = (theme: string) => {
                     isDark ? 'white' : 'black'
                 }; display: block; font-weight: 900'>${data[0].name}</span>`
 
-                const numberOfSensors = new Set(
-                    data.map((item: any) => item.seriesName.split('_')[0])
+                const dims = data[0].dimensionNames.slice(1)
+
+                const numberOfSensores = new Set(
+                    dims.map((d: string) => d.split('_')[0])
                 ).size
 
-                const dataMap = new Map(
-                    Array.from({ length: numberOfSensors }, (_, i) => {
-                        const sensorData = data.filter((item: any) =>
-                            item.seriesName.includes(i + 1)
-                        )
-                        return [i + 1, sensorData]
-                    })
+                const sensorData = new Map(
+                    Array.from({ length: numberOfSensores }, (_, i) => [
+                        i,
+                        dims
+                            .filter(
+                                (d: string) => d.split('_')[0] === `sensor${i}`
+                            )
+                            .map((d: string) => d.split('_').slice(1).join('_'))
+                    ])
                 )
 
-                let sensors = ''
+                let body = ''
 
-                dataMap.forEach((value: any, key: number) => {
-                    sensors += `<span style = 'font-weight: 900'>Sensor ${key}:</span> </br>`
-                    value.forEach((item: any) => {
-                        sensors += `${item.marker}${
-                            item.seriesName.split('_')[1]
-                        }: <b>${item.data[item.seriesName]}</b></br>`
+                for (const [key, value] of sensorData.entries()) {
+                    body += `<span style = 'font-weight: 900'>Sensor ${
+                        key + 1
+                    }:</span> </br>`
+                    value.forEach((v: any) => {
+                        let marker = ''
+                        for (let i = 0; i < dims.length; i++) {
+                            if (data[i].seriesName == `sensor${key}_${v}`) {
+                                marker = data[i].marker
+                                break
+                            }
+                        }
+                        body += `<span>${marker} ${v
+                            .split('_')
+                            .join(' ')}: <b>${
+                            data[0].data[
+                                data[0].dimensionNames.indexOf(
+                                    `sensor${key}_${v}`
+                                )
+                            ]
+                        }</b></span> </br>`
                     })
-                })
-
-                return header + sensors
+                }
+                return header + body
             },
             textStyle: {
                 color: isDark ? '#fffff' : '#1c1917',

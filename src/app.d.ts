@@ -16,8 +16,20 @@ declare global {
         }
     }
 
+    interface SensorInfo {
+        nome: string
+        descricao: string
+        dados_lidos: string
+    }
+
+    interface DadosSensor {
+        [key: string]: number[]
+    }
+
     interface Leitura {
-        [key: string]: { data_hora: string; [key: string]: any }[]
+        data: Date
+        horario: string[]
+        leituras: DadosSensor[]
     }
 }
 

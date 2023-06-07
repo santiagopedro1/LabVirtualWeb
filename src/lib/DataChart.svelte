@@ -4,40 +4,16 @@
 
     import { theme } from '$lib/stores'
 
-    type Sensor = {
-        nome: string
-        descricao: string
-        dados_lidos: string
-    }
-
     export let data: Leitura
-    export let displayDate: string
+    export let sensores: SensorInfo[]
+
+    const parsedData = parseData(data)
 
     let myChart: ECharts
     let chartFilter: typeof import('$lib/ChartFilter.svelte').default
 
-    export let sensores: Sensor[]
-
-    Object.entries(data).forEach(([key1, value1]) => {
-        value1.forEach(obj => {
-            obj.data_hora = new Date(obj.data_hora).toLocaleTimeString(
-                'pt-BR',
-                {
-                    hour: '2-digit',
-                    minute: '2-digit'
-                }
-            )
-            Object.entries(obj).forEach(([key2, value2], index) => {
-                if (index === 0) return
-                obj[`${key1}_${key2}`] = value2
-                delete obj[key2]
-            })
-        })
-    })
-
-    const TotalSensores = Object.keys(data).length
-    const TotalLeituras = Object.keys(data).reduce(
-        (total, key) => total + Object.keys(data[key][0]).length - 1,
+    const TotalSeries = Object.values(data.leituras).reduce(
+        (total, obj) => total + Object.keys(obj).length,
         0
     )
 
@@ -51,10 +27,12 @@
             show: false
         },
         title: {
-            text: `Gráfico do dia ${displayDate}`
+            text: `Gráfico do dia ${new Date(data.data).toLocaleDateString(
+                'pt-BR'
+            )}`
         },
         xAxis: {
-            name: 'Tempo',
+            name: 'Horário',
             nameLocation: 'middle',
             nameGap: 30,
             type: 'category',
@@ -72,26 +50,47 @@
             nameGap: 40
         },
 
-        dataset: new Array(TotalSensores).fill(0).map((_, i) => ({
-            id: i + 1,
-            source: Object.values(data)[i] as any
-        })),
-
-        series: new Array(TotalLeituras).fill(0).map((_, i) => ({
+        dataset: {
+            source: [...parsedData.values],
+            dimensions: [...parsedData.headers]
+        },
+        series: new Array(TotalSeries).fill(0).map((_, i) => ({
             type: 'line',
             emphasis: {
                 focus: 'series'
-            },
-            datasetIndex: i % TotalSensores
+            }
         }))
+    }
+
+    function parseData(data: Leitura) {
+        const headers = ['Horario']
+
+        for (const key in data.leituras) {
+            const item = data.leituras[key]
+            for (const name in item) {
+                headers.push(`sensor${key}_${name}`)
+            }
+        }
+
+        const values = data.horario.map((horario, index) => {
+            const row: Array<number | string> = [horario]
+            for (const i in data.leituras) {
+                for (let j in data.leituras[i]) {
+                    row.push(data.leituras[i][j][index])
+                }
+            }
+            return row
+        })
+
+        return { headers, values }
     }
 
     function chartDataToggle(id: number, data: string) {
         const chart = myChart
-
+        if (data.includes(' ')) data = data.replace(' ', '_')
         chart.dispatchAction({
             type: 'legendToggleSelect',
-            name: `${id}_${data}`
+            name: `sensor${id}_${data}`
         })
     }
 

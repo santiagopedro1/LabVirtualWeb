@@ -1,13 +1,7 @@
 <script lang="ts">
     import { SlideToggle } from '@skeletonlabs/skeleton'
 
-    type Sensor = {
-        nome: string
-        descricao: string
-        dados_lidos: string
-    }
-
-    export let sensores: Sensor[]
+    export let sensores: SensorInfo[]
     export let fn: (id: number, data: string) => void
 </script>
 
@@ -28,7 +22,7 @@
                             active="bg-secondary-500"
                             size="sm"
                             checked
-                            on:change={() => fn(index + 1, dados)}
+                            on:change={() => fn(index, dados)}
                         />
                     </div>
                 {/each}

@@ -24,13 +24,9 @@
         placement: 'bottom',
         closeQuery: 'li'
     }
-    let dados: {
-        leituras: Leitura
-        displayDate: string
-    } | null
+    let dados: Leitura | null
 
     let chartLoading = false
-    let userId: number
     let sensores: Sensor[] = []
 
     let dataChartComponent: typeof import('$lib/DataChart.svelte').default
@@ -60,31 +56,63 @@
     }
 
     async function handleSubmit(ev: Event) {
-        dados = null
-        chartLoading = true
-        sensores = []
         const form = ev.target as HTMLFormElement
 
         const params = new URLSearchParams(
             new FormData(form) as unknown as Record<string, string>
         )
 
-        // userId = Number(params.get('userId'))
-        userId = 1
+        // const userId = Number(params.get('userId'))
+        const userId = 1
 
-        const users = await getUserData()
+        if (!params.get('download')) {
+            dados = null
+            chartLoading = true
 
-        const user = users[userId - 1]
-        user.user.sensores_do_usuario.forEach((sensor: any) => {
-            sensores.push({
-                nome: user.sensores[sensor.id_de_sensor - 1].nome,
-                descricao: sensor.descricao,
-                dados_lidos:
-                    user.sensores[sensor.id_de_sensor - 1].dados_lidos.split(
-                        ','
-                    )
+            const users = await getUserData()
+
+            const user = users[userId - 1]
+            user.user.sensores_do_usuario.forEach((sensor: any) => {
+                sensores.push({
+                    nome: user.sensores[sensor.id_de_sensor - 1].nome,
+                    descricao: sensor.descricao,
+                    dados_lidos:
+                        user.sensores[
+                            sensor.id_de_sensor - 1
+                        ].dados_lidos.split(',')
+                })
             })
-        })
+        }
+
+        if (
+            dados &&
+            new Date(dados?.data).toLocaleDateString('pt-BR') ===
+                params.get('data')
+        ) {
+            if (!params.get('download')) {
+                chartLoading = false
+                return
+            } else {
+                const json = await fetch('/api/dados_usuario?userId=1')
+                const blob =
+                    params.get('download') === 'json'
+                        ? new Blob([JSON.stringify(json)], {
+                              type: 'application/json'
+                          })
+                        : new Blob([await json.json()], {
+                              type: 'text/csv'
+                          })
+                const url = window.URL.createObjectURL(blob)
+                const a = document.createElement('a')
+                a.href = url
+                a.download = `dados-${selectedDate.toLocaleDateString(
+                    'pt-BR'
+                )}.${params.get('download')}`
+                document.body.appendChild(a)
+                a.click()
+                a.remove()
+            }
+        }
 
         const url = new URL(form.action)
         url.search = params.toString()
@@ -98,7 +126,15 @@
             chartLoading = false
             dataChartComponent = (await import('$lib/DataChart.svelte')).default
             if (params.get('download')) {
-                const blob = await res.blob()
+                const json = await res.json()
+                const blob =
+                    params.get('download') === 'json'
+                        ? new Blob([JSON.stringify(json)], {
+                              type: 'application/json'
+                          })
+                        : new Blob([json], {
+                              type: 'text/csv'
+                          })
                 const url = window.URL.createObjectURL(blob)
                 const a = document.createElement('a')
                 a.href = url
@@ -137,6 +173,7 @@
     }
 
     onMount(async () => {
+        dataChartComponent = (await import('$lib/DataChart.svelte')).default
         let date: string | null = null
         if ($page.url.searchParams.has('data')) {
             date = $page.url.searchParams.get('data')
@@ -144,9 +181,10 @@
         const datepickerEl = document.getElementById(
             'datepicker'
         ) as HTMLInputElement
-        if (date) {
-            datepickerEl.value = date
-        }
+        if (date)
+            selectedDate = new Date(
+                date.split('/').reverse().join('-') + 'T00:00:00'
+            )
         import('flatpickr/dist/themes/material_green.css')
         import('flatpickr')
             .then(({ default: flatpickr }) => flatpickr)
@@ -155,6 +193,7 @@
                     flatpickr.localize(Portuguese)
                     flatpickr(datepickerEl, {
                         dateFormat: 'd/m/Y',
+                        defaultDate: date ? date : undefined,
                         allowInput: true,
                         maxDate: 'today',
                         onChange: dates => {
@@ -274,8 +313,7 @@
         <div>
             <svelte:component
                 this={dataChartComponent}
-                data={dados.leituras}
-                displayDate={dados.displayDate}
+                data={dados}
                 {sensores}
             />
         </div>
