@@ -132,7 +132,7 @@
 			</Button>
 		</div>
 	</div>
-	<main class="py-12 lg:px-48 md:px-32 px-4">
+	<main class="py-12 lg:px-48 md:px-32 px-4 grid place-items-center">
 		<slot />
 	</main>
 </div>
