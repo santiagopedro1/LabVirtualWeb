@@ -10,6 +10,7 @@
 
 	import { Button } from '$lib/components/ui/button';
 	import * as Sheet from '$lib/components/ui/sheet';
+	import * as ScrollArea from '$lib/components/ui/scroll-area';
 
 	import { mediaQuery, preferredDark } from 'svelte-legos';
 
@@ -57,7 +58,7 @@
 	});
 </script>
 
-<div class="h-screen bg-background text-foreground {isDark ? 'dark' : ''}">
+<ScrollArea.Root class="h-screen bg-background text-foreground {isDark ? 'dark' : ''}">
 	<div class="bg-primary py-3 pl-6 pr-[calc(1.5rem_-_calc(100vw_-_100%))] text-primary-foreground">
 		<div class="flex items-center justify-between">
 			{#if $isDesktop}
@@ -150,4 +151,4 @@
 			<slot />
 		</main>
 	</div>
-</div>
+</ScrollArea.Root>
