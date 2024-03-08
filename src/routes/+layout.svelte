@@ -10,6 +10,7 @@
 
 	import { Button } from '$lib/components/ui/button';
 	import * as Sheet from '$lib/components/ui/sheet';
+	import * as ScrollArea from '$lib/components/ui/scroll-area';
 
 	import { mediaQuery, preferredDark } from 'svelte-legos';
 
@@ -41,27 +42,29 @@
 			isDark = get(preferredDark());
 	}
 
-	function updateCookie() {
+	function updateTheme() {
 		document.cookie = `theme=${isDark ? 'dark' : 'light'}; path=/; max-age=31536000`;
+		if (isDark) document.documentElement.classList.add('dark');
+		else document.documentElement.classList.remove('dark');
 	}
 
 	function toggleTheme() {
 		isDark = !isDark;
-		updateCookie();
+		updateTheme();
 	}
 
 	onMount(() => {
-		if (!data.theme) updateCookie();
+		updateTheme();
 	});
 </script>
 
-<div class="min-h-screen bg-background text-foreground {isDark ? 'dark' : ''}">
+<div class="h-screen bg-background text-foreground {isDark ? 'dark' : ''}">
 	<div class="bg-primary px-6 py-3 text-primary-foreground">
 		<div class="flex items-center justify-between">
 			{#if $isDesktop}
 				<div class="flex items-center">
 					<img
-						class="h-8 w-8 mr-8"
+						class="mr-8 h-8 w-8"
 						src="https://tailwindui.com/img/logos/mark.svg?color=white"
 						alt="Your Company"
 					/>
@@ -71,9 +74,9 @@
 								<li>
 									<a
 										class="{$page.url.pathname === href
-											? 'bg-green-950 cursor-default'
+											? 'cursor-default bg-green-950'
 											: 'hover:bg-green-950'}
-									text-md font-bold uppercase px-3 py-2 rounded-md text-primary-foreground"
+									text-md rounded-md px-3 py-2 font-bold uppercase text-primary-foreground"
 										aria-current={$page.url.pathname === href ? 'page' : undefined}
 										{href}
 									>
@@ -85,10 +88,17 @@
 					</nav>
 				</div>
 			{:else}
-				<div class="flex items-center w-full">
+				<div class="flex w-full items-center">
 					<Sheet.Root>
-						<Sheet.Trigger asChild let:builder>
-							<Button builders={[builder]} variant="ghost" size="icon">
+						<Sheet.Trigger
+							asChild
+							let:builder
+						>
+							<Button
+								builders={[builder]}
+								variant="ghost"
+								size="icon"
+							>
 								<Menu />
 							</Button>
 						</Sheet.Trigger>
@@ -99,7 +109,7 @@
 										<li>
 											<Sheet.Close>
 												<a
-													class="text-md font-bold uppercase px-3 py-2 rounded-md text-primary-foreground {$page
+													class="text-md rounded-md px-3 py-2 font-bold uppercase text-primary-foreground {$page
 														.url.pathname === href
 														? 'bg-primary'
 														: ''}"
@@ -116,14 +126,18 @@
 						</Sheet.Content>
 					</Sheet.Root>
 					<img
-						class="h-8 w-8 mx-auto"
+						class="mx-auto h-8 w-8"
 						src="https://tailwindui.com/img/logos/mark.svg?color=white"
 						alt="Your Company"
 					/>
 				</div>
 			{/if}
 
-			<Button size="icon" variant="ghost" on:click={toggleTheme}>
+			<Button
+				size="icon"
+				variant="ghost"
+				on:click={toggleTheme}
+			>
 				{#if data.theme === 'dark'}
 					<Sun />
 				{:else}
@@ -132,7 +146,7 @@
 			</Button>
 		</div>
 	</div>
-	<main class="py-12 lg:px-48 md:px-32 px-4 grid place-items-center">
+	<main class="grid place-items-center px-4 py-12 md:px-32 lg:px-48">
 		<slot />
 	</main>
 </div>

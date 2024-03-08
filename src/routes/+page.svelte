@@ -2,7 +2,7 @@
 	<title>Início - Labvirtual</title>
 </svelte:head>
 
-<article class="prose dark:prose-invert lg:prose-xl">
+<article class="prose lg:prose-xl dark:prose-invert">
 	<h1>LabVirtual</h1>
 	<h2>Introdução</h2>
 	<p>
