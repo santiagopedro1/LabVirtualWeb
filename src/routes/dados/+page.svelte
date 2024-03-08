@@ -43,10 +43,10 @@
 		>
 			<Button
 				builders={[builder]}
-				class="flex justify-between gap-6"
+				class="flex justify-between gap-2"
 			>
 				Download
-				<ChevronDown size="12" />
+				<ChevronDown size="16" />
 			</Button>
 		</Popover.Trigger>
 		<Popover.Content class="grid w-max place-items-center gap-3">

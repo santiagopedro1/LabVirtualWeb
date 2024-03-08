@@ -76,15 +76,14 @@
 	/* === Scrollbars === */
 
 	::-webkit-scrollbar {
-		@apply w-2;
-		@apply h-2;
+		@apply relative h-2 w-2;
 	}
 
 	::-webkit-scrollbar-track {
-		@apply !bg-muted;
+		@apply absolute !bg-transparent;
 	}
 	::-webkit-scrollbar-thumb {
-		@apply rounded-sm !bg-muted-foreground/30;
+		@apply absolute rounded-sm !bg-muted-foreground/30;
 	}
 
 	/* Firefox */
