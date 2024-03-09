@@ -146,9 +146,7 @@
 			</Button>
 		</div>
 	</div>
-	<div class="pl-4 pr-[calc(1rem_-_calc(100vw_-_100%))]">
-		<main class="grid place-items-center py-12 md:px-28 lg:px-40">
-			<slot />
-		</main>
-	</div>
+	<main class="grid place-items-center gap-8 px-4 py-12 md:px-32 lg:px-48">
+		<slot />
+	</main>
 </ScrollArea.Root>

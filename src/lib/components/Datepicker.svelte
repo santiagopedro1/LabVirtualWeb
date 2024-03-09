@@ -54,7 +54,7 @@
 
 	<input
 		type="hidden"
-		name="date"
+		name="data"
 		value={value?.toDate(getLocalTimeZone())}
 	/>
 </div>
