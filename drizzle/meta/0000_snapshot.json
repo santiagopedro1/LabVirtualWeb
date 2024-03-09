@@ -1,0 +1,189 @@
+{
+  "version": "5",
+  "dialect": "sqlite",
+  "id": "de41ff39-5c7b-4087-b9d3-1dc0c4624ec2",
+  "prevId": "00000000-0000-0000-0000-000000000000",
+  "tables": {
+    "leitura_sensor": {
+      "name": "leitura_sensor",
+      "columns": {
+        "id_leitura": {
+          "name": "id_leitura",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "id_sensor": {
+          "name": "id_sensor",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "dados": {
+          "name": "dados",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "timestamp": {
+          "name": "timestamp",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "leitura_sensor_id_sensor_sensor_id_sensor_fk": {
+          "name": "leitura_sensor_id_sensor_sensor_id_sensor_fk",
+          "tableFrom": "leitura_sensor",
+          "tableTo": "sensor",
+          "columnsFrom": [
+            "id_sensor"
+          ],
+          "columnsTo": [
+            "id_sensor"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "tipo_sensor": {
+      "name": "tipo_sensor",
+      "columns": {
+        "id_tipo": {
+          "name": "id_tipo",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "nome_tipo": {
+          "name": "nome_tipo",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "dados_suportados": {
+          "name": "dados_suportados",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "sensor": {
+      "name": "sensor",
+      "columns": {
+        "id_sensor": {
+          "name": "id_sensor",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "id_usuario": {
+          "name": "id_usuario",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "id_tipo": {
+          "name": "id_tipo",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "descricao": {
+          "name": "descricao",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "sensor_id_usuario_usuario_id_usuario_fk": {
+          "name": "sensor_id_usuario_usuario_id_usuario_fk",
+          "tableFrom": "sensor",
+          "tableTo": "usuario",
+          "columnsFrom": [
+            "id_usuario"
+          ],
+          "columnsTo": [
+            "id_usuario"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "sensor_id_tipo_tipo_sensor_id_tipo_fk": {
+          "name": "sensor_id_tipo_tipo_sensor_id_tipo_fk",
+          "tableFrom": "sensor",
+          "tableTo": "tipo_sensor",
+          "columnsFrom": [
+            "id_tipo"
+          ],
+          "columnsTo": [
+            "id_tipo"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "usuario": {
+      "name": "usuario",
+      "columns": {
+        "id_usuario": {
+          "name": "id_usuario",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "nome_usuario": {
+          "name": "nome_usuario",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "data_inicio": {
+          "name": "data_inicio",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    }
+  },
+  "enums": {},
+  "_meta": {
+    "schemas": {},
+    "tables": {},
+    "columns": {}
+  }
+}

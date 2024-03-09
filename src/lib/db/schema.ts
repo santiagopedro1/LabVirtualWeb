@@ -7,7 +7,7 @@ export const users = sqliteTable('usuario', {
 		.primaryKey()
 		.$defaultFn(() => createId()),
 	username: text('nome_usuario').notNull(),
-	startDate: text('start_date').notNull()
+	startDate: text('data_inicio').notNull()
 });
 
 export const sensorTypes = sqliteTable('tipo_sensor', {
@@ -22,10 +22,10 @@ export const sensors = sqliteTable('sensor', {
 	sensorId: text('id_sensor')
 		.primaryKey()
 		.$defaultFn(() => createId()),
-	userId: integer('id_usuario')
+	userId: text('id_usuario')
 		.references(() => users.userId)
 		.notNull(),
-	sensorTypeId: integer('id_tipo')
+	sensorTypeId: text('id_tipo')
 		.references(() => sensorTypes.sensorId)
 		.notNull(),
 	desc: text('descricao')
@@ -35,7 +35,7 @@ export const sensorData = sqliteTable('leitura_sensor', {
 	dataId: text('id_leitura')
 		.primaryKey()
 		.$defaultFn(() => createId()),
-	sensorId: integer('id_sensor')
+	sensorId: text('id_sensor')
 		.references(() => sensors.sensorId)
 		.notNull(),
 	data: text('dados', { mode: 'json' })
