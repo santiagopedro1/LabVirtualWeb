@@ -25,12 +25,18 @@
 		--accent: 240 4.8% 95.9%;
 		--accent-foreground: 240 5.9% 10%;
 
-		--destructive: 0 72.22% 50.59%;
+		--destructive: 0 84.24% 60.2%;
 		--destructive-foreground: 0 0% 98%;
 
 		--ring: 240 5% 64.9%;
 
 		--radius: 0.5rem;
+
+		/* chart */
+		--vis-tooltip-background-color: hsla(0, 0%, 100%, 0.95);
+		--vis-tooltip-border-color: hsl(240, 5.9%, 90%);
+		--vis-tooltip-text-color: hsl(0, 0%, 5%);
+		--vis-tooltip-shadow-color: rgba(172, 179, 184, 0.35);
 	}
 
 	.dark {
@@ -58,10 +64,16 @@
 		--accent: 240 3.7% 15.9%;
 		--accent-foreground: 0 0% 98%;
 
-		--destructive: 0 62.8% 30.6%;
+		--destructive: 0 84.24% 60.2%;
 		--destructive-foreground: 0 85.7% 97.3%;
 
 		--ring: 240 3.7% 15.9%;
+
+		/* chart */
+		--vis-tooltip-background-color: hsla(0, 0%, 5%, 0.95);
+		--vis-tooltip-border-color: hsla(210, 40%, 80%, 0.5);
+		--vis-tooltip-text-color: hsl(0, 0%, 98%);
+		--vis-tooltip-shadow-color: white;
 	}
 }
 
@@ -71,41 +83,5 @@
 	}
 	body {
 		@apply bg-background text-foreground;
-	}
-
-	/* === Scrollbars === */
-
-	::-webkit-scrollbar {
-		@apply relative h-2 w-2;
-	}
-
-	::-webkit-scrollbar-track {
-		@apply absolute !bg-transparent;
-	}
-	::-webkit-scrollbar-thumb {
-		@apply absolute rounded-sm !bg-muted-foreground/30;
-	}
-
-	/* Firefox */
-	/* https://developer.mozilla.org/en-US/docs/Web/CSS/scrollbar-color#browser_compatibility */
-	html {
-		scrollbar-color: hsl(215.4 16.3% 46.9% / 0.3);
-	}
-
-	html.dark {
-		scrollbar-color: hsl(215.4 16.3% 56.9% / 0.3);
-	}
-
-	.hide-scrollbar::-webkit-scrollbar {
-		display: none;
-	}
-
-	.hide-scrollbar {
-		-ms-overflow-style: none;
-		scrollbar-width: none;
-	}
-	.antialised {
-		-webkit-font-smoothing: antialiased;
-		-moz-osx-font-smoothing: grayscale;
 	}
 }

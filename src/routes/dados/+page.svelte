@@ -1,4 +1,4 @@
-<script lang="ts">
+<!-- <script lang="ts">
 	import { enhance } from '$app/forms';
 	import Datepicker from '$lib/components/Datepicker.svelte';
 	import LineChart from '$lib/components/LineChart.svelte';
@@ -7,7 +7,7 @@
 	import { ChevronDown } from 'lucide-svelte';
 
 	let open = false;
-	let chart = false;
+	let chartState: Boolean | 'loading' = false;
 </script>
 
 <form
@@ -22,7 +22,7 @@
 	<Button
 		id="grafico"
 		type="submit"
-		on:click={() => (chart = !chart)}>Gráfico</Button
+		on:click={() => (chartState = !chartState)}>Gráfico</Button
 	>
 	<Popover.Root bind:open>
 		<Popover.Trigger
@@ -56,6 +56,23 @@
 	</Popover.Root>
 </form>
 
-{#if chart}
-	<LineChart />
+{#if chartState}
+{/if} -->
+
+<script lang="ts">
+	import LeiturasForm from './leituras-form.svelte';
+	import type { PageData } from './$types';
+	import LineChart from '$lib/components/LineChart.svelte';
+
+	export let data: PageData;
+	let dados: any;
+</script>
+
+<LeiturasForm
+	data={data.form}
+	bind:dados
+/>
+{#if dados}
+	<LineChart data={dados.leituras} />
+	<pre>{JSON.stringify(dados.sensores, null, 2)}</pre>
 {/if}
