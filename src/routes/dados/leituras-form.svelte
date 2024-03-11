@@ -51,7 +51,7 @@
 		class="flex flex-col"
 	>
 		<Form.Control let:attrs>
-			<Form.Label>Date of birth</Form.Label>
+			<Form.Label>Data para consulta</Form.Label>
 			<Popover.Root>
 				<Popover.Trigger
 					asChild
