@@ -68,11 +68,14 @@
 	let dados: any;
 </script>
 
+<svelte:head>
+	<title>Dados - Labvirtual</title>
+</svelte:head>
+
 <LeiturasForm
 	data={data.form}
 	bind:dados
 />
 {#if dados}
-	<LineChart data={dados.leituras} />
-	<pre>{JSON.stringify(dados.sensores, null, 2)}</pre>
+	<LineChart leituras={dados.leituras} sensores={data.sensores} />
 {/if}

@@ -1,49 +1,42 @@
 <script lang="ts">
-	import { Scale } from '@unovis/ts';
+	import { Scale, type BulletLegendItemInterface, type NumericAccessor } from '@unovis/ts';
 	import { VisXYContainer, VisLine, VisAxis, VisTooltip, VisCrosshair } from '@unovis/svelte';
 
-	type DataRecord = {
-		timestamp: Date;
-		data: {
-			[sensorId: string]: {
-				[key: string]: number;
-			};
-		};
-	};
+	import { Switch } from '$lib/components/ui/switch';
+	import { Label } from '$lib/components/ui/label';
+	import * as HoverCard from '$lib/components/ui/hover-card';
+	import { Info } from 'lucide-svelte';
 
-	export let data: DataRecord[];
+	export let leituras: SensorData[];
+	export let sensores: SensorInfo[];
 
-	const y: ((d: DataRecord) => number)[] = Object.keys(data[0].data).flatMap((sensorId) =>
-		Object.keys(data[0].data[sensorId]).map((key) => (d: DataRecord) => d.data[sensorId][key])
+	const yAccessors: NumericAccessor<SensorData>[] = Object.keys(leituras[0].data).flatMap(
+		(sensorId) =>
+			Object.keys(leituras[0].data[sensorId]).map((key) => (d: SensorData) => d.data[sensorId][key])
 	);
 
-	const x = (d: DataRecord) => d.timestamp.getTime();
-	const colors = ['#f93414', '#fe6c31', '#feae6c', '#06889b', '#006b8f', '#011f51'];
+	let y = yAccessors;
 
-	const color = (d: DataRecord, i: number) => colors[i];
+	const x: NumericAccessor<SensorData> = (d: SensorData) => d.timestamp.getTime();
+	const colors = ['#0a9396', '#94d2bd', '#e9d8a6', '#ee9b00', '#bb3e03', '#ae2012'];
 
-	const lineConfig = {
-		data,
-		x,
-		y,
-		color
-	};
+	const color = (d: SensorData, i: number) => colors[i];
 
 	const tickFormat = (v: Date) =>
 		Intl.DateTimeFormat('pt-BR', { hour: 'numeric', minute: 'numeric' }).format(v);
 
 	const xScale = Scale.scaleTime();
 
-	function template(d: DataRecord) {
+	function template(d: SensorData) {
 		let dados = '';
+		let count = 0;
 		Object.keys(d.data).forEach((sensorId: string, i: number) => {
 			const sensorData = d.data[sensorId];
-			let count = 0;
 			dados += `<p class="text-md font-bold">Sensor ${i + 1}</p>`;
 			Object.keys(sensorData).forEach((key: string) => {
 				dados += `
-					<div class="flex items-center gap-2">
-						<div class="w-3 h-3 rounded-full" style="background-color: ${colors[count + (i === 1 ? 3 : 0)]}"></div>
+					<div class="${items[count].inactive ? 'hidden' : 'flex'} items-center gap-2">
+						<div class="w-3 h-3 rounded-full" style="background-color: ${colors[count]}"></div>
 						<p class="text-sm">
 							<span class="font-bold">${key}</span>: ${sensorData[key]}
 						</p>
@@ -59,15 +52,90 @@
 		</div>
 		`;
 	}
+
+	const keys = Object.keys(leituras[0].data);
+	const items: BulletLegendItemInterface[] = [];
+
+	keys.forEach((key, index1) => {
+		const attributes = Object.keys(leituras[0].data[key]);
+		attributes.forEach((attribute, index2) => {
+			items.push({
+				name: `${key}_${attribute}`,
+				color: colors[(index1 * attributes.length + index2) % colors.length],
+				inactive: false
+			});
+		});
+	});
+
+	const obj = leituras[0];
+
+	interface DataObject {
+		[key: string]: {
+			[attribute: string]: boolean;
+		};
+	}
+
+	const newData: DataObject = {};
+
+	Object.keys(obj.data).forEach((key) => {
+		newData[key] = {};
+		Object.keys(obj.data[key]).forEach((attribute) => {
+			newData[key][attribute] = true;
+		});
+	});
+
+	function toggleAtr(a: any) {
+		const clickedId = a.detail.currentTarget.id as number;
+		items[clickedId].inactive = !items[clickedId].inactive;
+		y = items.map((item, i) => (item.inactive ? null : yAccessors[i]));
+	}
 </script>
 
-<!-- <div class="w-full space-y-6"> -->
-<h3 class="text-center">Grafico do dia</h3>
+<h3 class="text-center">
+	Grafico do dia {new Date(leituras[0].timestamp).toLocaleDateString('pt-BR')}
+</h3>
+<div class="flex items-center justify-between gap-6">
+	{#each Object.keys(newData) as sensor, sensorId}
+		<div class="grid place-items-center gap-3">
+			<h2 class="flex gap-4">
+				Sensor {sensorId + 1}
+				<HoverCard.Root>
+					<HoverCard.Trigger><Info size="24" /></HoverCard.Trigger>
+					<HoverCard.Content class="w-fit text-lg">
+						<p><span class="font-extrabold">ID interno:</span> {sensores[sensorId].internalId}</p>
+						<p><span class="font-extrabold">Nome:</span> {sensores[sensorId].sensorName}</p>
+						<p><span class="font-extrabold">Descrição:</span> {sensores[sensorId].desc}</p>
+					</HoverCard.Content>
+				</HoverCard.Root>
+			</h2>
+			{#each Object.keys(newData[sensor]) as attribute, attributeId}
+				<div class="grid grid-cols-2 items-center gap-4">
+					<Label>{attribute}</Label>
+					<Switch
+						id={`${(sensorId * Object.keys(newData[sensor]).length + attributeId) % (Object.keys(newData).length * Object.keys(newData[sensor]).length)}`}
+						checked={newData[sensor][attribute]}
+						on:click={toggleAtr}
+					/>
+				</div>
+			{/each}
+		</div>
+	{/each}
+</div>
+
 <VisXYContainer
-	{data}
+	data={leituras}
 	{xScale}
+	height={500}
+	padding={{ top: 15, bottom: 15, left: 15 }}
 >
-	<VisLine {...lineConfig} />
+	<VisLine
+		{x}
+		{y}
+		{color}
+		data={leituras}
+		highlightOnHover
+		lineWidth={3}
+	/>
 	<VisAxis
 		type="x"
 		label="Horário"
@@ -77,7 +145,6 @@
 	<VisAxis
 		type="y"
 		label="Valor"
-		gridLine={false}
 	/>
 	<VisTooltip />
 	<VisCrosshair
@@ -85,4 +152,3 @@
 		{color}
 	/>
 </VisXYContainer>
-<!-- </div> -->

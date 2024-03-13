@@ -1,14 +1,19 @@
 import { message, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
-import type { PageServerLoad } from './$types.js';
+import type { PageServerLoad } from './$types';
 import { formSchema } from './schema';
 import { fail, type Actions } from '@sveltejs/kit';
 import { getLeiturasbyDate, getSensores } from '$lib/db/';
 import { parseDateTime } from '@internationalized/date';
 
-export const load: PageServerLoad = async () => {
+export const load: PageServerLoad = async ({ cookies }) => {
+	if (!cookies.get('sensores')) {
+		const sensores = await getSensores();
+		cookies.set('sensores', JSON.stringify(sensores), { path: '/', maxAge: 31536000 });
+	}
 	return {
-		form: await superValidate(zod(formSchema))
+		form: await superValidate(zod(formSchema)),
+		sensores: JSON.parse(cookies.get('sensores') || '[]')
 	};
 };
 
@@ -16,7 +21,6 @@ export const actions: Actions = {
 	default: async (event) => {
 		const form = await superValidate(event, zod(formSchema));
 		if (!form.valid) {
-			console.log(form);
 			return fail(400, {
 				form
 			});
@@ -37,18 +41,8 @@ export const actions: Actions = {
 			.toDate('America/Sao_Paulo');
 
 		const leituras = await getLeiturasbyDate(start, end);
-		const sensores = await getSensores();
 
-		type ResultType = {
-			timestamp: Date;
-			data: {
-				[sensorId: string]: {
-					[key: string]: number;
-				};
-			};
-		};
-
-		const resultArray: ResultType[] = [];
+		const resultArray: SensorData[] = [];
 
 		leituras.forEach((leitura) => {
 			const index = resultArray.findIndex((result) => {
@@ -67,6 +61,11 @@ export const actions: Actions = {
 			}
 		});
 
-		return message(form, { status: 200, leituras: resultArray, sensores });
+		switch (form.data.type) {
+			case 'grafico':
+				return message(form, { status: 200, leituras: resultArray });
+			case 'csv':
+			case 'json':
+		}
 	}
 };

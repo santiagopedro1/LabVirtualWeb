@@ -19,11 +19,11 @@
 
 	export let data: SuperValidated<Infer<LeiturasFormSchema>>;
 
-	const form = superForm(data, {
+	const superFormObj = superForm(data, {
 		validators: zodClient(formSchema)
 	});
 
-	const { form: formData, enhance, message } = form;
+	const { form: formData, enhance, message } = superFormObj;
 
 	export let dados = $message;
 	$: if ($message) dados = $message;
@@ -46,7 +46,7 @@
 	use:enhance
 >
 	<Form.Field
-		{form}
+		form={superFormObj}
 		name="date"
 		class="flex flex-col"
 	>
@@ -97,7 +97,7 @@
 	</Form.Field>
 
 	<Form.Field
-		{form}
+		form={superFormObj}
 		name="type"
 	>
 		<Form.Control let:attrs>
@@ -134,7 +134,6 @@
 					on:click={() => {
 						open = false;
 						$formData.type = 'csv';
-						console.log($formData);
 					}}>CSV</Form.Button
 				>
 				<Form.Button
@@ -146,7 +145,6 @@
 					on:click={() => {
 						open = false;
 						$formData.type = 'json';
-						console.log($formData);
 					}}>JSON</Form.Button
 				>
 			</Popover.Content>

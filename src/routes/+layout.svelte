@@ -44,8 +44,8 @@
 
 	function updateTheme() {
 		document.cookie = `theme=${isDark ? 'dark' : 'light'}; path=/; max-age=31536000`;
-		if (isDark) document.documentElement.classList.add('dark');
-		else document.documentElement.classList.remove('dark');
+		if (isDark) document.documentElement.classList.add('dark', 'theme-dark');
+		else document.documentElement.classList.remove('dark', 'theme-dark');
 	}
 
 	function toggleTheme() {

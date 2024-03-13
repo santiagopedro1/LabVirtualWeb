@@ -1,7 +1,7 @@
-import { and, gte, lte } from 'drizzle-orm';
+import { and, eq, gte, lte } from 'drizzle-orm';
 
 import { db } from './client';
-import { sensorData, sensors } from './schema';
+import { sensorData, sensors, sensorTypes } from './schema';
 
 export const getLeiturasbyDate = async (startDate: Date, endDate: Date) => {
 	return await db
@@ -15,7 +15,15 @@ export const getLeiturasbyDate = async (startDate: Date, endDate: Date) => {
 };
 
 export const getSensores = async () => {
-	return await db.select().from(sensors);
+	return await db
+		.select({
+			internalId: sensors.sensorId,
+			sensorName: sensorTypes.name,
+			supportedAtr: sensorTypes.dataRead,
+			desc: sensors.desc
+		})
+		.from(sensors)
+		.innerJoin(sensorTypes, eq(sensors.sensorTypeId, sensorTypes.sensorId));
 };
 
 export { db } from './client';
