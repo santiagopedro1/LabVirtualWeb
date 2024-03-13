@@ -6,6 +6,10 @@ import { fail, type Actions } from '@sveltejs/kit';
 import { getLeiturasbyDate, getSensores } from '$lib/db/';
 import { parseDateTime } from '@internationalized/date';
 
+function nextMultipleOf5(number: number) {
+	return Math.ceil(number / 5) * 5;
+}
+
 export const load: PageServerLoad = async ({ cookies }) => {
 	if (!cookies.get('sensores')) {
 		const sensores = await getSensores();
@@ -44,9 +48,17 @@ export const actions: Actions = {
 
 		const resultArray: SensorData[] = [];
 
+		let maxY = 0;
+
 		leituras.forEach((leitura) => {
 			const index = resultArray.findIndex((result) => {
 				return result.timestamp.getTime() === leitura.timestamp.getTime();
+			});
+
+			Object.values(leitura.data).forEach((value) => {
+				if (value > maxY) {
+					maxY = value;
+				}
 			});
 
 			if (index === -1) {
@@ -63,7 +75,11 @@ export const actions: Actions = {
 
 		switch (form.data.type) {
 			case 'grafico':
-				return message(form, { status: 200, leituras: resultArray });
+				return message(form, {
+					status: 200,
+					leituras: resultArray,
+					maxYdomain: nextMultipleOf5(maxY)
+				});
 			case 'csv':
 			case 'json':
 		}

@@ -77,5 +77,5 @@
 	bind:dados
 />
 {#if dados}
-	<LineChart leituras={dados.leituras} sensores={data.sensores} />
+	<LineChart leituras={dados.leituras} sensores={data.sensores} maxYdomain={dados.maxYdomain} />
 {/if}

@@ -9,6 +9,7 @@
 
 	export let leituras: SensorData[];
 	export let sensores: SensorInfo[];
+	export let maxYdomain: number;
 
 	const yAccessors: NumericAccessor<SensorData>[] = Object.keys(leituras[0].data).flatMap(
 		(sensorId) =>
@@ -18,9 +19,9 @@
 	let y = yAccessors;
 
 	const x: NumericAccessor<SensorData> = (d: SensorData) => d.timestamp.getTime();
-	const colors = ['#0a9396', '#94d2bd', '#e9d8a6', '#ee9b00', '#bb3e03', '#ae2012'];
+	// const colors = ['#0a9396', '#94d2bd', '#e9d8a6', '#ee9b00', '#bb3e03', '#ae2012'];
 
-	const color = (d: SensorData, i: number) => colors[i];
+	// const color = (d: SensorData, i: number) => colors[i];
 
 	const tickFormat = (v: Date) =>
 		Intl.DateTimeFormat('pt-BR', { hour: 'numeric', minute: 'numeric' }).format(v);
@@ -36,7 +37,7 @@
 			Object.keys(sensorData).forEach((key: string) => {
 				dados += `
 					<div class="${items[count].inactive ? 'hidden' : 'flex'} items-center gap-2">
-						<div class="w-3 h-3 rounded-full" style="background-color: ${colors[count]}"></div>
+						<div class="w-3 h-3 rounded-full" style="background-color: var(--vis-color${count})"></div>
 						<p class="text-sm">
 							<span class="font-bold">${key}</span>: ${sensorData[key]}
 						</p>
@@ -61,7 +62,7 @@
 		attributes.forEach((attribute, index2) => {
 			items.push({
 				name: `${key}_${attribute}`,
-				color: colors[(index1 * attributes.length + index2) % colors.length],
+				// color: colors[(index1 * attributes.length + index2) % colors.length],
 				inactive: false
 			});
 		});
@@ -125,13 +126,13 @@
 <VisXYContainer
 	data={leituras}
 	{xScale}
+	yDomain={[0, maxYdomain]}
 	height={500}
 	padding={{ top: 15, bottom: 15, left: 15 }}
 >
 	<VisLine
 		{x}
 		{y}
-		{color}
 		data={leituras}
 		highlightOnHover
 		lineWidth={3}
@@ -147,8 +148,5 @@
 		label="Valor"
 	/>
 	<VisTooltip />
-	<VisCrosshair
-		{template}
-		{color}
-	/>
+	<VisCrosshair {template} />
 </VisXYContainer>

@@ -39,6 +39,22 @@
 		--vis-tooltip-border-color: hsl(240, 5.9%, 90%);
 		--vis-tooltip-text-color: hsl(0, 0%, 5%);
 		--vis-tooltip-shadow-color: rgba(172, 179, 184, 0.35);
+
+		--vis-axis-tick-label-font-size: 1rem !important;
+		--vis-axis-label-font-size: 1.5rem !important;
+
+		--vis-axis-tick-color: hsl(240, 10%, 3.9%) !important;
+		--vis-axis-label-color: hsl(240, 10%, 3.9%) !important;
+		--vis-axis-tick-label-color: hsl(240, 10%, 3.9%) !important;
+
+		--vis-axis-grid-color: rgba(0, 0, 0, 0.2) !important;
+
+		--vis-color0: #01befe;
+		--vis-color1: #ffdd00;
+		--vis-color2: #adff02;
+		--vis-color3: #ff006d;
+		--vis-color4: #8f00ff;
+		--vis-color5: #ff7d00;
 	}
 
 	.dark {
@@ -76,6 +92,22 @@
 		--vis-tooltip-border-color: hsla(210, 40%, 80%, 0.5);
 		--vis-tooltip-text-color: hsl(0, 0%, 98%);
 		--vis-tooltip-shadow-color: white;
+
+		--vis-axis-tick-label-font-size: 1rem;
+		--vis-axis-label-font-size: 1.5rem;
+
+		--vis-axis-tick-color: hsl(210, 40%, 98%);
+		--vis-axis-label-color: hsl(210, 40%, 98%);
+		--vis-axis-tick-label-color: hsl(210, 40%, 98%);
+
+		--vis-axis-grid-color: rgba(255, 255, 255, 0.1);
+
+		--vis-color0: #ff595eff;
+		--vis-color1: #ff924cff;
+		--vis-color2: #ffca3aff;
+		--vis-color3: #8ac926ff;
+		--vis-color4: #1982c4ff;
+		--vis-color5: #6a4c93ff;
 	}
 }
 
@@ -86,4 +118,7 @@
 	body {
 		@apply bg-background text-foreground;
 	}
+}
+
+:root {
 }
