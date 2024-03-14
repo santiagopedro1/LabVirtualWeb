@@ -58,7 +58,10 @@
 	});
 </script>
 
-<ScrollArea.Root class="h-screen bg-background text-foreground {isDark ? 'dark' : ''}">
+<ScrollArea.Root
+	orientation="both"
+	class="h-screen bg-background text-foreground {isDark ? 'dark' : ''}"
+>
 	<div class="bg-primary py-3 pl-6 pr-[calc(1.5rem_-_calc(100vw_-_100%))] text-primary-foreground">
 		<div class="flex items-center justify-between">
 			{#if $isDesktop}

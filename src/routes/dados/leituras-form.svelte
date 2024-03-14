@@ -1,153 +1,153 @@
 <script lang="ts">
-	import { Calendar as CalendarIcon, ChevronDown } from 'lucide-svelte';
-	import { type SuperValidated, type Infer, superForm } from 'sveltekit-superforms';
-	import { type LeiturasFormSchema, formSchema } from './schema';
-
-	import { zodClient } from 'sveltekit-superforms/adapters';
-	import * as Form from '$lib/components/ui/form/';
-	import * as Popover from '$lib/components/ui/popover/';
-	import { Calendar } from '$lib/components/ui/calendar/';
-	import { Button } from '$lib/components/ui/button/';
-
+	import { enhance } from '$app/forms';
+	import { Button } from '$lib/components/ui/button';
+	import { Calendar } from '$lib/components/ui/calendar';
+	import * as Popover from '$lib/components/ui/popover';
+	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
 	import {
-		type DateValue,
+		CalendarDate,
 		DateFormatter,
 		getLocalTimeZone,
-		parseDate,
-		CalendarDate
+		type DateValue
 	} from '@internationalized/date';
+	import { CalendarIcon, ChevronDown } from 'lucide-svelte';
 
-	export let data: SuperValidated<Infer<LeiturasFormSchema>>;
+	import { mediaQuery } from 'svelte-legos';
 
-	const superFormObj = superForm(data, {
-		validators: zodClient(formSchema)
-	});
+	export let chartState: Boolean | 'loading' = false;
 
-	const { form: formData, enhance, message } = superFormObj;
-
-	export let dados = $message;
-	$: if ($message) dados = $message;
+	let value: DateValue | undefined = undefined;
+	let dateError = false;
+	const isDesktop = mediaQuery('(min-width: 768px)');
 
 	const df = new DateFormatter('pt-BR', {
 		dateStyle: 'long'
 	});
-
-	let value: DateValue | undefined = $formData.date ? parseDate($formData.date) : undefined;
-	$: value = $formData.date ? parseDate($formData.date) : undefined;
-
-	let placeholder: DateValue = new CalendarDate(2022, 2, 11);
-	let open = false;
 </script>
 
 <form
 	method="POST"
 	id="dados"
-	class="flex items-center justify-center gap-8"
-	use:enhance
+	class="flex items-center justify-center gap-8 {!$isDesktop && 'flex-col'}"
+	use:enhance={({ submitter, formData, cancel }) => {
+		if (formData.get('date') === 'undefined') {
+			dateError = true;
+			setTimeout(() => {
+				dateError = false;
+			}, 2000);
+			return cancel();
+		}
+		if (submitter) {
+			if (submitter.id === 'grafico') chartState = 'loading';
+			formData.append('type', submitter.id);
+		}
+		return async ({ result, update }) => {
+			update();
+			if (result.type === 'success' && result.data) {
+				let blob = new Blob();
+				switch (result.data.type) {
+					case 'grafico':
+						chartState = true;
+						break;
+					case 'csv':
+						blob = new Blob([String(result.data.leituras)], {
+							type: `text/${result.data.type}`
+						});
+						break;
+					case 'json':
+						blob = new Blob([JSON.stringify(result.data.leituras, null, 4)], {
+							type: `application/${result.data.type}`
+						});
+						break;
+				}
+				if (result.data.type !== 'grafico') {
+					const url = window.URL.createObjectURL(blob);
+					const a = document.createElement('a');
+					a.href = url;
+					a.download = `dados-${value?.toDate('America/Sao_Paulo').toLocaleDateString('pt-BR')}.${result.data.type}`;
+					document.body.appendChild(a);
+					a.click();
+					a.remove();
+				}
+				value = undefined;
+			}
+		};
+	}}
 >
-	<Form.Field
-		form={superFormObj}
-		name="date"
-		class="flex flex-col"
-	>
-		<Form.Control let:attrs>
-			<Form.Label>Data para consulta</Form.Label>
-			<Popover.Root>
-				<Popover.Trigger
-					asChild
-					let:builder
-				>
-					<Button
-						variant="outline"
-						class="w-[280px] justify-start text-left font-normal
-							{!value && 'text-muted-foreground'}"
-						builders={[builder]}
-					>
-						<CalendarIcon class="mr-2 h-4 w-4" />
-						{value ? df.format(value.toDate(getLocalTimeZone())) : 'Escolha uma data'}
-					</Button>
-				</Popover.Trigger>
-				<Popover.Content
-					class="w-auto p-0"
-					align="start"
-				>
-					<Calendar
-						{value}
-						bind:placeholder
-						minValue={new CalendarDate(2022, 2, 11)}
-						maxValue={new CalendarDate(2022, 10, 5)}
-						locale="pt-BR"
-						onValueChange={(v) => {
-							if (v) {
-								$formData.date = v.toString();
-							} else {
-								$formData.date = '';
-							}
-						}}
-					/>
-				</Popover.Content>
-				<input
-					hidden
-					value={$formData.date}
-					name={attrs.name}
-				/>
-			</Popover.Root>
-		</Form.Control>
-		<Form.FieldErrors class="h-5" />
-	</Form.Field>
-
-	<Form.Field
-		form={superFormObj}
-		name="type"
-	>
-		<Form.Control let:attrs>
-			<input
-				hidden
-				name={attrs.name}
-				value={$formData.type}
-			/>
-		</Form.Control>
-	</Form.Field>
-
-	<div class="flex gap-2">
-		<Form.Button id="grafico">Gráfico</Form.Button>
-		<Popover.Root bind:open>
+	<div class="flex flex-col gap-2">
+		<Popover.Root>
 			<Popover.Trigger
 				asChild
 				let:builder
 			>
 				<Button
+					variant="outline"
+					class="w-[280px] justify-start text-left font-normal transition-all
+					{!value && 'text-muted-foreground'} {dateError && 'ring-2 ring-destructive'}"
 					builders={[builder]}
-					class="flex justify-between gap-2"
 				>
+					<CalendarIcon class="mr-2 h-4 w-4" />
+					{value ? df.format(value.toDate(getLocalTimeZone())) : 'Escolha uma data para consulta'}
+				</Button>
+			</Popover.Trigger>
+			<Popover.Content
+				class="w-auto p-0"
+				align="start"
+			>
+				<Calendar
+					bind:value
+					placeholder={new CalendarDate(2022, 2, 11)}
+					minValue={new CalendarDate(2022, 2, 11)}
+					maxValue={new CalendarDate(2022, 10, 5)}
+					locale="pt-BR"
+				/>
+			</Popover.Content>
+			<input
+				hidden
+				{value}
+				name="date"
+			/>
+		</Popover.Root>
+	</div>
+
+	<div class="flex gap-2">
+		<Button
+			type="submit"
+			id="grafico"
+		>
+			Gráfico
+		</Button>
+		<DropdownMenu.Root>
+			<DropdownMenu.Trigger>
+				<Button class="flex gap-4">
 					Download
 					<ChevronDown size="16" />
 				</Button>
-			</Popover.Trigger>
-			<Popover.Content class="flex w-max flex-col items-center p-0">
-				<Form.Button
-					id="csv"
-					form="dados"
-					variant="ghost"
-					size="lg"
-					class="w-full"
-					on:click={() => {
-						open = false;
-						$formData.type = 'csv';
-					}}>CSV</Form.Button
-				>
-				<Form.Button
-					id="json"
-					form="dados"
-					variant="ghost"
-					size="lg"
-					class="w-full"
-					on:click={() => {
-						open = false;
-						$formData.type = 'json';
-					}}>JSON</Form.Button
-				>
-			</Popover.Content>
-		</Popover.Root>
+			</DropdownMenu.Trigger>
+			<DropdownMenu.Content class="p-0">
+				<DropdownMenu.Item>
+					<Button
+						type="submit"
+						id="csv"
+						form="dados"
+						variant="ghost"
+						class="w-full rounded-md"
+					>
+						CSV
+					</Button>
+				</DropdownMenu.Item>
+				<DropdownMenu.Item>
+					<Button
+						type="submit"
+						id="json"
+						form="dados"
+						variant="ghost"
+						class="w-full rounded-md"
+					>
+						JSON
+					</Button>
+				</DropdownMenu.Item>
+			</DropdownMenu.Content>
+		</DropdownMenu.Root>
 	</div>
 </form>

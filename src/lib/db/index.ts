@@ -1,4 +1,4 @@
-import { and, eq, gte, lte } from 'drizzle-orm';
+import { and, asc, eq, gte, lte } from 'drizzle-orm';
 
 import { db } from './client';
 import { sensorData, sensors, sensorTypes } from './schema';
@@ -11,7 +11,8 @@ export const getLeiturasbyDate = async (startDate: Date, endDate: Date) => {
 			data: sensorData.data
 		})
 		.from(sensorData)
-		.where(and(lte(sensorData.timestamp, endDate), gte(sensorData.timestamp, startDate)));
+		.where(and(lte(sensorData.timestamp, endDate), gte(sensorData.timestamp, startDate)))
+		.orderBy(asc(sensorData.timestamp));
 };
 
 export const getSensores = async () => {

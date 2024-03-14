@@ -1,7 +1,4 @@
-import { message, superValidate } from 'sveltekit-superforms';
-import { zod } from 'sveltekit-superforms/adapters';
 import type { PageServerLoad } from './$types';
-import { formSchema } from './schema';
 import { fail, type Actions } from '@sveltejs/kit';
 import { getLeiturasbyDate, getSensores } from '$lib/db/';
 import { parseDateTime } from '@internationalized/date';
@@ -16,28 +13,26 @@ export const load: PageServerLoad = async ({ cookies }) => {
 		cookies.set('sensores', JSON.stringify(sensores), { path: '/', maxAge: 31536000 });
 	}
 	return {
-		form: await superValidate(zod(formSchema)),
 		sensores: JSON.parse(cookies.get('sensores') || '[]')
 	};
 };
 
 export const actions: Actions = {
-	default: async (event) => {
-		const form = await superValidate(event, zod(formSchema));
-		if (!form.valid) {
-			return fail(400, {
-				form
-			});
-		}
+	default: async ({ request }) => {
+		const formData = await request.formData();
 
-		const start = parseDateTime(form.data.date)
+		const date = String(formData.get('date'));
+		const type = String(formData.get('type'));
+
+		if (!date || !type) return fail(400, { message: 'Foda' });
+
+		const start = parseDateTime(date)
 			.set({
 				hour: 0,
 				minute: 0
 			})
 			.toDate('America/Sao_Paulo');
-
-		const end = parseDateTime(form.data.date)
+		const end = parseDateTime(date)
 			.set({
 				hour: 23,
 				minute: 59
@@ -47,7 +42,6 @@ export const actions: Actions = {
 		const leituras = await getLeiturasbyDate(start, end);
 
 		const resultArray: SensorData[] = [];
-
 		let maxY = 0;
 
 		leituras.forEach((leitura) => {
@@ -73,15 +67,73 @@ export const actions: Actions = {
 			}
 		});
 
-		switch (form.data.type) {
+		switch (type) {
 			case 'grafico':
-				return message(form, {
-					status: 200,
+				return {
+					type: type,
 					leituras: resultArray,
 					maxYdomain: nextMultipleOf5(maxY)
-				});
+				};
 			case 'csv':
+				return {
+					type: type,
+					leituras: arrayToCSV(resultArray)
+				};
 			case 'json':
+				// rename the keys from data to sensor{index + 1}
+				const json = resultArray.map((leitura) => {
+					const sensorData: any = {};
+					Object.keys(leitura.data).forEach((key, index) => {
+						sensorData[`sensor${index + 1}`] = leitura.data[key];
+					});
+					return {
+						timestamp: leitura.timestamp,
+						dados: sensorData
+					};
+				});
+				return {
+					type: type,
+					leituras: json
+				};
 		}
 	}
 };
+
+function arrayToCSV(data: SensorData[]) {
+	// Header
+	let csv = 'timestamp,';
+	const sensorIds: Set<string> = new Set();
+
+	// Collect all unique sensorIds
+	data.forEach((sensorData) => {
+		Object.keys(sensorData.data).forEach((sensorId) => {
+			sensorIds.add(sensorId);
+		});
+	});
+
+	// Add headers prefixed by sensorId
+	let i = 0;
+	sensorIds.forEach((sensorId) => {
+		Object.keys(data[0].data[sensorId]).forEach((key) => {
+			csv += `sensor${i + 1}_${key},`;
+		});
+		++i;
+	});
+	csv = csv.slice(0, -1); // Remove trailing comma
+	csv += '\n';
+
+	// Data
+	data.forEach((sensorData) => {
+		csv += `${sensorData.timestamp.toISOString()},`;
+		sensorIds.forEach((sensorId) => {
+			const sensorDataObj = sensorData.data[sensorId];
+			Object.keys(sensorDataObj).forEach((key) => {
+				csv += `${sensorDataObj[key]},`;
+			});
+		});
+		csv = csv.slice(0, -1); // Remove trailing comma
+		csv += '\n';
+	});
+
+	return csv;
+}
