@@ -95,7 +95,7 @@
 <h3 class="text-center">
 	Grafico do dia {new Date(leituras[0].timestamp).toLocaleDateString('pt-BR')}
 </h3>
-<div class="flex justify-around gap-3">
+<div class="flex justify-around gap-6">
 	{#each Object.keys(newData) as sensor, sensorId}
 		<div class="flex flex-col items-center gap-3">
 			<h2 class="flex gap-4">
@@ -127,8 +127,8 @@
 	data={leituras}
 	{xScale}
 	yDomain={[0, maxYdomain]}
-	height={500}
-	padding={{ top: 15, bottom: 15, left: 15, right: 10 }}
+	height={450}
+	padding={{ top: 15, bottom: 15, left: 10, right: 10 }}
 >
 	<VisLine
 		{x}
