@@ -95,9 +95,9 @@
 <h3 class="text-center">
 	Grafico do dia {new Date(leituras[0].timestamp).toLocaleDateString('pt-BR')}
 </h3>
-<div class="flex items-center justify-between gap-6">
+<div class="flex justify-around gap-3">
 	{#each Object.keys(newData) as sensor, sensorId}
-		<div class="grid place-items-center gap-3">
+		<div class="flex flex-col items-center gap-3">
 			<h2 class="flex gap-4">
 				Sensor {sensorId + 1}
 				<HoverCard.Root>
@@ -110,7 +110,7 @@
 				</HoverCard.Root>
 			</h2>
 			{#each Object.keys(newData[sensor]) as attribute, attributeId}
-				<div class="grid grid-cols-2 items-center gap-4">
+				<div class="flex gap-4">
 					<Label>{attribute}</Label>
 					<Switch
 						id={`${(sensorId * Object.keys(newData[sensor]).length + attributeId) % (Object.keys(newData).length * Object.keys(newData[sensor]).length)}`}
@@ -128,7 +128,7 @@
 	{xScale}
 	yDomain={[0, maxYdomain]}
 	height={500}
-	padding={{ top: 15, bottom: 15, left: 15 }}
+	padding={{ top: 15, bottom: 15, left: 15, right: 10 }}
 >
 	<VisLine
 		{x}
