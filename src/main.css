@@ -40,9 +40,6 @@
 		--vis-tooltip-text-color: hsl(0, 0%, 5%);
 		--vis-tooltip-shadow-color: rgba(172, 179, 184, 0.35);
 
-		--vis-axis-tick-label-font-size: 1rem !important;
-		--vis-axis-label-font-size: 1.5rem !important;
-
 		--vis-axis-tick-color: hsl(240, 10%, 3.9%) !important;
 		--vis-axis-label-color: hsl(240, 10%, 3.9%) !important;
 		--vis-axis-tick-label-color: hsl(240, 10%, 3.9%) !important;
@@ -92,9 +89,6 @@
 		--vis-tooltip-border-color: hsla(210, 40%, 80%, 0.5);
 		--vis-tooltip-text-color: hsl(0, 0%, 98%);
 		--vis-tooltip-shadow-color: white;
-
-		--vis-axis-tick-label-font-size: 1rem;
-		--vis-axis-label-font-size: 1.5rem;
 
 		--vis-axis-tick-color: hsl(210, 40%, 98%);
 		--vis-axis-label-color: hsl(210, 40%, 98%);

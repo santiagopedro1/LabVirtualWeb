@@ -5,11 +5,16 @@
 	import { Switch } from '$lib/components/ui/switch';
 	import { Label } from '$lib/components/ui/label';
 	import * as HoverCard from '$lib/components/ui/hover-card';
+
 	import { Info } from 'lucide-svelte';
+
+	import { mediaQuery } from 'svelte-legos';
 
 	export let leituras: SensorData[];
 	export let sensores: SensorInfo[];
 	export let maxYdomain: number;
+
+	const isDesktop = mediaQuery('(min-width: 768px)');
 
 	const yAccessors: NumericAccessor<SensorData>[] = Object.keys(leituras[0].data).flatMap(
 		(sensorId) =>
@@ -19,9 +24,6 @@
 	let y = yAccessors;
 
 	const x: NumericAccessor<SensorData> = (d: SensorData) => d.timestamp.getTime();
-	// const colors = ['#0a9396', '#94d2bd', '#e9d8a6', '#ee9b00', '#bb3e03', '#ae2012'];
-
-	// const color = (d: SensorData, i: number) => colors[i];
 
 	const tickFormat = (v: Date) =>
 		Intl.DateTimeFormat('pt-BR', { hour: 'numeric', minute: 'numeric' }).format(v);
@@ -62,7 +64,6 @@
 		attributes.forEach((attribute, index2) => {
 			items.push({
 				name: `${key}_${attribute}`,
-				// color: colors[(index1 * attributes.length + index2) % colors.length],
 				inactive: false
 			});
 		});
@@ -142,10 +143,14 @@
 		label="Horário"
 		{tickFormat}
 		gridLine={false}
+		labelFontSize={$isDesktop ? 24 : 16}
+		tickTextFontSize={$isDesktop ? 16 : 12}
 	/>
 	<VisAxis
 		type="y"
 		label="Valor"
+		labelFontSize={$isDesktop ? 24 : 16}
+		tickTextFontSize={$isDesktop ? 16 : 12}
 	/>
 	<VisTooltip />
 	<VisCrosshair {template} />
