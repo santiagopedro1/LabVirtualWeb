@@ -149,7 +149,7 @@
 			</Button>
 		</div>
 	</div>
-	<main class="grid place-items-center gap-8 px-4 py-12 pb-16 md:px-20 lg:px-24">
+	<main class="lg:px-18 grid place-items-center gap-8 px-4 py-12 pb-16 md:px-16">
 		<slot />
 	</main>
 </ScrollArea.Root>
