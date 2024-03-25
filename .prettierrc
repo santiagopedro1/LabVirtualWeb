@@ -1,11 +1,9 @@
 {
-    "tabWidth": 4,
-    "tabs": true,
-    "semi": false,
-    "quoteProps": "as-needed",
-    "trailingComma": "none",
-    "arrowParens": "avoid",
-    "singleAttributePerLine": true,
-    "singleQuote": true,
-    "plugins": ["prettier-plugin-tailwindcss"]
+	"useTabs": true,
+	"singleQuote": true,
+	"trailingComma": "none",
+	"printWidth": 100,
+	"singleAttributePerLine": true,
+	"plugins": ["prettier-plugin-svelte", "prettier-plugin-tailwindcss"],
+	"overrides": [{ "files": "*.svelte", "options": { "parser": "svelte" } }]
 }

@@ -1,36 +1,29 @@
 // See https://kit.svelte.dev/docs/types#app
 // for information about these interfaces
 declare global {
-    namespace App {
-        // interface Error {}
-        // interface Locals {}
-        // interface PageData {}
-        // interface Platform {}
-    }
+	namespace App {
+		// interface Error {}
+		// interface Locals {}
+		// interface PageData {}
+		// interface PageState {}
+		// interface Platform {}
+	}
 
-    interface LeituraDB {
-        id_sensor_de_usuario: number
-        data_hora: Date
-        leitura: {
-            [key: string]: number
-        }
-    }
+	type SensorData = {
+		timestamp: Date;
+		data: {
+			[sensorId: string]: {
+				[key: string]: number;
+			};
+		};
+	};
 
-    interface SensorInfo {
-        nome: string
-        descricao: string
-        dados_lidos: string
-    }
-
-    interface DadosSensor {
-        [key: string]: number[]
-    }
-
-    interface Leitura {
-        data: Date
-        horario: string[]
-        leituras: DadosSensor[]
-    }
+	type SensorInfo = {
+		internalId: string;
+		sensorName: string;
+		supportedAtr: string[];
+		desc: string | null;
+	};
 }
 
-export {}
+export {};

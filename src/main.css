@@ -1,0 +1,118 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+	:root {
+		--background: 138 76% 97%;
+		--foreground: 240 10% 3.9%;
+		--muted: 240 4.8% 95.9%;
+		--muted-foreground: 240 3.8% 46.1%;
+
+		--popover: 0 0% 100%;
+		--popover-foreground: 240 10% 3.9%;
+
+		--card: 0 0% 100%;
+		--card-foreground: 240 10% 3.9%;
+
+		--border: 240 5.9% 90%;
+		--input: 240 5.9% 90%;
+
+		--primary: 146 99% 31%;
+		--primary-foreground: 210 40% 98%;
+
+		--secondary: 240 4.8% 95.9%;
+		--secondary-foreground: 240 5.9% 10%;
+
+		--accent: 240 4.8% 95.9%;
+		--accent-foreground: 240 5.9% 10%;
+
+		--destructive: 0 84.24% 60.2%;
+		--destructive-foreground: 0 0% 98%;
+
+		--ring: 240 5% 64.9%;
+
+		--radius: 0.5rem;
+
+		/* chart */
+		--vis-tooltip-background-color: hsla(0, 0%, 100%, 0.95);
+		--vis-tooltip-border-color: hsl(240, 5.9%, 90%);
+		--vis-tooltip-text-color: hsl(0, 0%, 5%);
+		--vis-tooltip-shadow-color: rgba(172, 179, 184, 0.35);
+
+		--vis-axis-tick-color: hsl(240, 10%, 3.9%) !important;
+		--vis-axis-label-color: hsl(240, 10%, 3.9%) !important;
+		--vis-axis-tick-label-color: hsl(240, 10%, 3.9%) !important;
+
+		--vis-axis-grid-color: rgba(0, 0, 0, 0.2) !important;
+
+		--vis-color0: #01befe;
+		--vis-color1: #ffdd00;
+		--vis-color2: #adff02;
+		--vis-color3: #ff006d;
+		--vis-color4: #8f00ff;
+		--vis-color5: #ff7d00;
+	}
+
+	.dark {
+		--background: 229 84% 5%;
+		--foreground: 210 40% 98%;
+
+		--muted: 240 3.7% 15.9%;
+		--muted-foreground: 240 5% 64.9%;
+
+		--popover: 0 0% 5%;
+		--popover-foreground: 0 0% 98%;
+
+		--card: 0 0% 5%;
+		--card-foreground: 0 0% 98%;
+
+		--border: 210 40% 80%;
+		--input: 240 3.7% 15.9%;
+
+		--primary: 146 99% 31%;
+		--primary-foreground: 210 40% 98%;
+
+		--secondary: 240 3.7% 15.9%;
+		--secondary-foreground: 0 0% 98%;
+
+		--accent: 240 3.7% 15.9%;
+		--accent-foreground: 0 0% 98%;
+
+		--destructive: 0 84.24% 60.2%;
+		--destructive-foreground: 0 85.7% 97.3%;
+
+		--ring: 240 3.7% 15.9%;
+
+		/* chart */
+		--vis-tooltip-background-color: hsla(0, 0%, 5%, 0.95);
+		--vis-tooltip-border-color: hsla(210, 40%, 80%, 0.5);
+		--vis-tooltip-text-color: hsl(0, 0%, 98%);
+		--vis-tooltip-shadow-color: white;
+
+		--vis-axis-tick-color: hsl(210, 40%, 98%);
+		--vis-axis-label-color: hsl(210, 40%, 98%);
+		--vis-axis-tick-label-color: hsl(210, 40%, 98%);
+
+		--vis-axis-grid-color: rgba(255, 255, 255, 0.1);
+
+		--vis-color0: #ff595eff;
+		--vis-color1: #ff924cff;
+		--vis-color2: #ffca3aff;
+		--vis-color3: #8ac926ff;
+		--vis-color4: #1982c4ff;
+		--vis-color5: #6a4c93ff;
+	}
+}
+
+@layer base {
+	* {
+		@apply border-border;
+	}
+	body {
+		@apply bg-background text-foreground;
+	}
+}
+
+:root {
+}
